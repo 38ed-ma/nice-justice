@@ -1,10 +1,18 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function Cases() {
 
   const [cases, setCases] = useState<any[]>([])
+
+useEffect(() => {
+  const savedCases = localStorage.getItem("cases")
+
+  if (savedCases) {
+    setCases(JSON.parse(savedCases))
+  }
+}, [])
 
   const [plaintiff, setPlaintiff] = useState("")
   const [defendant, setDefendant] = useState("")
