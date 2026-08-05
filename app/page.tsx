@@ -54,10 +54,10 @@ useEffect(() => {
 </div>
 
         <div className="card">
-          <span>👨‍⚖️</span>
-          <h3>القضاة</h3>
-          <h2>0</h2>
-        </div>
+  <span>👨‍⚖️</span>
+  <h3>القضاة</h3>
+  <h2>{judgesCount}</h2>
+</div>
 
         <div className="card">
           <span>📜</span>
