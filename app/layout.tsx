@@ -31,7 +31,11 @@ export default function RootLayout({
   <p>👨‍⚖️ القضاة</p>
 </Link>
   <Link href="/users">
-  <p>👥 المستخدمين</p>
+  {
+role === "مسؤول" && (
+<p>👥 المستخدمين</p>
+)
+}
 </Link>
   <Link href="/verdicts">
   <p>📜 الأحكام</p>
