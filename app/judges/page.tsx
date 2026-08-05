@@ -158,7 +158,30 @@ judges.map((judge)=>(
 <td>
 {judge.court}
 </td>
+<td>
 
+<button
+onClick={()=>{
+
+const updated = judges.filter(
+(item)=>item.id !== judge.id
+)
+
+setJudges(updated)
+
+localStorage.setItem(
+"judges",
+JSON.stringify(updated)
+)
+
+}}
+>
+
+🗑 حذف
+
+</button>
+
+</td>
 
 </tr>
 
