@@ -13,20 +13,14 @@ const [notifications,setNotifications] = useState(0)
 
 useEffect(()=>{
 
-const savedUser =
-localStorage.getItem("user")
-
+const savedUser = localStorage.getItem("user")
 
 if(savedUser){
-
 setUser(JSON.parse(savedUser))
-
 }
 
 
-const savedNotifications =
-localStorage.getItem("notifications")
-
+const savedNotifications = localStorage.getItem("notifications")
 
 if(savedNotifications){
 
@@ -38,6 +32,7 @@ JSON.parse(savedNotifications).length
 
 
 },[])
+
 
 
 
@@ -96,6 +91,8 @@ link:"/login"
 
 
 
+
+
 return(
 
 <aside
@@ -108,7 +105,9 @@ right:0,
 
 top:0,
 
-width:"260px",
+width:"300px",
+
+minWidth:"300px",
 
 height:"100vh",
 
@@ -123,7 +122,9 @@ flexDirection:"column",
 
 boxShadow:"-10px 0 30px rgba(0,0,0,.35)",
 
-zIndex:999
+zIndex:999,
+
+overflow:"hidden"
 
 }}
 
@@ -132,11 +133,12 @@ zIndex:999
 
 
 
+
 <div
 
 style={{
 
-padding:"25px 15px",
+padding:"30px 20px",
 
 textAlign:"center",
 
@@ -152,14 +154,12 @@ borderBottom:
 
 style={{
 
-fontSize:"35px"
+fontSize:"45px"
 
 }}
 
 >
-
 ⚖️
-
 </div>
 
 
@@ -170,7 +170,7 @@ style={{
 
 margin:"5px 0",
 
-fontSize:"24px",
+fontSize:"26px",
 
 color:"#D4AF37"
 
@@ -202,11 +202,12 @@ Minister Of Justice
 
 
 
+
 <div
 
 style={{
 
-marginTop:"20px",
+marginTop:"25px",
 
 background:"rgba(212,175,55,.12)",
 
@@ -214,7 +215,7 @@ border:"1px solid #D4AF37",
 
 borderRadius:"15px",
 
-padding:"15px"
+padding:"18px"
 
 }}
 
@@ -238,14 +239,25 @@ color:"#D4AF37"
 </p>
 
 
-<strong>
+
+<h3
+
+style={{
+
+margin:"10px 0 0"
+
+}}
+
+>
 
 عقيد ( خالد ايلفن )
 
-</strong>
+</h3>
+
 
 
 </div>
+
 
 
 
@@ -258,9 +270,9 @@ marginTop:"15px",
 
 background:"rgba(255,255,255,.08)",
 
-padding:"10px",
+padding:"12px",
 
-borderRadius:"10px"
+borderRadius:"12px"
 
 }}
 
@@ -280,7 +292,9 @@ borderRadius:"10px"
 </div>
 
 
+
 </div>
+
 
 
 
@@ -290,16 +304,15 @@ borderRadius:"10px"
 
 style={{
 
-padding:"15px",
+padding:"20px",
 
-overflowY:"auto",
+flex:1,
 
-flex:1
+overflowY:"auto"
 
 }}
 
 >
-
 
 
 {
@@ -318,11 +331,11 @@ style={{
 
 width:"100%",
 
-padding:"14px",
+padding:"16px",
 
-marginBottom:"10px",
+marginBottom:"12px",
 
-borderRadius:"12px",
+borderRadius:"14px",
 
 border:"none",
 
@@ -330,11 +343,13 @@ background:"#132B4F",
 
 color:"white",
 
-fontSize:"15px",
+fontSize:"16px",
 
 cursor:"pointer",
 
-textAlign:"right"
+textAlign:"right",
+
+transition:"0.3s"
 
 }}
 
@@ -349,6 +364,7 @@ e.currentTarget.style.color="#111"
 }}
 
 
+
 onMouseLeave={(e)=>{
 
 e.currentTarget.style.background="#132B4F"
@@ -358,13 +374,17 @@ e.currentTarget.style.color="white"
 }}
 
 
-
 >
 
 
+<span>
+
 {item.icon}
 
-&nbsp;
+</span>
+
+
+&nbsp;&nbsp;
 
 {item.title}
 
@@ -384,20 +404,21 @@ e.currentTarget.style.color="white"
 
 
 
+
 <footer
 
 style={{
 
-padding:"15px",
+padding:"18px",
 
 textAlign:"center",
 
-fontSize:"12px",
+fontSize:"13px",
 
 color:"#E8DCC0",
 
 borderTop:
-"1px solid rgba(255,255,255,.1)"
+"1px solid rgba(255,255,255,.15)"
 
 }}
 
@@ -406,6 +427,7 @@ borderTop:
 Ministry Of Justice © 2026
 
 </footer>
+
 
 
 
