@@ -4,15 +4,12 @@ import { useEffect, useState } from "react"
 import Sidebar from "../components/Sidebar"
 
 
-
 export default function Dashboard(){
 
 
 const [cases,setCases] = useState<any[]>([])
 
 const [users,setUsers] = useState<any[]>([])
-
-
 
 
 
@@ -50,12 +47,16 @@ setUsers(JSON.parse(savedUsers))
 
 
 
+const totalCases =
+cases.length
+
 
 
 const newCases =
 cases.filter(
 (item)=>item.status === "جديدة"
 ).length
+
 
 
 
@@ -66,10 +67,12 @@ cases.filter(
 
 
 
+
 const judgments =
 cases.filter(
 (item)=>item.judgment
 ).length
+
 
 
 
@@ -80,11 +83,11 @@ users.filter(
 
 
 
+
 const lawyers =
 users.filter(
 (item)=>item.role === "محامي"
 ).length
-
 
 
 
@@ -106,7 +109,7 @@ style={{
 
 marginRight:"280px",
 
-padding:"40px",
+padding:"30px",
 
 direction:"rtl",
 
@@ -118,8 +121,14 @@ textAlign:"center"
 
 
 <h1>
-⚖️ لوحة تحكم وزارة العدل
+⚖️ لوحة وزارة العدل
 </h1>
+
+
+
+<p>
+إحصائيات النظام
+</p>
 
 
 
@@ -135,9 +144,9 @@ style={{
 
 display:"grid",
 
-gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",
+gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",
 
-gap:"20px"
+gap:"15px"
 
 }}
 
@@ -146,67 +155,136 @@ gap:"20px"
 
 
 
-<Card
+<Box
 
 title="📁 إجمالي القضايا"
 
-value={cases.length}
+number={totalCases}
 
 />
 
 
 
-<Card
+<Box
 
-title="🆕 قضايا جديدة"
+title="🆕 القضايا الجديدة"
 
-value={newCases}
-
-/>
-
-
-
-<Card
-
-title="🔒 قضايا مغلقة"
-
-value={closedCases}
+number={newCases}
 
 />
 
 
 
-<Card
+<Box
 
-title="⚖️ أحكام صادرة"
+title="🔒 القضايا المغلقة"
 
-value={judgments}
+number={closedCases}
 
 />
 
 
 
-<Card
+<Box
+
+title="⚖️ الأحكام الصادرة"
+
+number={judgments}
+
+/>
+
+
+
+<Box
 
 title="👨‍⚖️ القضاة"
 
-value={judges}
+number={judges}
 
 />
 
 
 
-<Card
+<Box
 
 title="👨‍💼 المحامين"
 
-value={lawyers}
+number={lawyers}
 
 />
 
 
 
 </div>
+
+
+
+
+
+<hr/>
+
+
+
+
+<h2>
+📊 حالة القضايا
+</h2>
+
+
+
+
+<div
+
+style={{
+
+width:"300px",
+
+height:"20px",
+
+background:"#ddd",
+
+margin:"auto",
+
+borderRadius:"20px",
+
+overflow:"hidden"
+
+}}
+
+>
+
+
+<div
+
+style={{
+
+width:
+`${totalCases ? (closedCases/totalCases)*100 : 0}%`,
+
+height:"100%",
+
+background:"green"
+
+}}
+
+>
+
+
+</div>
+
+
+</div>
+
+
+
+<p>
+
+نسبة القضايا المغلقة
+
+</p>
+
+
+
 
 
 
@@ -224,8 +302,7 @@ value={lawyers}
 
 
 
-
-function Card({title,value}:any){
+function Box({title,number}:any){
 
 
 return(
@@ -236,11 +313,9 @@ style={{
 
 border:"1px solid #ccc",
 
-padding:"25px",
+padding:"20px",
 
-borderRadius:"15px",
-
-fontSize:"20px"
+borderRadius:"15px"
 
 }}
 
@@ -254,13 +329,11 @@ fontSize:"20px"
 </h3>
 
 
-
 <h1>
 
-{value}
+{number}
 
 </h1>
-
 
 
 </div>
