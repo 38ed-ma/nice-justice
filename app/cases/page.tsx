@@ -43,7 +43,6 @@ useEffect(() => {
   setJudge("")
 }
 
-
     setCases([...cases, newCase])
 
     setPlaintiff("")
