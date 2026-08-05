@@ -22,7 +22,9 @@ export default function RootLayout({
 
             <nav>
   <p>🏠 الرئيسية</p>
+  <Link href="/cases">
   <p>📁 القضايا</p>
+</Link>
   <p>👨‍⚖️ القضاة</p>
   <p>👥 المستخدمين</p>
   <p>📜 الأحكام</p>
