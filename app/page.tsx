@@ -85,9 +85,9 @@ export default function Home() {
 
           <h2>الخدمات</h2>
 
-<div>
-  ...
-</div>
+          <div>
+          ...
+          </div>
             style={{
               display: "flex",
               gap: "10px",
