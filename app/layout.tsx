@@ -12,7 +12,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
+  const [role, setRole] = useState("")
+
+
+useEffect(() => {
+
+  const user = localStorage.getItem("role")
+
+  if(user){
+    setRole(user)
+  }
+
+}, [])return (
     <html lang="ar" dir="rtl">
       <body>
 
