@@ -1,6 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import {useState} from "react"
+import {checkPassword} from "../lib/password"
+
 
 
 export default function Login(){
@@ -12,37 +14,76 @@ const [password,setPassword] = useState("")
 
 
 
+
 function login(){
 
 
-const savedUsers =
+const saved =
 localStorage.getItem("users")
 
 
 
-if(savedUsers){
+if(!saved){
+
+alert("لا يوجد مستخدمين")
+
+return
+
+}
 
 
-const users = JSON.parse(savedUsers)
+
+const users =
+JSON.parse(saved)
 
 
 
-const found = users.find(
+
+const user =
+users.find(
 (item:any)=>
-item.username === username &&
-item.password === password
+item.username === username
 )
 
 
 
-if(found){
+
+if(!user){
+
+alert("بيانات الدخول غير صحيحة")
+
+return
+
+}
+
+
+
+
+const correct =
+checkPassword(
+password,
+user.password
+)
+
+
+
+
+if(!correct){
+
+alert("بيانات الدخول غير صحيحة")
+
+return
+
+}
+
+
 
 
 localStorage.setItem(
 
 "user",
 
-JSON.stringify(found)
+JSON.stringify(user)
 
 )
 
@@ -51,27 +92,11 @@ JSON.stringify(found)
 window.location.href="/dashboard"
 
 
-}else{
-
-
-alert("بيانات الدخول غير صحيحة")
-
 
 }
 
 
 
-}else{
-
-
-alert("لا يوجد مستخدمين")
-
-
-}
-
-
-
-}
 
 
 
@@ -84,9 +109,9 @@ style={{
 
 padding:"50px",
 
-textAlign:"center",
+direction:"rtl",
 
-direction:"rtl"
+textAlign:"center"
 
 }}
 
@@ -94,13 +119,9 @@ direction:"rtl"
 
 
 <h1>
-⚖️ نظام العدل الإلكتروني
+🔐 تسجيل الدخول
 </h1>
 
-
-<h2>
-تسجيل الدخول
-</h2>
 
 
 
@@ -123,9 +144,9 @@ onChange={(e)=>setUsername(e.target.value)}
 
 <input
 
-placeholder="كلمة المرور"
-
 type="password"
+
+placeholder="كلمة المرور"
 
 value={password}
 
