@@ -11,7 +11,13 @@ export default function Cases() {
   const [defendant, setDefendant] = useState("")
   const [type, setType] = useState("")
   const [judge, setJudge] = useState("")
+useEffect(() => {
+  setCases(getData("cases"))
+}, [])
 
+useEffect(() => {
+  saveData("cases", cases)
+}, [cases])
   function addCase() {
 
     const newCase = {
