@@ -3,16 +3,20 @@
 import { useEffect, useState } from "react"
 import Sidebar from "../components/Sidebar"
 
-alert("وصلت صفحة القضايا")
+
+export default function Cases(){
+
 
 const [cases,setCases] = useState<any[]>([])
 const [showForm,setShowForm] = useState(false)
 const [search,setSearch] = useState("")
 
+
 const [plaintiff,setPlaintiff] = useState("")
 const [defendant,setDefendant] = useState("")
 const [judge,setJudge] = useState("")
 const [type,setType] = useState("")
+
 
 const [user,setUser] = useState<any>(null)
 
@@ -20,51 +24,78 @@ const [user,setUser] = useState<any>(null)
 
 useEffect(()=>{
 
+
 const savedUser = localStorage.getItem("user")
 
+
 if(savedUser){
+
 setUser(JSON.parse(savedUser))
+
 }
+
 
 
 const savedCases = localStorage.getItem("cases")
 
+
 if(savedCases){
 
+
 const allCases = JSON.parse(savedCases)
+
 
 const currentUser = JSON.parse(savedUser || "{}")
 
 
+
 if(currentUser.role === "قاضي"){
 
+
 setCases(
+
 allCases.filter(
-(item:any)=>item.judge === currentUser.username
+(item:any)=>
+item.judge === currentUser.username
 )
+
 )
+
 
 }
 
 else if(currentUser.role === "محامي"){
 
+
 setCases(
+
 allCases.filter(
-(item:any)=>item.lawyer === currentUser.username
+(item:any)=>
+item.lawyer === currentUser.username
 )
+
 )
+
 
 }
 
 else{
 
+
 setCases(allCases)
 
-}
 
 }
+
+
+}
+
 
 },[])
+
+
+
+
 
 
 
@@ -74,12 +105,15 @@ function addCase(){
 if(!plaintiff || !defendant || !type || !judge){
 
 alert("الرجاء تعبئة جميع البيانات")
+
 return
 
 }
 
 
+
 const newCase = {
+
 
 id:`NC-2026-${String(cases.length+1).padStart(4,"0")}`,
 
@@ -98,21 +132,37 @@ createdAt:new Date().toLocaleDateString("ar-SA")
 }
 
 
+
 const saved = localStorage.getItem("cases")
+
 
 const all = saved ? JSON.parse(saved) : []
 
 
-const updated=[...all,newCase]
+
+const updated=[
+
+...all,
+
+newCase
+
+]
+
 
 
 localStorage.setItem(
+
 "cases",
+
 JSON.stringify(updated)
+
 )
 
 
+
 setCases(updated)
+
+
 
 setShowForm(false)
 
@@ -122,35 +172,55 @@ setJudge("")
 setType("")
 
 
+
 }
+
+
 
 
 
 
 function deleteCase(id:string){
 
+
 const saved = localStorage.getItem("cases")
+
 
 if(saved){
 
+
 const all = JSON.parse(saved)
 
+
+
 const updated = all.filter(
+
 (item:any)=>item.id !== id
+
 )
+
 
 
 localStorage.setItem(
+
 "cases",
+
 JSON.stringify(updated)
+
 )
+
 
 
 setCases(updated)
 
-}
+
 
 }
+
+
+
+}
+
 
 
 
@@ -159,20 +229,22 @@ return(
 
 <>
 
+
 <Sidebar />
+
 
 
 <main
 
 style={{
 
-marginRight:"280px",
+marginRight:"300px",
 
 padding:"40px",
 
 direction:"rtl",
 
-background:"#f5f5f5",
+background:"#E8DCC0",
 
 minHeight:"100vh"
 
@@ -181,27 +253,42 @@ minHeight:"100vh"
 >
 
 
-<h1 style={{
+
+<h1
+
+style={{
+
 textAlign:"center",
-color:"#0b1f3a"
-}}>
+
+color:"#0B1F3A",
+
+fontSize:"35px"
+
+}}
+
+>
+
 ⚖️ نظام القضايا
+
 </h1>
+
 
 
 
 {
 
 (user?.role === "وزير العدل" ||
+
 user?.role === "موظف")
 
 &&
+
 
 <button
 
 style={{
 
-background:"#0b1f3a",
+background:"#0B1F3A",
 
 color:"white",
 
@@ -228,6 +315,7 @@ onClick={()=>setShowForm(!showForm)}
 
 
 
+
 {
 
 showForm &&
@@ -241,13 +329,13 @@ background:"white",
 
 padding:"25px",
 
-margin:"20px auto",
+margin:"25px auto",
 
 borderRadius:"15px",
 
 maxWidth:"500px",
 
-boxShadow:"0 0 10px #ccc"
+boxShadow:"0 5px 20px #999"
 
 }}
 
@@ -255,7 +343,9 @@ boxShadow:"0 0 10px #ccc"
 
 
 <h2>
+
 تسجيل قضية
+
 </h2>
 
 
@@ -316,6 +406,7 @@ onChange={(e)=>setJudge(e.target.value)}
 
 
 
+
 <button
 
 style={saveButton}
@@ -329,16 +420,13 @@ onClick={addCase}
 </button>
 
 
-</div>
 
+</div>
 
 }
 
 
 
-
-
-<div style={{marginTop:"30px"}}>
 
 
 <input
@@ -353,8 +441,6 @@ onChange={(e)=>setSearch(e.target.value)}
 
 />
 
-
-</div>
 
 
 
@@ -381,12 +467,11 @@ style={tableStyle}
 
 <th>الحالة</th>
 
-<th>الإجراء</th>
+<th>حذف</th>
 
 </tr>
 
 </thead>
-
 
 
 
@@ -398,8 +483,9 @@ style={tableStyle}
 cases
 
 .filter(
-(item)=>
-item.id.includes(search)
+
+(item)=>item.id.includes(search)
+
 )
 
 .map((item)=>(
@@ -410,30 +496,22 @@ item.id.includes(search)
 
 <td>
 
-<button
-
-onClick={()=>{
-
-window.location.href=`/cases/${item.id}`
-
-}}
-
->
-
 {item.id}
-
-</button>
 
 </td>
 
 
 <td>{item.plaintiff}</td>
 
+
 <td>{item.defendant}</td>
+
 
 <td>{item.judge}</td>
 
+
 <td>{item.status}</td>
+
 
 
 <td>
@@ -452,14 +530,16 @@ onClick={()=>deleteCase(item.id)}
 
 >
 
-🗑 حذف
+🗑
 
 </button>
+
 
 }
 
 
 </td>
+
 
 
 </tr>
@@ -471,8 +551,8 @@ onClick={()=>deleteCase(item.id)}
 }
 
 
-
 </tbody>
+
 
 
 </table>
@@ -486,7 +566,10 @@ onClick={()=>deleteCase(item.id)}
 
 )
 
+
 }
+
+
 
 
 
@@ -507,9 +590,11 @@ border:"1px solid #ccc"
 }
 
 
+
+
 const saveButton={
 
-background:"#d4af37",
+background:"#D4AF37",
 
 padding:"12px 30px",
 
@@ -522,11 +607,14 @@ cursor:"pointer"
 }
 
 
+
 const searchStyle={
 
 width:"80%",
 
 padding:"12px",
+
+marginTop:"20px",
 
 borderRadius:"10px",
 
@@ -535,11 +623,12 @@ border:"1px solid #ccc"
 }
 
 
+
 const tableStyle={
 
 width:"100%",
 
-marginTop:"20px",
+marginTop:"30px",
 
 background:"white",
 
