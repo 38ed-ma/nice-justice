@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Sidebar from "../components/Sidebar"
+import { checkPassword, encryptPassword } from "../lib/password"
 
 
 
@@ -11,13 +12,19 @@ export default function Profile(){
 const [user,setUser] = useState<any>(null)
 
 
+const [oldPassword,setOldPassword] = useState("")
+
+const [newPassword,setNewPassword] = useState("")
+
+
+
+
 
 useEffect(()=>{
 
 
 const saved =
 localStorage.getItem("user")
-
 
 
 if(saved){
@@ -29,6 +36,144 @@ setUser(JSON.parse(saved))
 
 
 },[])
+
+
+
+
+
+
+
+
+function changePassword(){
+
+
+
+if(!oldPassword || !newPassword){
+
+alert("عبّي جميع البيانات")
+
+return
+
+}
+
+
+
+
+
+const correct =
+checkPassword(
+oldPassword,
+user.password
+)
+
+
+
+if(!correct){
+
+alert("كلمة المرور القديمة غير صحيحة")
+
+return
+
+}
+
+
+
+
+
+
+const users =
+JSON.parse(
+localStorage.getItem("users") || "[]"
+)
+
+
+
+
+
+const updated =
+
+users.map((item:any)=>{
+
+
+if(item.id === user.id){
+
+
+return{
+
+...item,
+
+password:
+encryptPassword(newPassword)
+
+}
+
+
+}
+
+
+return item
+
+
+})
+
+
+
+
+
+
+
+localStorage.setItem(
+
+"users",
+
+JSON.stringify(updated)
+
+)
+
+
+
+
+
+const updatedUser = {
+
+...user,
+
+password:
+encryptPassword(newPassword)
+
+}
+
+
+
+
+localStorage.setItem(
+
+"user",
+
+JSON.stringify(updatedUser)
+
+)
+
+
+
+
+setUser(updatedUser)
+
+
+
+setOldPassword("")
+
+setNewPassword("")
+
+
+
+alert("تم تغيير كلمة المرور")
+
+
+
+}
+
+
 
 
 
@@ -54,17 +199,10 @@ window.location.href="/login"
 
 if(!user){
 
-return(
-
-<h1 style={{textAlign:"center"}}>
-
-لا يوجد مستخدم مسجل
-
-</h1>
-
-)
+return <h1>لا يوجد مستخدم</h1>
 
 }
+
 
 
 
@@ -74,7 +212,6 @@ return(
 return(
 
 <>
-
 
 <Sidebar />
 
@@ -104,11 +241,6 @@ textAlign:"center"
 
 
 
-<hr/>
-
-
-
-
 
 <div
 
@@ -118,11 +250,7 @@ border:"1px solid #ccc",
 
 padding:"25px",
 
-borderRadius:"15px",
-
-maxWidth:"400px",
-
-margin:"auto"
+borderRadius:"15px"
 
 }}
 
@@ -131,48 +259,82 @@ margin:"auto"
 
 
 <h2>
-👤 {user.username}
+
+{user.username}
+
 </h2>
 
 
 
 <p>
-🆔 رقم المستخدم:
-</p>
-
-
-<p>
-{user.id}
+⚖️ الصلاحية: {user.role}
 </p>
 
 
 
-
-<p>
-⚖️ الصلاحية:
-</p>
-
-
-<h3>
-{user.role}
-</h3>
+<hr/>
 
 
 
 
-
-<p>
-📅 تاريخ الدخول:
-</p>
-
-
-<p>
-
-{new Date().toLocaleDateString("ar-SA")}
-
-</p>
+<h2>
+🔐 تغيير كلمة المرور
+</h2>
 
 
+
+
+<input
+
+type="password"
+
+placeholder="كلمة المرور القديمة"
+
+value={oldPassword}
+
+onChange={(e)=>setOldPassword(e.target.value)}
+
+ />
+
+
+
+<br/><br/>
+
+
+
+
+<input
+
+type="password"
+
+placeholder="كلمة المرور الجديدة"
+
+value={newPassword}
+
+onChange={(e)=>setNewPassword(e.target.value)}
+
+ />
+
+
+
+<br/><br/>
+
+
+
+
+<button
+
+onClick={changePassword}
+
+>
+
+💾 حفظ كلمة المرور
+
+</button>
+
+
+
+<br/><br/>
 
 
 
@@ -180,20 +342,6 @@ margin:"auto"
 <button
 
 onClick={logout}
-
-style={{
-
-padding:"12px",
-
-background:"#b91c1c",
-
-color:"white",
-
-border:"none",
-
-borderRadius:"8px"
-
-}}
 
 >
 
