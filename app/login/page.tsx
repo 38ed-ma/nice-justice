@@ -6,7 +6,8 @@ import { useState } from "react"
 export default function Login(){
 
 
-const [username,setUsername] = useState("")
+const [username,setUsername] = useState("38ed")
+
 const [role,setRole] = useState("")
 
 
@@ -23,8 +24,11 @@ return
 }
 
 
+
 localStorage.setItem(
+
 "user",
+
 JSON.stringify({
 
 username,
@@ -32,23 +36,36 @@ username,
 role
 
 })
+
 )
 
 
-window.location.href="/"
+
+window.location.href="/dashboard"
+
 
 
 }
 
 
 
+
+
 return(
 
+
 <main
+
 style={{
+
+padding:"50px",
+
 textAlign:"center",
-padding:"50px"
+
+direction:"rtl"
+
 }}
+
 >
 
 
@@ -62,6 +79,7 @@ padding:"50px"
 </h2>
 
 
+
 <input
 
 placeholder="اسم المستخدم"
@@ -71,6 +89,7 @@ value={username}
 onChange={(e)=>setUsername(e.target.value)}
 
 />
+
 
 
 <br/><br/>
@@ -111,6 +130,7 @@ onChange={(e)=>setRole(e.target.value)}
 </option>
 
 
+
 </select>
 
 
@@ -129,6 +149,8 @@ onChange={(e)=>setRole(e.target.value)}
 
 </main>
 
+
 )
+
 
 }
