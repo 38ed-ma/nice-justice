@@ -20,6 +20,15 @@ useEffect(() => {
 }, [cases])
   function addCase() {
 
+  ...
+
+}
+
+function deleteCase(id: string) {
+  setCases(cases.filter((item) => item.id !== id))
+}
+
+return (
     const newCase = {
       id: `NC-2026-${String(cases.length + 1).padStart(4, "0")}`,
       plaintiff,
