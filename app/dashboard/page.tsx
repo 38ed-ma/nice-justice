@@ -2,9 +2,7 @@
 
 import Sidebar from "../components/Sidebar"
 
-
 export default function Dashboard(){
-
 
 return(
 
@@ -16,21 +14,14 @@ return(
 <main
 
 style={{
-
-marginRight:"300px",
-
+marginRight:"260px",
 padding:"35px",
-
 direction:"rtl",
-
 background:"#E8DCC0",
-
 minHeight:"100vh"
-
 }}
 
 >
-
 
 
 <header
@@ -38,19 +29,12 @@ minHeight:"100vh"
 style={{
 
 background:"#0B1F3A",
-
 color:"white",
-
 padding:"30px",
-
 borderRadius:"20px",
-
 display:"flex",
-
 justifyContent:"space-between",
-
 alignItems:"center",
-
 marginBottom:"30px"
 
 }}
@@ -65,17 +49,9 @@ marginBottom:"30px"
 </h1>
 
 
-<p
-
-style={{
-
-color:"#D4AF37",
-
-marginTop:"8px"
-
-}}
-
->
+<p style={{
+color:"#D4AF37"
+}}>
 Minister Of Justice
 </p>
 
@@ -84,40 +60,26 @@ Minister Of Justice
 
 
 
-
 <div
 
 style={{
 
-textAlign:"center",
-
 background:"rgba(255,255,255,.1)",
-
-padding:"15px 30px",
-
-borderRadius:"15px"
+padding:"20px",
+borderRadius:"15px",
+textAlign:"center"
 
 }}
 
 >
 
-
-<span>
+<p>
 وزير العدل
-</span>
+</p>
 
-
-<h2
-
-style={{
-
-margin:"8px 0",
-
+<h2 style={{
 color:"#D4AF37"
-
-}}
-
->
+}}>
 خالد ايلفن
 </h2>
 
@@ -128,6 +90,7 @@ color:"#D4AF37"
 
 
 </div>
+
 
 
 </header>
@@ -141,21 +104,15 @@ color:"#D4AF37"
 style={{
 
 display:"grid",
-
 gridTemplateColumns:"repeat(4,1fr)",
-
-gap:"20px",
-
-marginBottom:"35px"
+gap:"20px"
 
 }}
 
 >
 
 
-{
-
-[
+{[
 
 ["📁","128","القضايا"],
 
@@ -175,15 +132,10 @@ key={item[2]}
 style={{
 
 background:"white",
-
 padding:"25px",
-
 borderRadius:"20px",
-
 textAlign:"center",
-
-boxShadow:"0 8px 20px rgba(0,0,0,.15)",
-
+boxShadow:"0 8px 20px #0003",
 borderTop:"5px solid #D4AF37"
 
 }}
@@ -196,30 +148,14 @@ borderTop:"5px solid #D4AF37"
 </h1>
 
 
-<h2
-
-style={{
-
+<h2 style={{
 fontSize:"35px"
-
-}}
-
->
+}}>
 {item[1]}
 </h2>
 
 
-<p
-
-style={{
-
-color:"#0B1F3A",
-
-fontWeight:"bold"
-
-}}
-
->
+<p>
 {item[2]}
 </p>
 
@@ -227,10 +163,7 @@ fontWeight:"bold"
 </div>
 
 
-))
-
-
-}
+))}
 
 
 </section>
@@ -239,17 +172,14 @@ fontWeight:"bold"
 
 
 
-<section
+<div
 
 style={{
 
+marginTop:"35px",
 background:"white",
-
 padding:"25px",
-
-borderRadius:"20px",
-
-boxShadow:"0 8px 20px rgba(0,0,0,.15)"
+borderRadius:"20px"
 
 }}
 
@@ -257,9 +187,8 @@ boxShadow:"0 8px 20px rgba(0,0,0,.15)"
 
 
 <h2>
-📁 آخر القضايا
+📂 آخر القضايا
 </h2>
-
 
 
 <table
@@ -267,9 +196,7 @@ boxShadow:"0 8px 20px rgba(0,0,0,.15)"
 style={{
 
 width:"100%",
-
 marginTop:"20px",
-
 borderCollapse:"collapse"
 
 }}
@@ -279,37 +206,12 @@ borderCollapse:"collapse"
 
 <thead>
 
-<tr
+<tr>
 
-style={{
-
-background:"#0B1F3A",
-
-color:"white"
-
-}}
-
->
-
-<th style={{padding:"15px"}}>
-رقم القضية
-</th>
-
-<th style={{padding:"15px"}}>
-المدعي
-</th>
-
-<th style={{padding:"15px"}}>
-المدعى عليه
-</th>
-
-<th style={{padding:"15px"}}>
-الحالة
-</th>
-
-<th style={{padding:"15px"}}>
-القاضي
-</th>
+<th>رقم القضية</th>
+<th>المدعي</th>
+<th>المدعى عليه</th>
+<th>الحالة</th>
 
 </tr>
 
@@ -319,33 +221,17 @@ color:"white"
 
 <tbody>
 
-
 <tr>
 
-<td style={{padding:"15px"}}>
-NC-2026-0001
-</td>
+<td>NC-2026-0001</td>
 
+<td>محمد</td>
 
-<td style={{padding:"15px"}}>
-محمد
-</td>
+<td>أحمد</td>
 
-
-<td style={{padding:"15px"}}>
-أحمد
-</td>
-
-
-<td style={{padding:"15px",color:"green"}}>
+<td>
 مكتملة
 </td>
-
-
-<td style={{padding:"15px"}}>
-خالد ايلفن
-</td>
-
 
 </tr>
 
@@ -353,12 +239,10 @@ NC-2026-0001
 </tbody>
 
 
-
 </table>
 
 
-
-</section>
+</div>
 
 
 
