@@ -1,24 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Sidebar from "../components/Sidebar"
 
 
 export default function Cases(){
 
+
 const [user,setUser] = useState<any>(null)
-
-const isAdmin =
-user?.role === "رئيس العدل"
-
-const isJudge =
-user?.role === "قاضي"
-
-const isLawyer =
-user?.role === "محامي"
-
-const isEmployee =
-user?.role === "ادارة العدل"
-
 
 const [cases,setCases] = useState<any[]>([])
 
@@ -36,7 +25,9 @@ const [type,setType] = useState("")
 
 useEffect(()=>{
 
+
 const savedUser = localStorage.getItem("user")
+
 
 if(savedUser){
 
@@ -48,19 +39,46 @@ window.location.href="/login"
 
 }
 
+
+
+const saved = localStorage.getItem("cases")
+
+
+if(saved){
+
+setCases(JSON.parse(saved))
+
+}
+
+
 },[])
+
+
+
+
+
+const isAdmin =
+user?.role === "وزير العدل"
+
 
 
 
 
 function addCase(){
 
+
 if(!plaintiff || !defendant || !type || !judge){
+
 alert("الرجاء تعبئة جميع البيانات")
+
 return
+
 }
 
-const newCase = {
+
+
+const newCase={
+
 
 id:`NC-2026-${String(cases.length+1).padStart(4,"0")}`,
 
@@ -76,7 +94,9 @@ status:"جديدة",
 
 createdAt:new Date().toLocaleDateString("ar-SA")
 
+
 }
+
 
 
 const updated=[...cases,newCase]
@@ -93,11 +113,10 @@ JSON.stringify(updated)
 
 setShowForm(false)
 
-
 setPlaintiff("")
 setDefendant("")
-setJudge("")
 setType("")
+setJudge("")
 
 
 }
@@ -106,7 +125,9 @@ setType("")
 
 
 
+
 function deleteCase(id:string){
+
 
 const updated =
 cases.filter((item)=>item.id !== id)
@@ -120,14 +141,36 @@ localStorage.setItem(
 JSON.stringify(updated)
 )
 
+
 }
+
+
 
 
 
 
 return(
 
-<main>
+<>
+
+
+<Sidebar />
+
+
+<main
+
+style={{
+
+marginRight:"280px",
+
+padding:"40px",
+
+direction:"rtl"
+
+}}
+
+>
+
 
 
 <h1>
@@ -136,16 +179,17 @@ return(
 
 
 
-{
-(isAdmin || isJudge || isEmployee) &&
 
-<button onClick={()=>setShowForm(!showForm)}>
+<button
+
+onClick={()=>setShowForm(!showForm)}
+
+>
 
 ➕ قضية جديدة
 
 </button>
 
-}
 
 
 
@@ -153,7 +197,7 @@ return(
 {
 showForm &&
 
-<div className="card">
+<div>
 
 
 <h2>
@@ -161,50 +205,90 @@ showForm &&
 </h2>
 
 
+
 <input
+
 placeholder="اسم المدعي"
+
 value={plaintiff}
+
 onChange={(e)=>setPlaintiff(e.target.value)}
-/>
+
+ />
+
+
+
+<br/><br/>
+
 
 
 <input
+
 placeholder="اسم المدعى عليه"
+
 value={defendant}
+
 onChange={(e)=>setDefendant(e.target.value)}
-/>
+
+ />
+
+
+
+<br/><br/>
 
 
 
 <input
+
 placeholder="نوع القضية"
+
 value={type}
+
 onChange={(e)=>setType(e.target.value)}
-/>
+
+ />
+
+
+
+<br/><br/>
 
 
 
 <input
+
 placeholder="القاضي المسؤول"
+
 value={judge}
+
 onChange={(e)=>setJudge(e.target.value)}
-/>
+
+ />
+
+
+
+<br/><br/>
 
 
 
 <button onClick={addCase}>
+
 حفظ القضية
+
 </button>
 
 
 </div>
+
 
 }
 
 
 
 
-<br/>
+
+<br/><br/>
+
+
 
 
 <input
@@ -221,7 +305,8 @@ onChange={(e)=>setSearch(e.target.value)}
 
 
 
-<table>
+<table border={1} width="100%">
+
 
 
 <thead>
@@ -240,11 +325,10 @@ onChange={(e)=>setSearch(e.target.value)}
 
 <th>إجراء</th>
 
-
 </tr>
 
-
 </thead>
+
 
 
 
@@ -254,9 +338,13 @@ onChange={(e)=>setSearch(e.target.value)}
 {
 
 cases
+
 .filter((item)=>
+
 item.id.includes(search)
+
 )
+
 .map((item)=>(
 
 
@@ -264,38 +352,69 @@ item.id.includes(search)
 
 
 <td>
-  <button
-    onClick={() => {
-      window.location.href = `/cases/${item.id}`
-    }}
-  >
-    {item.id}
-  </button>
+
+
+<button
+
+onClick={()=>{
+
+window.location.href=`/cases/${item.id}`
+
+}}
+
+>
+
+{item.id}
+
+</button>
+
+
 </td>
 
-<td>{item.plaintiff}</td>
 
-<td>{item.defendant}</td>
+<td>
+{item.plaintiff}
+</td>
 
-<td>{item.judge}</td>
 
-<td>{item.status}</td>
+<td>
+{item.defendant}
+</td>
+
+
+<td>
+{item.judge}
+</td>
+
+
+<td>
+{item.status}
+</td>
+
 
 
 <td>
 
+
 {
+
 isAdmin &&
 
+
 <button
+
 onClick={()=>deleteCase(item.id)}
+
 >
 
 🗑 حذف
 
 </button>
 
+
 }
+
+
 
 </td>
 
@@ -312,14 +431,18 @@ onClick={()=>deleteCase(item.id)}
 </tbody>
 
 
-
 </table>
+
 
 
 
 </main>
 
 
+</>
+
+
 )
+
 
 }
