@@ -8,6 +8,8 @@ export default function Sidebar(){
 
 const [user,setUser] = useState<any>(null)
 
+const [open,setOpen] = useState(false)
+
 
 
 useEffect(()=>{
@@ -38,11 +40,54 @@ window.location.href="/login"
 
 
 
+
+
 return(
+
+<>
+
+
+<button
+
+onClick={()=>setOpen(!open)}
+
+style={{
+
+position:"fixed",
+
+top:"20px",
+
+right:"20px",
+
+zIndex:2000,
+
+fontSize:"25px",
+
+padding:"10px",
+
+borderRadius:"10px"
+
+}}
+
+>
+
+☰
+
+</button>
+
+
+
+
 
 <aside
 
 style={{
+
+position:"fixed",
+
+top:0,
+
+right:open ? 0 : "-300px",
 
 width:"250px",
 
@@ -54,11 +99,9 @@ color:"white",
 
 padding:"20px",
 
-position:"fixed",
+transition:"0.3s",
 
-right:0,
-
-top:0,
+zIndex:1500,
 
 direction:"rtl"
 
@@ -75,7 +118,6 @@ direction:"rtl"
 <hr/>
 
 
-
 <p>
 👤 {user?.username}
 </p>
@@ -88,16 +130,16 @@ direction:"rtl"
 </p>
 
 
-
 <hr/>
+
 
 
 
 <button
 
-onClick={()=>window.location.href="/dashboard"}
-
 style={btn}
+
+onClick={()=>window.location.href="/dashboard"}
 
 >
 
@@ -107,11 +149,12 @@ style={btn}
 
 
 
+
 <button
 
-onClick={()=>window.location.href="/cases"}
-
 style={btn}
+
+onClick={()=>window.location.href="/cases"}
 
 >
 
@@ -121,11 +164,12 @@ style={btn}
 
 
 
+
 <button
 
-onClick={()=>window.location.href="/cases"}
-
 style={btn}
+
+onClick={()=>window.location.href="/cases"}
 
 >
 
@@ -135,11 +179,12 @@ style={btn}
 
 
 
+
 <button
 
-onClick={()=>window.location.href="/users"}
-
 style={btn}
+
+onClick={()=>window.location.href="/users"}
 
 >
 
@@ -149,11 +194,12 @@ style={btn}
 
 
 
+
 <button
 
-onClick={logout}
-
 style={btn}
+
+onClick={logout}
 
 >
 
@@ -163,11 +209,16 @@ style={btn}
 
 
 
+
 </aside>
+
+
+</>
 
 )
 
 }
+
 
 
 
