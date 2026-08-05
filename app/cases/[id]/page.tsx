@@ -90,6 +90,7 @@ new Date().toLocaleDateString("ar-SA")
 
 }
 
+
 }
 
 
@@ -134,10 +135,9 @@ alert("تم حفظ التعديلات")
 
 
 
-
 function printJudgment(){
 
-window.print()
+window.location.href = `/cases/${caseData.id}/print`
 
 }
 
@@ -147,9 +147,7 @@ window.print()
 
 if(!caseData){
 
-
 return <h1>جاري تحميل القضية...</h1>
-
 
 }
 
