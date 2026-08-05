@@ -14,6 +14,8 @@ const [count,setCount] = useState(0)
 
 
 
+
+
 useEffect(()=>{
 
 
@@ -32,7 +34,6 @@ setUser(JSON.parse(savedUser))
 
 const savedNotifications =
 localStorage.getItem("notifications")
-
 
 
 if(savedNotifications){
@@ -139,15 +140,20 @@ direction:"rtl"
 </p>
 
 
+
 <p>
 الصلاحية:
 <br/>
+
 {user?.role}
+
 </p>
 
 
 
+
 <hr/>
+
 
 
 
@@ -229,6 +235,7 @@ onClick={()=>window.location.href="/notifications"}
 
 
 
+
 <button style={btn}
 
 onClick={()=>window.location.href="/users"}
@@ -238,6 +245,23 @@ onClick={()=>window.location.href="/users"}
 👥 المستخدمين
 
 </button>
+
+
+
+
+
+
+
+<button style={btn}
+
+onClick={()=>window.location.href="/profile"}
+
+>
+
+👤 الملف الشخصي
+
+</button>
+
 
 
 
@@ -272,22 +296,32 @@ onClick={()=>window.location.href="/login"}
 
 
 
+
 const btn={
+
 
 width:"100%",
 
+
 padding:"12px",
+
 
 marginTop:"10px",
 
+
 background:"#1f2937",
+
 
 color:"white",
 
+
 border:"none",
+
 
 borderRadius:"8px",
 
+
 cursor:"pointer"
+
 
 }
