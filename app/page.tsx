@@ -9,12 +9,23 @@ export default function Home() {
   const [role, setRole] = useState("")
 
   useEffect(() => {
-    const user = localStorage.getItem("role")
-    if (user) {
-      setRole(user)
-    }
-  }, [])
 
+  const user = localStorage.getItem("role")
+
+  if (user) {
+    setRole(user)
+
+    const savedCases = JSON.parse(localStorage.getItem("cases") || "[]")
+    setCasesCount(savedCases.length)
+
+    const savedJudges = JSON.parse(localStorage.getItem("judges") || "[]")
+    setJudgesCount(savedJudges.length)
+
+    const savedUsers = JSON.parse(localStorage.getItem("users") || "[]")
+    setUsersCount(savedUsers.length)
+  }
+
+}, [])
   return (
     <main>
 
