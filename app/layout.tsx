@@ -28,26 +28,19 @@ fontFamily:"Arial, sans-serif"
 
 <header
 style={{
-height:"140px",
-background:
-"linear-gradient(135deg,#0B1F3A,#162B4D)",
+background:"linear-gradient(135deg,#0B1F3A,#162B4D)",
 color:"white",
-display:"flex",
-alignItems:"center",
-justifyContent:"space-between",
-padding:"0 50px",
-boxShadow:"0 8px 25px rgba(0,0,0,.25)"
+padding:"25px 15px",
+textAlign:"center",
+boxShadow:"0 5px 20px rgba(0,0,0,.25)"
 }}
 >
 
 
-<div>
-
 <h1
 style={{
 margin:0,
-fontSize:"34px",
-letterSpacing:"1px"
+fontSize:"24px"
 }}
 >
 ⚖️ Minister Of Justice
@@ -57,15 +50,11 @@ letterSpacing:"1px"
 <h2
 style={{
 margin:"8px 0",
-fontSize:"28px"
+fontSize:"22px"
 }}
 >
 وزارة العدل
 </h2>
-
-
-</div>
-
 
 
 
@@ -73,56 +62,35 @@ fontSize:"28px"
 
 style={{
 
+marginTop:"15px",
+
 background:"rgba(255,255,255,.1)",
 
-padding:"20px 35px",
+padding:"15px",
 
-borderRadius:"20px",
-
-border:"1px solid rgba(212,175,55,.5)",
-
-textAlign:"center"
+borderRadius:"15px"
 
 }}
 
 >
 
 
-<p
-
+<div
 style={{
-
-margin:0,
-
-color:"#D4AF37",
-
-fontSize:"16px"
-
+color:"#D4AF37"
 }}
-
 >
-
 وزير العدل
-
-</p>
-
+</div>
 
 
-<h2
-
+<strong
 style={{
-
-margin:"8px 0",
-
-fontSize:"24px"
-
+fontSize:"20px"
 }}
-
 >
-
 عقيد ( خالد ايلفن )
-
-</h2>
+</strong>
 
 
 </div>
