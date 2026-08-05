@@ -237,9 +237,13 @@ item.id.includes(search)
 
 
 <td>
-<a href={`/cases/${item.id}`}>
-{item.id}
-</a>
+  <button
+    onClick={() => {
+      window.location.href = `/cases/${item.id}`
+    }}
+  >
+    {item.id}
+  </button>
 </td>
 
 <td>{item.plaintiff}</td>
