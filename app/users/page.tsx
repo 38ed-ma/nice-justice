@@ -22,13 +22,13 @@ const [currentUser,setCurrentUser] = useState<any>(null)
 useEffect(()=>{
 
 
-const savedUser =
+const user =
 localStorage.getItem("user")
 
 
-if(savedUser){
+if(user){
 
-setCurrentUser(JSON.parse(savedUser))
+setCurrentUser(JSON.parse(user))
 
 }
 
@@ -56,7 +56,7 @@ function addUser(){
 
 if(!username || !password || !role){
 
-alert("اكمل جميع البيانات")
+alert("عبي جميع البيانات")
 
 return
 
@@ -64,7 +64,7 @@ return
 
 
 
-const newUser={
+const newUser = {
 
 id:Date.now(),
 
@@ -78,7 +78,10 @@ role
 
 
 
-const updated=[...users,newUser]
+const updated = [
+...users,
+newUser
+]
 
 
 setUsers(updated)
@@ -92,14 +95,19 @@ JSON.stringify(updated)
 
 
 setUsername("")
+
 setPassword("")
+
 setRole("")
+
 
 
 alert("تم إضافة المستخدم")
 
 
 }
+
+
 
 
 
@@ -129,11 +137,22 @@ JSON.stringify(updated)
 
 
 
+
+
 if(currentUser?.role !== "وزير العدل"){
 
-return <h1>ليس لديك صلاحية</h1>
+return(
+
+<h1>
+
+ليس لديك صلاحية
+
+</h1>
+
+)
 
 }
+
 
 
 
@@ -147,6 +166,7 @@ return(
 <Sidebar />
 
 
+
 <main
 
 style={{
@@ -155,17 +175,23 @@ marginRight:"280px",
 
 padding:"40px",
 
-direction:"rtl"
+direction:"rtl",
+
+textAlign:"center"
 
 }}
 
 >
 
 
+
 <h1>
 👥 إدارة المستخدمين
 </h1>
 
+
+
+<br/>
 
 
 
@@ -189,6 +215,8 @@ onChange={(e)=>setUsername(e.target.value)}
 <input
 
 placeholder="كلمة المرور"
+
+type="password"
 
 value={password}
 
@@ -219,24 +247,33 @@ onChange={(e)=>setRole(e.target.value)}
 </option>
 
 
-<option>
+<option value="وزير العدل">
+
 وزير العدل
+
 </option>
 
 
-<option>
+<option value="قاضي">
+
 قاضي
+
 </option>
 
 
-<option>
+<option value="محامي">
+
 محامي
+
 </option>
 
 
-<option>
+<option value="موظف">
+
 موظف
+
 </option>
+
 
 
 </select>
@@ -264,8 +301,9 @@ onChange={(e)=>setRole(e.target.value)}
 
 
 <h2>
-قائمة المستخدمين
+المستخدمين
 </h2>
+
 
 
 
@@ -278,17 +316,12 @@ users.map((item)=>(
 
 
 <p>
-👤 {item.username}
+👤 المستخدم: {item.username}
 </p>
 
 
 <p>
-🔐 {item.password}
-</p>
-
-
-<p>
-⚖️ {item.role}
+⚖️ الصلاحية: {item.role}
 </p>
 
 
@@ -302,6 +335,7 @@ onClick={()=>deleteUser(item.id)}
 🗑 حذف
 
 </button>
+
 
 
 <hr/>
