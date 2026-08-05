@@ -2,439 +2,145 @@
 
 import { useEffect, useState } from "react"
 
-
 export default function Sidebar(){
 
 const [user,setUser] = useState<any>(null)
 
-const [notifications,setNotifications] = useState(0)
-
-
-
 useEffect(()=>{
 
-const savedUser = localStorage.getItem("user")
+const saved = localStorage.getItem("user")
 
-if(savedUser){
-setUser(JSON.parse(savedUser))
+if(saved){
+setUser(JSON.parse(saved))
 }
-
-
-const savedNotifications = localStorage.getItem("notifications")
-
-if(savedNotifications){
-
-setNotifications(
-JSON.parse(savedNotifications).length
-)
-
-}
-
 
 },[])
 
 
-
-
-
 const menu=[
-
-{
-icon:"🏠",
-title:"الرئيسية",
-link:"/dashboard"
-},
-
-{
-icon:"⚖️",
-title:"القضايا",
-link:"/cases"
-},
-
-{
-icon:"📜",
-title:"الأحكام",
-link:"/archive"
-},
-
-{
-icon:"📅",
-title:"الجلسات",
-link:"/calendar"
-},
-
-{
-icon:"👥",
-title:"المستخدمون",
-link:"/users"
-},
-
-{
-icon:"🔔",
-title:`الإشعارات (${notifications})`,
-link:"/notifications"
-},
-
-{
-icon:"👤",
-title:"الملف الشخصي",
-link:"/profile"
-},
-
-{
-icon:"🔐",
-title:"تسجيل الدخول",
-link:"/login"
-}
-
+["🏠","الرئيسية","/dashboard"],
+["⚖️","القضايا","/cases"],
+["📜","الأحكام","/archive"],
+["📅","الجلسات","/calendar"],
+["👥","المستخدمون","/users"],
+["🔔","الإشعارات","/notifications"],
+["👤","الملف الشخصي","/profile"],
+["🔐","تسجيل الدخول","/login"]
 ]
-
-
-
 
 
 return(
 
 <aside
-
 style={{
-
 position:"fixed",
-
 right:0,
-
 top:0,
-
-width:"300px",
-
-minWidth:"300px",
-
+width:"260px",
 height:"100vh",
-
-background:
-"linear-gradient(180deg,#0B1F3A,#071426)",
-
+background:"#0B1F3A",
 color:"white",
-
-display:"flex",
-
-flexDirection:"column",
-
-boxShadow:"-10px 0 30px rgba(0,0,0,.35)",
-
-zIndex:999,
-
-overflow:"hidden"
-
+zIndex:9999,
+padding:"20px",
+boxShadow:"-10px 0 25px #0005"
 }}
-
 >
-
-
-
-
-
-<div
-
-style={{
-
-padding:"30px 20px",
-
-textAlign:"center",
-
-borderBottom:
-"1px solid rgba(255,255,255,.15)"
-
-}}
-
->
-
-
-<div
-
-style={{
-
-fontSize:"45px"
-
-}}
-
->
-⚖️
-</div>
-
 
 
 <h1
-
 style={{
-
-margin:"5px 0",
-
-fontSize:"26px",
-
+textAlign:"center",
 color:"#D4AF37"
-
 }}
-
 >
-
-وزارة العدل
-
+⚖️ وزارة العدل
 </h1>
 
 
 <p
-
 style={{
-
-margin:0,
-
+textAlign:"center",
 color:"#E8DCC0"
-
 }}
-
 >
-
 Minister Of Justice
-
 </p>
-
-
-
 
 
 <div
-
 style={{
-
-marginTop:"25px",
-
-background:"rgba(212,175,55,.12)",
-
+marginTop:"20px",
+padding:"15px",
 border:"1px solid #D4AF37",
-
 borderRadius:"15px",
-
-padding:"18px"
-
+textAlign:"center"
 }}
-
 >
 
+<p>وزير العدل</p>
 
-<p
-
-style={{
-
-margin:0,
-
-color:"#D4AF37"
-
-}}
-
->
-
-وزير العدل
-
-</p>
-
-
-
-<h3
-
-style={{
-
-margin:"10px 0 0"
-
-}}
-
->
-
+<h3>
 عقيد ( خالد ايلفن )
-
 </h3>
-
-
 
 </div>
 
 
 
-
-
-<div
-
-style={{
-
-marginTop:"15px",
-
-background:"rgba(255,255,255,.08)",
-
-padding:"12px",
-
-borderRadius:"12px"
-
-}}
-
->
+<div style={{marginTop:"20px"}}>
 
 👤 {user?.username || "زائر"}
 
 <br/>
 
-<small>
-
 {user?.role || "بدون صلاحية"}
 
-</small>
-
-
 </div>
 
 
 
-</div>
-
-
-
-
-
-
-<div
-
-style={{
-
-padding:"20px",
-
-flex:1,
-
-overflowY:"auto"
-
-}}
-
->
-
+<div style={{marginTop:"25px"}}>
 
 {
-
-menu.map((item)=>(
-
+menu.map((item:any)=>(
 
 <button
 
-key={item.link}
+key={item[2]}
 
-onClick={()=>window.location.href=item.link}
-
+onClick={()=>window.location.href=item[2]}
 
 style={{
 
 width:"100%",
-
-padding:"16px",
-
-marginBottom:"12px",
-
-borderRadius:"14px",
-
+padding:"15px",
+marginBottom:"10px",
 border:"none",
-
+borderRadius:"12px",
 background:"#132B4F",
-
 color:"white",
-
-fontSize:"16px",
-
 cursor:"pointer",
-
 textAlign:"right",
-
-transition:"0.3s"
-
-}}
-
-
-
-onMouseEnter={(e)=>{
-
-e.currentTarget.style.background="#D4AF37"
-
-e.currentTarget.style.color="#111"
+fontSize:"16px"
 
 }}
-
-
-
-onMouseLeave={(e)=>{
-
-e.currentTarget.style.background="#132B4F"
-
-e.currentTarget.style.color="white"
-
-}}
-
 
 >
 
-
-<span>
-
-{item.icon}
-
-</span>
-
-
-&nbsp;&nbsp;
-
-{item.title}
-
+{item[0]} {item[1]}
 
 </button>
 
-
 ))
-
 
 }
 
-
 </div>
-
-
-
-
-
-
-<footer
-
-style={{
-
-padding:"18px",
-
-textAlign:"center",
-
-fontSize:"13px",
-
-color:"#E8DCC0",
-
-borderTop:
-"1px solid rgba(255,255,255,.15)"
-
-}}
-
->
-
-Ministry Of Justice © 2026
-
-</footer>
-
 
 
 
 </aside>
 
-
 )
-
 
 }
