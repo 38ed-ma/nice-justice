@@ -1,62 +1,89 @@
 "use client"
 
-export default function Home() {
-
-  return (
-
-    <main>
-
-      <h1>
-        لوحة التحكم
-      </h1>
+import { useEffect, useState } from "react"
 
 
-      <div className="dashboard">
+export default function Home(){
+
+const [role,setRole] = useState("")
 
 
-        <div className="card">
+useEffect(()=>{
 
-          <h2>📁</h2>
-          <h3>القضايا</h3>
-          <p>0</p>
+const user = localStorage.getItem("role")
 
-        </div>
+if(user){
+setRole(user)
+}
+
+},[])
 
 
 
-        <div className="card">
+return(
 
-          <h2>🆕</h2>
-          <h3>القضايا الجديدة</h3>
-          <p>0</p>
+<main>
 
-        </div>
+<h1>
+لوحة التحكم
+</h1>
 
 
-
-        <div className="card">
-
-          <h2>👨‍⚖️</h2>
-          <h3>القضاة</h3>
-          <p>0</p>
-
-        </div>
+<h2>
+مرحباً بك 👋 {role}
+</h2>
 
 
 
-        <div className="card">
-
-          <h2>📜</h2>
-          <h3>الأحكام</h3>
-          <p>0</p>
-
-        </div>
+<div className="dashboard">
 
 
-      </div>
+<div className="card">
+
+<h2>📁</h2>
+<h3>القضايا</h3>
+<p>0</p>
+
+</div>
 
 
-    </main>
 
-  )
+<div className="card">
+
+<h2>⚖️</h2>
+<h3>الجلسات</h3>
+<p>
+{
+role === "قاضي" ? "متاحة" : "مغلقة"
+}
+</p>
+
+</div>
+
+
+
+{
+role === "مسؤول" &&
+
+<div className="card">
+
+<h2>👥</h2>
+<h3>إدارة المستخدمين</h3>
+<p>
+متاحة
+</p>
+
+</div>
+
+}
+
+
+
+</div>
+
+
+</main>
+
+)
+
 }
