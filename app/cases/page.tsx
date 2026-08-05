@@ -42,7 +42,6 @@ useEffect(() => {
   setType("")
   setJudge("")
 }
-    }
 
 
     setCases([...cases, newCase])
