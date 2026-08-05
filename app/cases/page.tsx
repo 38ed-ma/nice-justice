@@ -107,7 +107,13 @@ JSON.stringify(updated)
 }
 
 
+if(!user){
 
+window.location.href="/login"
+
+return null
+
+}
 
 
 return(
