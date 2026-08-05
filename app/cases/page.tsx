@@ -1,7 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { getData, saveData } from "../../lib/storage"
+import { useState } from "react"
 
 export default function Cases() {
 
@@ -11,24 +10,10 @@ export default function Cases() {
   const [defendant, setDefendant] = useState("")
   const [type, setType] = useState("")
   const [judge, setJudge] = useState("")
-useEffect(() => {
-  setCases(getData("cases"))
-}, [])
 
-useEffect(() => {
-  saveData("cases", cases)
-}, [cases])
+
   function addCase() {
 
-  ...
-
-}
-
-function deleteCase(id: string) {
-  setCases(cases.filter((item) => item.id !== id))
-}
-
-return (
     const newCase = {
       id: `NC-2026-${String(cases.length + 1).padStart(4, "0")}`,
       plaintiff,
@@ -37,6 +22,7 @@ return (
       judge,
       status: "جديدة"
     }
+
 
     setCases([...cases, newCase])
 
