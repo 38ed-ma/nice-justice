@@ -2,7 +2,7 @@ import "./globals.css"
 
 export const metadata = {
   title: "وزارة العدل",
-  description: "Minister Of Justice"
+  description: "Minister Of Justice",
 }
 
 export default function RootLayout({
@@ -12,11 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl">
-      <body>
-
-        {children}
-
-      </body>
+      <body>{children}</body>
     </html>
   )
 }
