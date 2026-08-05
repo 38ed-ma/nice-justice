@@ -2,10 +2,7 @@
 import "./globals.css"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-export const metadata = {
-  title: "وزارة العدل - النظام الإلكتروني",
-  description: "نظام إدارة القضايا",
-}
+
 
 export default function RootLayout({
   children,
