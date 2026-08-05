@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 
 export default function Cases(){
 
+const user = JSON.parse(localStorage.getItem("user") || "null")
+
 
 const [cases,setCases] = useState<any[]>([])
 
