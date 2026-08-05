@@ -2,223 +2,100 @@
 
 import { useEffect, useState } from "react"
 
+export default function Judges() {
+  const [judges, setJudges] = useState<any[]>([])
+  const [name, setName] = useState("")
+  const [court, setCourt] = useState("")
 
-export default function Judges(){
+  useEffect(() => {
+    const saved = localStorage.getItem("judges")
 
+    if (saved) {
+      setJudges(JSON.parse(saved))
+    }
+  }, [])
 
-const [judges,setJudges] = useState<any[]>([])
+  function addJudge() {
+    if (!name || !court) {
+      alert("الرجاء تعبئة جميع الحقول")
+      return
+    }
 
-const [name,setName] = useState("")
-const [court,setCourt] = useState("")
+    const newJudge = {
+      id: `J-${String(judges.length + 1).padStart(3, "0")}`,
+      name,
+      court,
+    }
 
+    const updated = [...judges, newJudge]
 
-useEffect(()=>{
+    setJudges(updated)
+    localStorage.setItem("judges", JSON.stringify(updated))
 
-const saved = localStorage.getItem("judges")
-
-if(saved){
-
-setJudges(JSON.parse(saved))
-
-}
-
-},[])
-
-
-
-function addJudge() {
-
-  if (!name || !court) {
-    alert("الرجاء تعبئة جميع الحقول")
-    return
+    setName("")
+    setCourt("")
   }
 
-  const newJudge = {
-    id: `J-${String(judges.length + 1).padStart(3, "0")}`,
-    name,
-    court
+  function deleteJudge(id: string) {
+    const updated = judges.filter((judge) => judge.id !== id)
+
+    setJudges(updated)
+    localStorage.setItem("judges", JSON.stringify(updated))
   }
 
   return (
-
-const updated=[...judges,newJudge]
-
-setJudges(updated)
-
-localStorage.setItem(
-"judges",
-JSON.stringify(updated)
-)
-
-setName("")
-setCourt("")
-
-}
-
-return (
-
-
-const updated=[...judges,newJudge]
-
-
-setJudges(updated)
-
-
-localStorage.setItem(
-"judges",
-JSON.stringify(updated)
-)
-
-
-setName("")
-setCourt("")
-
-}
-
-
-
-return(
-
-<main>
-
-
-<h1>
-👨‍⚖️ إدارة القضاة
-</h1>
-
-
-<div className="card">
-
-
-<input
-
-placeholder="اسم القاضي"
-
-value={name}
-
-onChange={(e)=>setName(e.target.value)}
-
- />
-
-
-<input
-
-placeholder="المحكمة"
-
-value={court}
-
-onChange={(e)=>setCourt(e.target.value)}
-
- />
-
-
-<button onClick={addJudge}>
-
-➕ إضافة قاضي
-
-</button>
-
-
-</div>
-
-
-
-<br/>
-
-
-<table>
-
-
-<thead>
-
-<tr>
-
-<th>
-رقم القاضي
-</th>
-
-<th>
-الاسم
-</th>
-
-<th>
-المحكمة
-</th>
-<th>
-إجراء
-</th>
-</tr>
-
-</thead>
-
-
-
-<tbody>
-
-
-{
-
-judges.map((judge)=>(
-
-
-<tr key={judge.id}>
-
-
-<td>
-{judge.id}
-</td>
-
-
-<td>
-{judge.name}
-</td>
-
-
-<td>
-{judge.court}
-</td>
-<td>
-
-<button
-onClick={()=>{
-
-const updated = judges.filter(
-(item)=>item.id !== judge.id
-)
-
-setJudges(updated)
-
-localStorage.setItem(
-"judges",
-JSON.stringify(updated)
-)
-
-}}
->
-
-🗑 حذف
-
-</button>
-
-</td>
-
-</tr>
-
-
-))
-
-
-}
-
-
-</tbody>
-
-
-</table>
-
-
-</main>
-
-)
-
+    <main>
+      <h1>👨‍⚖️ إدارة القضاة</h1>
+
+      <div className="card">
+        <input
+          placeholder="اسم القاضي"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <br />
+        <br />
+
+        <input
+          placeholder="المحكمة"
+          value={court}
+          onChange={(e) => setCourt(e.target.value)}
+        />
+
+        <br />
+        <br />
+
+        <button onClick={addJudge}>➕ إضافة قاضي</button>
+      </div>
+
+      <br />
+
+      <table>
+        <thead>
+          <tr>
+            <th>رقم القاضي</th>
+            <th>الاسم</th>
+            <th>المحكمة</th>
+            <th>إجراء</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {judges.map((judge) => (
+            <tr key={judge.id}>
+              <td>{judge.id}</td>
+              <td>{judge.name}</td>
+              <td>{judge.court}</td>
+              <td>
+                <button onClick={() => deleteJudge(judge.id)}>
+                  🗑 حذف
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </main>
+  )
 }
