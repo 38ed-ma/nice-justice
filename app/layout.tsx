@@ -34,7 +34,9 @@ export default function RootLayout({
   <Link href="/verdicts">
   <p>📜 الأحكام</p>
 </Link>
+  <Link href="/settings">
   <p>⚙️ الإعدادات</p>
+</Link>
 
   <Link href="/login">
   <p>🔐 تسجيل دخول للعدل</p>
