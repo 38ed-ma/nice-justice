@@ -22,13 +22,26 @@ useEffect(() => {
 
   function addCase() {
 
-    const newCase = {
-      id: `NC-2026-${String(cases.length + 1).padStart(4, "0")}`,
-      plaintiff,
-      defendant,
-      type,
-      judge,
-      status: "جديدة"
+  const newCase = {
+    id: `NC-2026-${String(cases.length + 1).padStart(4, "0")}`,
+    plaintiff,
+    defendant,
+    type,
+    judge,
+    status: "جديدة"
+  }
+
+  const updatedCases = [...cases, newCase]
+
+  setCases(updatedCases)
+
+  localStorage.setItem("cases", JSON.stringify(updatedCases))
+
+  setPlaintiff("")
+  setDefendant("")
+  setType("")
+  setJudge("")
+}
     }
 
 
