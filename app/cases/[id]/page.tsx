@@ -8,6 +8,8 @@ export default function CaseDetails(){
 
 const [caseData,setCaseData] = useState<any>(null)
 
+const [user,setUser] = useState<any>(null)
+
 const [status,setStatus] = useState("")
 const [notes,setNotes] = useState("")
 
@@ -15,8 +17,24 @@ const [judgment,setJudgment] = useState("")
 const [judgeName,setJudgeName] = useState("")
 
 
+const canEdit =
+user?.role === "وزير العدل" ||
+user?.role === "قاضي"
+
+
 
 useEffect(()=>{
+
+
+const savedUser = localStorage.getItem("user")
+
+
+if(savedUser){
+
+setUser(JSON.parse(savedUser))
+
+}
+
 
 
 const id = window.location.pathname.split("/").pop()
@@ -100,12 +118,10 @@ return item
 })
 
 
-
 localStorage.setItem(
 "cases",
 JSON.stringify(updated)
 )
-
 
 
 setCaseData({
@@ -123,7 +139,6 @@ judgeName
 })
 
 
-
 alert("تم حفظ التعديلات")
 
 
@@ -137,10 +152,10 @@ alert("تم حفظ التعديلات")
 
 function printJudgment(){
 
-window.location.href = `/cases/${caseData.id}/print`
+window.location.href =
+`/cases/${caseData.id}/print`
 
 }
-
 
 
 
@@ -202,7 +217,6 @@ return(
 <hr/>
 
 
-
 <h3>
 حالة القضية
 </h3>
@@ -210,12 +224,13 @@ return(
 
 <select
 
+disabled={!canEdit}
+
 value={status}
 
 onChange={(e)=>setStatus(e.target.value)}
 
 >
-
 
 <option>جديدة</option>
 
@@ -242,13 +257,15 @@ onChange={(e)=>setStatus(e.target.value)}
 
 <textarea
 
+disabled={!canEdit}
+
 rows={5}
 
 value={notes}
 
 onChange={(e)=>setNotes(e.target.value)}
 
-placeholder="اكتب ملاحظات القاضي"
+placeholder="ملاحظات القاضي"
 
 />
 
@@ -262,8 +279,9 @@ placeholder="اكتب ملاحظات القاضي"
 </h3>
 
 
-
 <input
+
+disabled={!canEdit}
 
 placeholder="اسم القاضي المصدر للحكم"
 
@@ -274,12 +292,13 @@ onChange={(e)=>setJudgeName(e.target.value)}
 />
 
 
-
 <br/><br/>
 
 
 
 <textarea
+
+disabled={!canEdit}
 
 rows={8}
 
@@ -297,11 +316,17 @@ onChange={(e)=>setJudgment(e.target.value)}
 
 
 
+{
+
+canEdit &&
+
 <button onClick={saveChanges}>
 
 💾 حفظ الحكم والتعديلات
 
 </button>
+
+}
 
 
 
