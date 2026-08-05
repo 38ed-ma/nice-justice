@@ -6,36 +6,43 @@ import { useState } from "react"
 export default function Login(){
 
 
-const [username,setUsername] = useState("38ed")
+const [username,setUsername] = useState("")
 
-const [role,setRole] = useState("")
+const [password,setPassword] = useState("")
 
 
 
 function login(){
 
 
-if(!username || !role){
+const savedUsers =
+localStorage.getItem("users")
 
-alert("عبي جميع البيانات")
 
-return
 
-}
+if(savedUsers){
 
+
+const users = JSON.parse(savedUsers)
+
+
+
+const found = users.find(
+(item:any)=>
+item.username === username &&
+item.password === password
+)
+
+
+
+if(found){
 
 
 localStorage.setItem(
 
 "user",
 
-JSON.stringify({
-
-username,
-
-role
-
-})
+JSON.stringify(found)
 
 )
 
@@ -44,15 +51,32 @@ role
 window.location.href="/dashboard"
 
 
+}else{
+
+
+alert("بيانات الدخول غير صحيحة")
+
+
+}
+
+
+
+}else{
+
+
+alert("لا يوجد مستخدمين")
+
+
+}
+
+
 
 }
 
 
 
 
-
 return(
-
 
 <main
 
@@ -88,7 +112,7 @@ value={username}
 
 onChange={(e)=>setUsername(e.target.value)}
 
-/>
+ />
 
 
 
@@ -96,46 +120,23 @@ onChange={(e)=>setUsername(e.target.value)}
 
 
 
-<select
 
-value={role}
+<input
 
-onChange={(e)=>setRole(e.target.value)}
+placeholder="كلمة المرور"
 
->
+type="password"
 
+value={password}
 
-<option value="">
-اختر الصلاحية
-</option>
+onChange={(e)=>setPassword(e.target.value)}
 
-
-<option>
-وزير العدل
-</option>
-
-
-<option>
-قاضي
-</option>
-
-
-<option>
-محامي
-</option>
-
-
-<option>
-موظف
-</option>
-
-
-
-</select>
+ />
 
 
 
 <br/><br/>
+
 
 
 
@@ -149,8 +150,6 @@ onChange={(e)=>setRole(e.target.value)}
 
 </main>
 
-
 )
-
 
 }
