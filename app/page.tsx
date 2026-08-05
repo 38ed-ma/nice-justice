@@ -1,7 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-
+const [casesCount, setCasesCount] = useState(0)
+const [judgesCount, setJudgesCount] = useState(0)
+const [usersCount, setUsersCount] = useState(0)
 export default function Home() {
 
   const [role, setRole] = useState("")
