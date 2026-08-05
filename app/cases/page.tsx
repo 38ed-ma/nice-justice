@@ -60,23 +60,6 @@ createdAt:new Date().toLocaleDateString("ar-SA")
 
 }
 
-const updated=[...cases,newCase]
-
-setCases(updated)
-
-localStorage.setItem(
-"cases",
-JSON.stringify(updated)
-)
-
-setShowForm(false)
-
-setPlaintiff("")
-setDefendant("")
-setJudge("")
-setType("")
-
-}
 
 const updated=[...cases,newCase]
 
