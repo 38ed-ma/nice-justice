@@ -97,3 +97,37 @@ header {
   box-shadow: 0 5px 15px #0002;
 
 }
+.dashboard {
+
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+
+}
+
+
+.dashboard .card {
+
+  text-align:center;
+  background:white;
+  border-top:5px solid #d4af37;
+  padding:30px;
+  border-radius:20px;
+
+}
+
+
+.dashboard h2 {
+
+  font-size:40px;
+
+}
+
+
+.dashboard p {
+
+  font-size:35px;
+  color:#b8860b;
+  font-weight:bold;
+
+}
