@@ -15,6 +15,7 @@ const [showForm,setShowForm] = useState(false)
 const [search,setSearch] = useState("")
 
 
+
 const [plaintiff,setPlaintiff] = useState("")
 
 const [defendant,setDefendant] = useState("")
@@ -25,20 +26,104 @@ const [type,setType] = useState("")
 
 
 
+const [user,setUser] = useState<any>(null)
+
+
+
+
 
 
 useEffect(()=>{
 
 
-const saved =
+
+const savedUser =
+localStorage.getItem("user")
+
+
+
+if(savedUser){
+
+setUser(JSON.parse(savedUser))
+
+}
+
+
+
+
+const savedCases =
 localStorage.getItem("cases")
 
 
-if(saved){
 
-setCases(JSON.parse(saved))
+if(savedCases){
+
+
+
+const allCases =
+JSON.parse(savedCases)
+
+
+
+
+
+if(
+JSON.parse(savedUser || "{}").role
+===
+"قاضي"
+){
+
+
+setCases(
+
+allCases.filter(
+(item:any)=>
+item.judge === JSON.parse(savedUser || "{}").username
+)
+
+)
+
 
 }
+
+else if(
+
+JSON.parse(savedUser || "{}").role
+===
+"محامي"
+
+){
+
+
+
+setCases(
+
+allCases.filter(
+(item:any)=>
+item.lawyer === JSON.parse(savedUser || "{}").username
+)
+
+)
+
+
+}
+
+
+
+else{
+
+
+setCases(allCases)
+
+
+}
+
+
+
+
+
+}
+
 
 
 },[])
@@ -49,10 +134,19 @@ setCases(JSON.parse(saved))
 
 
 
+
+
 function addCase(){
 
 
-if(!plaintiff || !defendant || !type || !judge){
+
+if(
+!plaintiff ||
+!defendant ||
+!type ||
+!judge
+){
+
 
 alert("الرجاء تعبئة جميع البيانات")
 
@@ -63,23 +157,36 @@ return
 
 
 
+const newCase={
 
-const newCase = {
 
 
-id:`NC-2026-${String(cases.length+1).padStart(4,"0")}`,
+id:
+
+`NC-2026-${String(cases.length+1).padStart(4,"0")}`,
+
+
 
 plaintiff,
 
+
 defendant,
+
 
 type,
 
+
 judge,
+
+
 
 status:"جديدة",
 
-createdAt:new Date().toLocaleDateString("ar-SA")
+
+createdAt:
+
+new Date().toLocaleDateString("ar-SA")
+
 
 
 }
@@ -88,18 +195,30 @@ createdAt:new Date().toLocaleDateString("ar-SA")
 
 
 
+const saved =
+localStorage.getItem("cases")
+
+
+
+const all =
+saved
+?
+JSON.parse(saved)
+:
+[]
+
+
+
 
 const updated=[
 
-...cases,
+...all,
 
 newCase
 
 ]
 
 
-
-setCases(updated)
 
 
 
@@ -115,52 +234,13 @@ JSON.stringify(updated)
 
 
 
-// 🔔 إنشاء إشعار
-
-const oldNotifications =
-localStorage.getItem("notifications")
-
-
-
-const notifications =
-oldNotifications
-?
-JSON.parse(oldNotifications)
-:
-[]
-
-
-
-
-notifications.push({
-
-id:Date.now(),
-
-title:"📁 قضية جديدة",
-
-message:`تم إنشاء القضية رقم ${newCase.id}`,
-
-date:new Date().toLocaleDateString("ar-SA")
-
-})
-
-
-
-
-localStorage.setItem(
-
-"notifications",
-
-JSON.stringify(notifications)
-
-)
-
-
+setCases(updated)
 
 
 
 
 setShowForm(false)
+
 
 setPlaintiff("")
 
@@ -172,7 +252,10 @@ setType("")
 
 
 
+
+
 }
+
 
 
 
@@ -186,15 +269,25 @@ function deleteCase(id:string){
 
 
 
+const saved =
+localStorage.getItem("cases")
+
+
+
+if(saved){
+
+
+
+const all =
+JSON.parse(saved)
+
+
+
 const updated =
-cases.filter(
-(item)=>item.id !== id
+
+all.filter(
+(item:any)=>item.id !== id
 )
-
-
-
-
-setCases(updated)
 
 
 
@@ -208,7 +301,22 @@ JSON.stringify(updated)
 
 
 
+setCases(
+
+updated
+
+)
+
+
+
 }
+
+
+
+
+}
+
+
 
 
 
@@ -245,11 +353,20 @@ textAlign:"center"
 
 
 
+
 <h1>
 📁 نظام القضايا
 </h1>
 
 
+
+
+{
+
+(user?.role === "وزير العدل" ||
+user?.role === "موظف")
+
+&&
 
 
 
@@ -264,6 +381,9 @@ onClick={()=>setShowForm(!showForm)}
 </button>
 
 
+}
+
+
 
 
 
@@ -274,6 +394,7 @@ showForm &&
 
 
 <div>
+
 
 
 <h2>
@@ -293,6 +414,7 @@ onChange={(e)=>setPlaintiff(e.target.value)}
  />
 
 <br/><br/>
+
 
 
 
@@ -344,17 +466,18 @@ onChange={(e)=>setJudge(e.target.value)}
 
 <button onClick={addCase}>
 
-💾 حفظ القضية
+💾 حفظ
 
 </button>
-
 
 
 
 </div>
 
 
+
 }
+
 
 
 
@@ -369,13 +492,14 @@ onChange={(e)=>setJudge(e.target.value)}
 
 <input
 
-placeholder="🔍 بحث برقم القضية"
+placeholder="🔍 بحث"
 
 value={search}
 
 onChange={(e)=>setSearch(e.target.value)}
 
  />
+
 
 
 
@@ -396,7 +520,7 @@ width="100%"
 
 <tr>
 
-<th>رقم القضية</th>
+<th>القضية</th>
 
 <th>المدعي</th>
 
@@ -409,6 +533,7 @@ width="100%"
 <th>إجراء</th>
 
 </tr>
+
 
 </thead>
 
@@ -424,7 +549,9 @@ width="100%"
 
 cases
 
-.filter((item)=>
+.filter(
+
+(item)=>
 
 item.id.includes(search)
 
@@ -473,7 +600,15 @@ window.location.href=
 
 
 
+
 <td>
+
+
+{
+
+user?.role === "وزير العدل"
+
+&&
 
 
 <button
@@ -487,7 +622,12 @@ onClick={()=>deleteCase(item.id)}
 </button>
 
 
+}
+
+
+
 </td>
+
 
 
 
@@ -505,9 +645,8 @@ onClick={()=>deleteCase(item.id)}
 </tbody>
 
 
+
 </table>
-
-
 
 
 
