@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Sidebar from "../components/Sidebar"
+import Auth from "../components/Auth"
 
 
 export default function Users(){
@@ -70,6 +71,7 @@ newUser
 ]
 
 
+
 setUsers(updated)
 
 
@@ -91,12 +93,10 @@ setPassword("")
 setRole("")
 
 
-
 alert("تم إضافة المستخدم")
 
 
 }
-
 
 
 
@@ -136,6 +136,9 @@ JSON.stringify(updated)
 
 return(
 
+<Auth roles={["وزير العدل"]}>
+
+
 <>
 
 
@@ -162,6 +165,7 @@ textAlign:"center"
 <h1>
 👥 إدارة المستخدمين
 </h1>
+
 
 
 
@@ -289,11 +293,6 @@ users.map((item)=>(
 
 
 <p>
-🔐 كلمة المرور: {item.password}
-</p>
-
-
-<p>
 ⚖️ الصلاحية: {item.role}
 </p>
 
@@ -308,6 +307,7 @@ onClick={()=>deleteUser(item.id)}
 🗑 حذف
 
 </button>
+
 
 
 <hr/>
@@ -327,6 +327,10 @@ onClick={()=>deleteUser(item.id)}
 
 
 </>
+
+
+</Auth>
+
 
 )
 
