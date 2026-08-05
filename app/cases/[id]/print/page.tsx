@@ -9,24 +9,33 @@ export default function PrintJudgment(){
 const [caseData,setCaseData] = useState<any>(null)
 
 
+
 useEffect(()=>{
 
 
-const id = window.location.pathname.split("/")[2]
+const id =
+window.location.pathname.split("/")[2]
 
 
-const saved = localStorage.getItem("cases")
+
+const saved =
+localStorage.getItem("cases")
+
 
 
 if(saved){
 
 
-const allCases = JSON.parse(saved)
+const cases =
+JSON.parse(saved)
 
 
-const found = allCases.find(
+
+const found =
+cases.find(
 (item:any)=>item.id === id
 )
+
 
 
 setCaseData(found)
@@ -35,7 +44,24 @@ setCaseData(found)
 }
 
 
+
 },[])
+
+
+
+
+
+
+
+function printPage(){
+
+window.print()
+
+}
+
+
+
+
 
 
 
@@ -47,38 +73,60 @@ return <h1>جاري تجهيز الصك...</h1>
 
 
 
+
+
 return(
 
 <main
+
 style={{
+
 padding:"50px",
+
+direction:"rtl",
+
 textAlign:"center",
-direction:"rtl"
+
+fontFamily:"Arial"
+
 }}
+
 >
 
 
+
 <h1>
-⚖️ صك حكم
+⚖️ وزارة العدل
 </h1>
 
 
+
 <h2>
-وزارة العدل
+صك حكم قضائي
 </h2>
+
 
 
 <hr/>
 
 
+
+
 <h3>
-بيانات القضية
+رقم القضية:
 </h3>
 
-
 <p>
-رقم القضية: {caseData.id}
+{caseData.id}
 </p>
+
+
+
+
+<h3>
+أطراف القضية
+</h3>
+
 
 
 <p>
@@ -86,17 +134,30 @@ direction:"rtl"
 </p>
 
 
+
 <p>
 المدعى عليه: {caseData.defendant}
 </p>
 
 
+
+
+<h3>
+نوع القضية
+</h3>
+
+
 <p>
-نوع القضية: {caseData.type}
+{caseData.type}
 </p>
 
 
+
+
 <hr/>
+
+
+
 
 
 <h3>
@@ -104,54 +165,79 @@ direction:"rtl"
 </h3>
 
 
+
 <p
+
 style={{
-fontSize:"18px",
-lineHeight:"2"
+
+minHeight:"150px",
+
+fontSize:"18px"
+
 }}
+
 >
 
-{caseData.judgment}
+{caseData.judgment || "لم يتم إصدار حكم"}
 
 </p>
+
+
+
 
 
 <hr/>
 
 
-<p>
-القاضي المصدر: {caseData.judgeName}
-</p>
 
 
 <p>
-تاريخ الحكم: {caseData.judgmentDate}
+القاضي المصدر للحكم:
+<br/>
+
+{caseData.judgeName || caseData.judge}
+
 </p>
+
+
+
+
+<p>
+
+تاريخ الإصدار:
+
+<br/>
+
+{caseData.judgmentDate || 
+new Date().toLocaleDateString("ar-SA")}
+
+</p>
+
+
+
 
 
 <br/><br/>
 
 
-<p>
-توقيع القاضي:
-______________
-</p>
-
-
-<br/><br/>
 
 
 <button
-onClick={()=>window.print()}
+
+onClick={printPage}
+
 >
 
-🖨️ طباعة
+🖨️ طباعة الصك
 
 </button>
+
+
 
 
 </main>
 
 )
+
 
 }
