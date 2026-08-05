@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Sidebar from "../../components/Sidebar"
 
 
 export default function CaseDetails(){
@@ -20,6 +21,7 @@ const [judgeName,setJudgeName] = useState("")
 const canEdit =
 user?.role === "وزير العدل" ||
 user?.role === "قاضي"
+
 
 
 
@@ -73,6 +75,7 @@ setJudgeName(found?.judgeName || "")
 
 
 
+
 function saveChanges(){
 
 
@@ -118,25 +121,12 @@ return item
 })
 
 
+
 localStorage.setItem(
 "cases",
 JSON.stringify(updated)
 )
 
-
-setCaseData({
-
-...caseData,
-
-status,
-
-notes,
-
-judgment,
-
-judgeName
-
-})
 
 
 alert("تم حفظ التعديلات")
@@ -150,12 +140,14 @@ alert("تم حفظ التعديلات")
 
 
 
+
 function printJudgment(){
 
 window.location.href =
 `/cases/${caseData.id}/print`
 
 }
+
 
 
 
@@ -171,13 +163,32 @@ return <h1>جاري تحميل القضية...</h1>
 
 return(
 
+<>
 
-<main>
+
+<Sidebar />
+
+
+<main
+
+style={{
+
+marginRight:"280px",
+
+padding:"40px",
+
+direction:"rtl"
+
+}}
+
+>
+
 
 
 <h1>
 ⚖️ إدارة القضية
 </h1>
+
 
 
 <h2>
@@ -186,6 +197,7 @@ return(
 
 
 <hr/>
+
 
 
 <h3>
@@ -214,7 +226,10 @@ return(
 
 
 
+
 <hr/>
+
+
 
 
 <h3>
@@ -247,7 +262,10 @@ onChange={(e)=>setStatus(e.target.value)}
 
 
 
+
 <hr/>
+
+
 
 
 <h3>
@@ -271,12 +289,17 @@ placeholder="ملاحظات القاضي"
 
 
 
+
+
 <hr/>
+
+
 
 
 <h3>
 ⚖️ إصدار حكم رسمي
 </h3>
+
 
 
 <input
@@ -289,10 +312,12 @@ value={judgeName}
 
 onChange={(e)=>setJudgeName(e.target.value)}
 
-/>
+ />
+
 
 
 <br/><br/>
+
 
 
 
@@ -316,6 +341,8 @@ onChange={(e)=>setJudgment(e.target.value)}
 
 
 
+
+
 {
 
 canEdit &&
@@ -334,6 +361,7 @@ canEdit &&
 
 
 
+
 <button onClick={printJudgment}>
 
 🖨️ طباعة صك الحكم
@@ -343,6 +371,9 @@ canEdit &&
 
 
 </main>
+
+
+</>
 
 
 )
