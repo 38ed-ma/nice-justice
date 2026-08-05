@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 
-
 export default function CaseDetails(){
 
 const [caseData,setCaseData] = useState<any>(null)
@@ -13,7 +12,6 @@ useEffect(()=>{
 const id = window.location.pathname.split("/").pop()
 
 const saved = localStorage.getItem("cases")
-
 
 if(saved){
 
@@ -33,7 +31,7 @@ setCaseData(found)
 
 if(!caseData){
 
-return <h2>جاري تحميل القضية...</h2>
+return <h1>جاري تحميل القضية...</h1>
 
 }
 
@@ -44,11 +42,9 @@ return(
 <main>
 
 <h1>
-📁 ملف القضية
+📁 تفاصيل القضية
 </h1>
 
-
-<div className="card">
 
 <h2>
 {caseData.id}
@@ -80,7 +76,9 @@ return(
 </p>
 
 
-</div>
+<p>
+تاريخ التسجيل: {caseData.createdAt}
+</p>
 
 
 </main>
