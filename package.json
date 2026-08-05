@@ -5,15 +5,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@supabase/supabase-js": "latest",
+    "bcryptjs": "latest",
+    "jspdf": "latest",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest",
-    "bcryptjs": "latest",
-    "jspdf": "latest"
+    "react-dom": "latest"
   },
   "devDependencies": {
-    "typescript": "latest",
+    "@types/node": "latest",
     "@types/react": "latest",
-    "@types/node": "latest"
+    "typescript": "latest"
   }
 }
