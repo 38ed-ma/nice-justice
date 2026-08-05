@@ -26,7 +26,7 @@ setJudges(JSON.parse(saved))
 
 
 
-function addJudge() {
+function addJudge(){
 
   if (!name || !court) {
     alert("الرجاء تعبئة جميع الحقول")
