@@ -15,7 +15,8 @@ const [open,setOpen] = useState(false)
 useEffect(()=>{
 
 
-const saved = localStorage.getItem("user")
+const saved =
+localStorage.getItem("user")
 
 
 if(saved){
@@ -26,6 +27,7 @@ setUser(JSON.parse(saved))
 
 
 },[])
+
 
 
 
@@ -79,6 +81,7 @@ borderRadius:"10px"
 
 
 
+
 <aside
 
 style={{
@@ -110,17 +113,22 @@ direction:"rtl"
 >
 
 
+
 <h2>
 ⚖️ العدل الإلكتروني
 </h2>
 
 
+
 <hr/>
+
+
 
 
 <p>
 👤 {user?.username}
 </p>
+
 
 
 <p>
@@ -130,7 +138,10 @@ direction:"rtl"
 </p>
 
 
+
+
 <hr/>
+
 
 
 
@@ -150,6 +161,8 @@ onClick={()=>window.location.href="/dashboard"}
 
 
 
+
+
 <button
 
 style={btn}
@@ -165,17 +178,21 @@ onClick={()=>window.location.href="/cases"}
 
 
 
+
+
 <button
 
 style={btn}
 
-onClick={()=>window.location.href="/cases"}
+onClick={()=>window.location.href="/archive"}
 
 >
 
-⚖️ الأحكام
+📚 أرشيف الأحكام
 
 </button>
+
+
 
 
 
@@ -191,6 +208,8 @@ onClick={()=>window.location.href="/users"}
 👥 المستخدمين
 
 </button>
+
+
 
 
 
@@ -213,6 +232,7 @@ onClick={logout}
 </aside>
 
 
+
 </>
 
 )
@@ -222,22 +242,32 @@ onClick={logout}
 
 
 
+
 const btn={
+
 
 width:"100%",
 
+
 padding:"12px",
+
 
 marginTop:"10px",
 
+
 background:"#1f2937",
+
 
 color:"white",
 
+
 border:"none",
+
 
 borderRadius:"8px",
 
+
 cursor:"pointer"
+
 
 }
