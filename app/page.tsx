@@ -48,10 +48,10 @@ useEffect(() => {
       <section className="dashboard">
 
         <div className="card">
-          <span>📁</span>
-          <h3>القضايا</h3>
-          <h2>0</h2>
-        </div>
+  <span>📁</span>
+  <h3>القضايا</h3>
+  <h2>{casesCount}</h2>
+</div>
 
         <div className="card">
           <span>👨‍⚖️</span>
