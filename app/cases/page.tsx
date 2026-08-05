@@ -236,7 +236,11 @@ item.id.includes(search)
 <tr key={item.id}>
 
 
-<td>{item.id}</td>
+<td>
+<a href={`/cases/${item.id}`}>
+{item.id}
+</a>
+</td>
 
 <td>{item.plaintiff}</td>
 
