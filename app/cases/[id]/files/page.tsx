@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import Sidebar from "../../../components/Sidebar"
 
 
-
 export default function Files(){
 
 
@@ -12,7 +11,7 @@ const [caseId,setCaseId] = useState("")
 
 const [files,setFiles] = useState<any[]>([])
 
-const [name,setName] = useState("")
+const [file,setFile] = useState<File | null>(null)
 
 
 
@@ -36,21 +35,17 @@ localStorage.getItem("files")
 
 if(saved){
 
-
 const all =
 JSON.parse(saved)
 
 
+setFiles(
 
-const current =
 all.filter(
 (item:any)=>item.caseId === id
 )
 
-
-
-setFiles(current)
-
+)
 
 }
 
@@ -64,20 +59,25 @@ setFiles(current)
 
 
 
+function uploadFile(){
 
 
-function addFile(){
+if(!file){
 
-
-if(!name){
-
-alert("اكتب اسم الملف")
+alert("اختر ملف")
 
 return
 
 }
 
 
+
+const reader =
+new FileReader()
+
+
+
+reader.onload = ()=>{
 
 
 
@@ -88,7 +88,11 @@ id:Date.now(),
 
 caseId,
 
-name,
+name:file.name,
+
+type:file.type,
+
+data:reader.result,
 
 date:new Date().toLocaleDateString("ar-SA")
 
@@ -97,103 +101,27 @@ date:new Date().toLocaleDateString("ar-SA")
 
 
 
-
-const updated = [
-
-...files,
-
-newFile
-
-]
-
-
-
-setFiles(updated)
-
-
-
-
 const allSaved =
 localStorage.getItem("files")
 
-
-
-let all:any[] = []
-
-
-
-if(allSaved){
-
-all = JSON.parse(allSaved)
-
-}
-
-
-
-localStorage.setItem(
-
-"files",
-
-JSON.stringify(
-[
-...all,
-newFile
-]
-)
-
-)
-
-
-
-setName("")
-
-
-
-alert("تم إضافة المرفق")
-
-
-}
-
-
-
-
-
-
-
-
-
-function deleteFile(id:number){
-
-
-const updated =
-files.filter(
-(item)=>item.id !== id
-)
-
-
-
-setFiles(updated)
-
-
-
-
-const allSaved =
-localStorage.getItem("files")
-
-
-
-if(allSaved){
 
 
 const all =
+allSaved
+?
 JSON.parse(allSaved)
+:
+[]
 
 
 
-const newAll =
-all.filter(
-(item:any)=>item.id !== id
-)
+const updated=[
+
+...all,
+
+newFile
+
+]
 
 
 
@@ -201,13 +129,32 @@ localStorage.setItem(
 
 "files",
 
-JSON.stringify(newAll)
+JSON.stringify(updated)
 
 )
 
 
+
+setFiles(
+
+updated.filter(
+(item:any)=>item.caseId===caseId
+)
+
+)
+
+
+
+setFile(null)
+
+
+alert("تم رفع الملف")
+
 }
 
+
+
+reader.readAsDataURL(file)
 
 
 }
@@ -224,9 +171,7 @@ return(
 
 <>
 
-
 <Sidebar />
-
 
 
 <main
@@ -246,11 +191,9 @@ textAlign:"center"
 >
 
 
-
 <h1>
 📎 مرفقات القضية
 </h1>
-
 
 
 <h2>
@@ -258,30 +201,24 @@ textAlign:"center"
 </h2>
 
 
-
 <hr/>
-
-
-
-
-
-<h3>
-إضافة ملف
-</h3>
 
 
 
 
 <input
 
-placeholder="اسم الملف"
+type="file"
 
-value={name}
+onChange={(e)=>
 
-onChange={(e)=>setName(e.target.value)}
+setFile(
+e.target.files?.[0] || null
+)
 
- />
+}
 
+/>
 
 
 
@@ -291,10 +228,9 @@ onChange={(e)=>setName(e.target.value)}
 
 
 
+<button onClick={uploadFile}>
 
-<button onClick={addFile}>
-
-➕ إضافة مرفق
+📤 رفع الملف
 
 </button>
 
@@ -308,9 +244,8 @@ onChange={(e)=>setName(e.target.value)}
 
 
 
-
 <h2>
-ملفات القضية
+الملفات المرفوعة
 </h2>
 
 
@@ -353,16 +288,17 @@ borderRadius:"10px"
 
 
 
+<a
 
-<button
+href={item.data}
 
-onClick={()=>deleteFile(item.id)}
+download={item.name}
 
 >
 
-🗑 حذف
+⬇️ فتح / تحميل
 
-</button>
+</a>
 
 
 
@@ -373,8 +309,6 @@ onClick={()=>deleteFile(item.id)}
 
 
 }
-
-
 
 
 
