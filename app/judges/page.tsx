@@ -26,16 +26,31 @@ setJudges(JSON.parse(saved))
 
 
 
-function addJudge(){
+function addJudge() {
 
+  if (!name || !court) {
+    alert("الرجاء تعبئة جميع الحقول")
+    return
+  }
 
-const newJudge = {
+  const newJudge = {
+    id: `J-${String(judges.length + 1).padStart(3, "0")}`,
+    name,
+    court
+  }
 
-id:`J-${String(judges.length+1).padStart(3,"0")}`,
+  const updated = [...judges, newJudge]
 
-name,
+  setJudges(updated)
 
-court
+  localStorage.setItem(
+    "judges",
+    JSON.stringify(updated)
+  )
+
+  setName("")
+  setCourt("")
+}
 
 }
 
