@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Sidebar from "../../components/Sidebar"
+import Auth from "../../components/Auth"
 
 
 export default function CaseDetails(){
@@ -12,10 +13,13 @@ const [caseData,setCaseData] = useState<any>(null)
 const [user,setUser] = useState<any>(null)
 
 const [status,setStatus] = useState("")
+
 const [notes,setNotes] = useState("")
 
 const [judgment,setJudgment] = useState("")
+
 const [judgeName,setJudgeName] = useState("")
+
 
 
 const canEdit =
@@ -25,10 +29,12 @@ user?.role === "قاضي"
 
 
 
+
 useEffect(()=>{
 
 
-const savedUser = localStorage.getItem("user")
+const savedUser =
+localStorage.getItem("user")
 
 
 if(savedUser){
@@ -39,10 +45,14 @@ setUser(JSON.parse(savedUser))
 
 
 
-const id = window.location.pathname.split("/").pop()
+const id =
+window.location.pathname.split("/").pop()
 
 
-const saved = localStorage.getItem("cases")
+
+const saved =
+localStorage.getItem("cases")
+
 
 
 if(saved){
@@ -51,9 +61,11 @@ if(saved){
 const allCases = JSON.parse(saved)
 
 
-const found = allCases.find(
+const found =
+allCases.find(
 (item:any)=>item.id === id
 )
+
 
 
 setCaseData(found)
@@ -70,7 +82,10 @@ setJudgeName(found?.judgeName || "")
 }
 
 
+
 },[])
+
+
 
 
 
@@ -79,16 +94,22 @@ setJudgeName(found?.judgeName || "")
 function saveChanges(){
 
 
-const saved = localStorage.getItem("cases")
+
+const saved =
+localStorage.getItem("cases")
+
 
 
 if(saved){
 
 
-const allCases = JSON.parse(saved)
+const allCases =
+JSON.parse(saved)
 
 
-const updated = allCases.map((item:any)=>{
+
+const updated =
+allCases.map((item:any)=>{
 
 
 if(item.id === caseData.id){
@@ -123,8 +144,11 @@ return item
 
 
 localStorage.setItem(
+
 "cases",
+
 JSON.stringify(updated)
+
 )
 
 
@@ -135,7 +159,11 @@ alert("تم حفظ التعديلات")
 }
 
 
+
 }
+
+
+
 
 
 
@@ -143,10 +171,14 @@ alert("تم حفظ التعديلات")
 
 function printJudgment(){
 
+
 window.location.href =
 `/cases/${caseData.id}/print`
 
+
 }
+
+
 
 
 
@@ -161,12 +193,20 @@ return <h1>جاري تحميل القضية...</h1>
 
 
 
+
+
+
 return(
+
+
+<Auth roles={["وزير العدل","قاضي"]}>
+
 
 <>
 
 
 <Sidebar />
+
 
 
 <main
@@ -196,13 +236,17 @@ direction:"rtl"
 </h2>
 
 
+
+
 <hr/>
+
 
 
 
 <h3>
 بيانات القضية
 </h3>
+
 
 
 <p>
@@ -237,28 +281,45 @@ direction:"rtl"
 </h3>
 
 
-<select
 
-disabled={!canEdit}
+<select
 
 value={status}
 
 onChange={(e)=>setStatus(e.target.value)}
 
+disabled={!canEdit}
+
 >
 
-<option>جديدة</option>
 
-<option>قيد المراجعة</option>
+<option>
+جديدة
+</option>
 
-<option>منظورة</option>
 
-<option>صدر الحكم</option>
+<option>
+قيد المراجعة
+</option>
 
-<option>مغلقة</option>
+
+<option>
+منظورة
+</option>
+
+
+<option>
+صدر الحكم
+</option>
+
+
+<option>
+مغلقة
+</option>
 
 
 </select>
+
 
 
 
@@ -273,11 +334,12 @@ onChange={(e)=>setStatus(e.target.value)}
 </h3>
 
 
+
 <textarea
 
-disabled={!canEdit}
-
 rows={5}
+
+disabled={!canEdit}
 
 value={notes}
 
@@ -297,8 +359,9 @@ placeholder="ملاحظات القاضي"
 
 
 <h3>
-⚖️ إصدار حكم رسمي
+⚖️ إصدار الحكم
 </h3>
+
 
 
 
@@ -306,13 +369,13 @@ placeholder="ملاحظات القاضي"
 
 disabled={!canEdit}
 
-placeholder="اسم القاضي المصدر للحكم"
+placeholder="اسم القاضي"
 
 value={judgeName}
 
 onChange={(e)=>setJudgeName(e.target.value)}
 
- />
+/>
 
 
 
@@ -323,17 +386,17 @@ onChange={(e)=>setJudgeName(e.target.value)}
 
 <textarea
 
-disabled={!canEdit}
-
 rows={8}
 
-placeholder="نص الحكم الرسمي"
+disabled={!canEdit}
+
+placeholder="نص الحكم"
 
 value={judgment}
 
 onChange={(e)=>setJudgment(e.target.value)}
 
- />
+/>
 
 
 
@@ -347,17 +410,22 @@ onChange={(e)=>setJudgment(e.target.value)}
 
 canEdit &&
 
+
 <button onClick={saveChanges}>
 
 💾 حفظ الحكم والتعديلات
 
 </button>
 
+
 }
 
 
 
+
+
 <br/><br/>
+
 
 
 
@@ -370,13 +438,19 @@ canEdit &&
 
 
 
+
 </main>
+
 
 
 </>
 
 
+</Auth>
+
+
 )
+
 
 
 }
