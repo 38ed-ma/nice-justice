@@ -61,9 +61,7 @@ marginBottom:"30px"
 <div>
 
 <h1>
-
 ⚖️ وزارة العدل
-
 </h1>
 
 
@@ -78,9 +76,7 @@ marginTop:"8px"
 }}
 
 >
-
 Minister Of Justice
-
 </p>
 
 
@@ -107,9 +103,7 @@ borderRadius:"15px"
 
 
 <span>
-
 وزير العدل
-
 </span>
 
 
@@ -124,16 +118,12 @@ color:"#D4AF37"
 }}
 
 >
-
 خالد ايلفن
-
 </h2>
 
 
 <small>
-
 ( عقيد )
-
 </small>
 
 
@@ -201,4 +191,182 @@ borderTop:"5px solid #D4AF37"
 >
 
 
-<h
+<h1>
+{item[0]}
+</h1>
+
+
+<h2
+
+style={{
+
+fontSize:"35px"
+
+}}
+
+>
+{item[1]}
+</h2>
+
+
+<p
+
+style={{
+
+color:"#0B1F3A",
+
+fontWeight:"bold"
+
+}}
+
+>
+{item[2]}
+</p>
+
+
+</div>
+
+
+))
+
+
+}
+
+
+</section>
+
+
+
+
+
+<section
+
+style={{
+
+background:"white",
+
+padding:"25px",
+
+borderRadius:"20px",
+
+boxShadow:"0 8px 20px rgba(0,0,0,.15)"
+
+}}
+
+>
+
+
+<h2>
+📁 آخر القضايا
+</h2>
+
+
+
+<table
+
+style={{
+
+width:"100%",
+
+marginTop:"20px",
+
+borderCollapse:"collapse"
+
+}}
+
+>
+
+
+<thead>
+
+<tr
+
+style={{
+
+background:"#0B1F3A",
+
+color:"white"
+
+}}
+
+>
+
+<th style={{padding:"15px"}}>
+رقم القضية
+</th>
+
+<th style={{padding:"15px"}}>
+المدعي
+</th>
+
+<th style={{padding:"15px"}}>
+المدعى عليه
+</th>
+
+<th style={{padding:"15px"}}>
+الحالة
+</th>
+
+<th style={{padding:"15px"}}>
+القاضي
+</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+<tr>
+
+<td style={{padding:"15px"}}>
+NC-2026-0001
+</td>
+
+
+<td style={{padding:"15px"}}>
+محمد
+</td>
+
+
+<td style={{padding:"15px"}}>
+أحمد
+</td>
+
+
+<td style={{padding:"15px",color:"green"}}>
+مكتملة
+</td>
+
+
+<td style={{padding:"15px"}}>
+خالد ايلفن
+</td>
+
+
+</tr>
+
+
+</tbody>
+
+
+
+</table>
+
+
+
+</section>
+
+
+
+</main>
+
+
+</>
+
+)
+
+}
