@@ -4,15 +4,14 @@ import { useEffect, useState } from "react"
 import Sidebar from "../../../components/Sidebar"
 
 
-export default function Files(){
+export default function CaseFile(){
 
 
-const [caseId,setCaseId] = useState("")
+const [data,setData] = useState<any>(null)
+
+const [sessions,setSessions] = useState<any[]>([])
 
 const [files,setFiles] = useState<any[]>([])
-
-const [file,setFile] = useState<File | null>(null)
-
 
 
 
@@ -24,19 +23,73 @@ const id =
 window.location.pathname.split("/")[2]
 
 
-setCaseId(id)
+
+
+// القضايا
+
+const savedCases =
+localStorage.getItem("cases")
+
+
+if(savedCases){
+
+
+const cases =
+JSON.parse(savedCases)
+
+
+const found =
+cases.find(
+(item:any)=>item.id === id
+)
+
+
+setData(found)
+
+
+}
 
 
 
-const saved =
+
+// الجلسات
+
+const savedSessions =
+localStorage.getItem("sessions")
+
+
+if(savedSessions){
+
+
+const all =
+JSON.parse(savedSessions)
+
+
+setSessions(
+
+all.filter(
+(item:any)=>item.caseId === id
+)
+
+)
+
+
+}
+
+
+
+
+// المرفقات
+
+const savedFiles =
 localStorage.getItem("files")
 
 
+if(savedFiles){
 
-if(saved){
 
 const all =
-JSON.parse(saved)
+JSON.parse(savedFiles)
 
 
 setFiles(
@@ -46,6 +99,7 @@ all.filter(
 )
 
 )
+
 
 }
 
@@ -58,110 +112,11 @@ all.filter(
 
 
 
+if(!data){
 
-function uploadFile(){
-
-
-if(!file){
-
-alert("اختر ملف")
-
-return
+return <h1>جاري تحميل الملف...</h1>
 
 }
-
-
-
-const reader =
-new FileReader()
-
-
-
-reader.onload = ()=>{
-
-
-
-const newFile = {
-
-
-id:Date.now(),
-
-caseId,
-
-name:file.name,
-
-type:file.type,
-
-data:reader.result,
-
-date:new Date().toLocaleDateString("ar-SA")
-
-}
-
-
-
-
-const allSaved =
-localStorage.getItem("files")
-
-
-
-const all =
-allSaved
-?
-JSON.parse(allSaved)
-:
-[]
-
-
-
-const updated=[
-
-...all,
-
-newFile
-
-]
-
-
-
-localStorage.setItem(
-
-"files",
-
-JSON.stringify(updated)
-
-)
-
-
-
-setFiles(
-
-updated.filter(
-(item:any)=>item.caseId===caseId
-)
-
-)
-
-
-
-setFile(null)
-
-
-alert("تم رفع الملف")
-
-}
-
-
-
-reader.readAsDataURL(file)
-
-
-}
-
-
-
-
 
 
 
@@ -171,7 +126,9 @@ return(
 
 <>
 
+
 <Sidebar />
+
 
 
 <main
@@ -182,23 +139,25 @@ marginRight:"280px",
 
 padding:"40px",
 
-direction:"rtl",
-
-textAlign:"center"
+direction:"rtl"
 
 }}
 
 >
 
 
+
 <h1>
-📎 مرفقات القضية
+📁 ملف القضية
 </h1>
 
 
+
 <h2>
-{caseId}
+{data.id}
 </h2>
+
+
 
 
 <hr/>
@@ -206,33 +165,129 @@ textAlign:"center"
 
 
 
-<input
+<h2>
+بيانات القضية
+</h2>
 
-type="file"
 
-onChange={(e)=>
 
-setFile(
-e.target.files?.[0] || null
-)
+<p>
+👤 المدعي: {data.plaintiff}
+</p>
+
+
+<p>
+👤 المدعى عليه: {data.defendant}
+</p>
+
+
+<p>
+⚖️ القاضي: {data.judge}
+</p>
+
+
+<p>
+📌 النوع: {data.type}
+</p>
+
+
+<p>
+📍 الحالة: {data.status}
+</p>
+
+
+
+
+
+<hr/>
+
+
+
+
+
+<h2>
+⚖️ الحكم
+</h2>
+
+
+
+<p>
+{data.judgment || "لم يصدر حكم"}
+</p>
+
+
+
+<p>
+
+رقم الصك:
+
+{data.deedNumber || "غير موجود"}
+
+</p>
+
+
+
+
+
+<hr/>
+
+
+
+
+
+<h2>
+📝 الجلسات
+</h2>
+
+
+
+
+{
+
+sessions.length === 0 &&
+
+<p>
+لا توجد جلسات
+</p>
 
 }
 
-/>
 
 
 
 
-<br/><br/>
+{
+
+sessions.map((item)=>(
 
 
+<div
+
+key={item.id}
+
+style={box}
+
+>
 
 
-<button onClick={uploadFile}>
+📅 {item.date}
 
-📤 رفع الملف
+<br/>
 
-</button>
+⚖️ {item.judge}
+
+<br/>
+
+📝 {item.notes}
+
+
+</div>
+
+
+))
+
+
+}
 
 
 
@@ -244,10 +299,23 @@ e.target.files?.[0] || null
 
 
 
+
 <h2>
-الملفات المرفوعة
+📎 المرفقات
 </h2>
 
+
+
+
+{
+
+files.length === 0 &&
+
+<p>
+لا توجد ملفات
+</p>
+
+}
 
 
 
@@ -262,30 +330,15 @@ files.map((item)=>(
 
 key={item.id}
 
-style={{
-
-border:"1px solid #ccc",
-
-padding:"15px",
-
-margin:"10px",
-
-borderRadius:"10px"
-
-}}
+style={box}
 
 >
 
 
-<p>
 📄 {item.name}
-</p>
 
 
-<p>
-📅 {item.date}
-</p>
-
+<br/>
 
 
 <a
@@ -296,10 +349,9 @@ download={item.name}
 
 >
 
-⬇️ فتح / تحميل
+فتح الملف
 
 </a>
-
 
 
 </div>
@@ -312,11 +364,29 @@ download={item.name}
 
 
 
+
+
+
 </main>
 
 
 </>
 
 )
+
+}
+
+
+
+
+const box={
+
+border:"1px solid #ccc",
+
+padding:"15px",
+
+margin:"10px",
+
+borderRadius:"10px"
 
 }
