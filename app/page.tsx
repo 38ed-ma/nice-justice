@@ -15,16 +15,13 @@ export default function Home() {
     if (user === "minister" && pass === "1234") {
       setRole("وزير العدل")
       setUsername("minister")
-    } 
-    else if (user === "judge" && pass === "J1234") {
+    } else if (user === "judge" && pass === "J1234") {
       setRole("قاضي")
       setUsername("judge")
-    } 
-    else if (user === "lawyer" && pass === "L1234") {
+    } else if (user === "lawyer" && pass === "L1234") {
       setRole("محامي")
       setUsername("lawyer")
-    } 
-    else {
+    } else {
       setError("بيانات الدخول غير صحيحة")
       return
     }
@@ -35,7 +32,6 @@ export default function Home() {
 
   return (
     <main style={{ padding: "40px", textAlign: "center" }}>
-
       {!role ? (
         <>
           <h1>🏛️ نايس سيتي</h1>
@@ -62,7 +58,7 @@ export default function Home() {
                 onChange={(e) => setUser(e.target.value)}
               />
 
-              <br />
+              <br /><br />
 
               <input
                 placeholder="كلمة المرور"
@@ -70,7 +66,7 @@ export default function Home() {
                 onChange={(e) => setPass(e.target.value)}
               />
 
-              <br />
+              <br /><br />
 
               <button onClick={handleLogin}>
                 دخول
@@ -80,10 +76,9 @@ export default function Home() {
                 إغلاق
               </button>
 
-              <p>{error}</p>
+              <p style={{ color: "red" }}>{error}</p>
             </div>
           )}
-
         </>
       ) : (
         <>
@@ -91,72 +86,55 @@ export default function Home() {
 
           <h2>مرحباً {username}</h2>
 
-          <p>
-            الرتبة: {role}
-          </p>
+          <p>الرتبة: {role}</p>
 
           <hr />
 
           <h2>الخدمات</h2>
 
-          <Link href="/cases">
-            <button>
-              ⚖️ القضايا
-            </button>
-          </Link>
+          <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
+            <Link href="/cases">
+              <button>⚖️ القضايا</button>
+            </Link>
 
-          <button>
-            📜 الأحكام
-          </button>
+            <Link href="/judgments">
+              <button>📜 الأحكام</button>
+            </Link>
 
-          {role === "وزير العدل" && (
-            <>
-              <button>
-                👥 إدارة الموظفين
-              </button>
+            {role === "وزير العدل" && (
+              <>
+                <button>👥 إدارة الموظفين</button>
+                <button>📝 القرارات</button>
+              </>
+            )}
 
-              <button>
-                📝 القرارات
-              </button>
-            </>
-          )}
+            {role === "قاضي" && (
+              <>
+                <button>📂 القضايا المحالة</button>
+                <button>⚖️ إصدار حكم</button>
+              </>
+            )}
 
-          {role === "قاضي" && (
-            <>
-              <button>
-                📂 القضايا المحالة
-              </button>
-
-              <button>
-                ⚖️ إصدار حكم
-              </button>
-            </>
-          )}
-
-          {role === "محامي" && (
-            <>
-              <button>
-                📁 ملفاتي
-              </button>
-
-              <button>
-                📄 الطلبات
-              </button>
-            </>
-          )}
+            {role === "محامي" && (
+              <>
+                <button>📁 ملفاتي</button>
+                <button>📄 الطلبات</button>
+              </>
+            )}
+          </div>
 
           <br /><br />
 
-          <button onClick={() => {
-            setRole("")
-            setUsername("")
-          }}>
+          <button
+            onClick={() => {
+              setRole("")
+              setUsername("")
+            }}
+          >
             تسجيل خروج
           </button>
-
         </>
       )}
-
     </main>
   )
 }
