@@ -4,10 +4,13 @@ import { useEffect, useState } from "react"
 import Sidebar from "../components/Sidebar"
 
 
+
 export default function Notifications(){
 
 
 const [notifications,setNotifications] = useState<any[]>([])
+
+
 
 
 
@@ -27,23 +30,17 @@ setNotifications(JSON.parse(saved))
 
 
 
+// تصفير العداد بعد فتح الصفحة
+
+localStorage.setItem(
+"notifications",
+JSON.stringify([])
+)
+
+
+
 },[])
 
-
-
-
-
-
-
-function clearAll(){
-
-
-localStorage.removeItem("notifications")
-
-setNotifications([])
-
-
-}
 
 
 
@@ -76,6 +73,7 @@ textAlign:"center"
 >
 
 
+
 <h1>
 🔔 الإشعارات
 </h1>
@@ -88,26 +86,17 @@ textAlign:"center"
 
 
 
-<button onClick={clearAll}>
-
-🗑 حذف الكل
-
-</button>
-
-
-
-
-
 
 {
 
 notifications.length === 0 &&
 
-<h3>
+<h2>
 لا توجد إشعارات
-</h3>
+</h2>
 
 }
+
 
 
 
@@ -128,7 +117,7 @@ border:"1px solid #ccc",
 
 padding:"15px",
 
-margin:"10px",
+margin:"15px",
 
 borderRadius:"10px"
 
@@ -168,7 +157,6 @@ borderRadius:"10px"
 
 
 }
-
 
 
 
