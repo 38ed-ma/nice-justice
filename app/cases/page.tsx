@@ -37,6 +37,10 @@ setCases(JSON.parse(saved))
 
 function addCase(){
 
+if(!plaintiff || !defendant || !type || !judge){
+alert("الرجاء تعبئة جميع البيانات")
+return
+}
 
 const newCase = {
 
@@ -50,11 +54,29 @@ type,
 
 judge,
 
-status:"جديدة"
+status:"جديدة",
+
+createdAt:new Date().toLocaleDateString("ar-SA")
 
 }
 
+const updated=[...cases,newCase]
 
+setCases(updated)
+
+localStorage.setItem(
+"cases",
+JSON.stringify(updated)
+)
+
+setShowForm(false)
+
+setPlaintiff("")
+setDefendant("")
+setJudge("")
+setType("")
+
+}
 
 const updated=[...cases,newCase]
 
