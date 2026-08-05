@@ -8,15 +8,11 @@ return bcrypt.hashSync(password,10)
 }
 
 
-
 export function checkPassword(
 password:string,
 encrypted:string
 ){
 
-return bcrypt.compareSync(
-password,
-encrypted
-)
+return bcrypt.compareSync(password,encrypted)
 
 }
