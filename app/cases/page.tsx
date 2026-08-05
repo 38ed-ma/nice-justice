@@ -136,11 +136,16 @@ return(
 
 
 
+{
+(isAdmin || isJudge || isEmployee) &&
+
 <button onClick={()=>setShowForm(!showForm)}>
 
 ➕ قضية جديدة
 
 </button>
+
+}
 
 
 
