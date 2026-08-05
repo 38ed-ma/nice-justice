@@ -32,17 +32,6 @@ setUser(JSON.parse(saved))
 
 
 
-function logout(){
-
-localStorage.removeItem("user")
-
-window.location.href="/login"
-
-}
-
-
-
-
 
 return(
 
@@ -76,6 +65,7 @@ borderRadius:"10px"
 ☰
 
 </button>
+
 
 
 
@@ -130,9 +120,10 @@ direction:"rtl"
 
 
 
-
 <p>
+
 الصلاحية:
+
 <br/>
 
 {user?.role}
@@ -141,7 +132,9 @@ direction:"rtl"
 
 
 
+
 <hr/>
+
 
 
 
@@ -158,6 +151,7 @@ onClick={()=>window.location.href="/dashboard"}
 🏠 الرئيسية
 
 </button>
+
 
 
 
@@ -181,6 +175,7 @@ onClick={()=>window.location.href="/cases"}
 
 
 
+
 <button
 
 style={btn}
@@ -192,6 +187,7 @@ onClick={()=>window.location.href="/archive"}
 📚 أرشيف الأحكام
 
 </button>
+
 
 
 
@@ -215,6 +211,7 @@ onClick={()=>window.location.href="/calendar"}
 
 
 
+
 <button
 
 style={btn}
@@ -232,17 +229,19 @@ onClick={()=>window.location.href="/users"}
 
 
 
+
 <button
 
 style={btn}
 
-onClick={logout}
+onClick={()=>window.location.href="/login"}
 
 >
 
-🚪 تسجيل خروج
+🔐 تسجيل الدخول
 
 </button>
+
 
 
 
