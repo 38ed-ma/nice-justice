@@ -39,17 +39,20 @@ function addJudge() {
     court
   }
 
-  const updated = [...judges, newJudge]
+  return (
 
-  setJudges(updated)
+const updated=[...judges,newJudge]
 
-  localStorage.setItem(
-    "judges",
-    JSON.stringify(updated)
-  )
+setJudges(updated)
 
-  setName("")
-  setCourt("")
+localStorage.setItem(
+"judges",
+JSON.stringify(updated)
+)
+
+setName("")
+setCourt("")
+
 }
 
 return (
