@@ -15,23 +15,9 @@ const [password,setPassword] = useState("")
 
 const [role,setRole] = useState("")
 
-const [currentUser,setCurrentUser] = useState<any>(null)
-
 
 
 useEffect(()=>{
-
-
-const user =
-localStorage.getItem("user")
-
-
-if(user){
-
-setCurrentUser(JSON.parse(user))
-
-}
-
 
 
 const savedUsers =
@@ -87,9 +73,13 @@ newUser
 setUsers(updated)
 
 
+
 localStorage.setItem(
+
 "users",
+
 JSON.stringify(updated)
+
 )
 
 
@@ -122,36 +112,22 @@ users.filter(
 )
 
 
+
 setUsers(updated)
 
 
+
 localStorage.setItem(
+
 "users",
+
 JSON.stringify(updated)
+
 )
 
 
 }
 
-
-
-
-
-
-
-if(currentUser?.role !== "وزير العدل"){
-
-return(
-
-<h1>
-
-ليس لديك صلاحية
-
-</h1>
-
-)
-
-}
 
 
 
@@ -164,7 +140,6 @@ return(
 
 
 <Sidebar />
-
 
 
 <main
@@ -184,14 +159,9 @@ textAlign:"center"
 >
 
 
-
 <h1>
 👥 إدارة المستخدمين
 </h1>
-
-
-
-<br/>
 
 
 
@@ -275,9 +245,7 @@ onChange={(e)=>setRole(e.target.value)}
 </option>
 
 
-
 </select>
-
 
 
 
@@ -301,7 +269,7 @@ onChange={(e)=>setRole(e.target.value)}
 
 
 <h2>
-المستخدمين
+قائمة المستخدمين
 </h2>
 
 
@@ -316,7 +284,12 @@ users.map((item)=>(
 
 
 <p>
-👤 المستخدم: {item.username}
+👤 {item.username}
+</p>
+
+
+<p>
+🔐 كلمة المرور: {item.password}
 </p>
 
 
@@ -335,7 +308,6 @@ onClick={()=>deleteUser(item.id)}
 🗑 حذف
 
 </button>
-
 
 
 <hr/>
