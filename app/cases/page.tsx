@@ -41,7 +41,7 @@ useEffect(() => {
   setDefendant("")
   setType("")
   setJudge("")
-}
+  }
 
     setCases([...cases, newCase])
 
