@@ -2,88 +2,74 @@
 
 import { useEffect, useState } from "react"
 
+export default function Home() {
 
-export default function Home(){
+  const [role, setRole] = useState("")
 
-const [role,setRole] = useState("")
+  useEffect(() => {
+    const user = localStorage.getItem("role")
+    if (user) {
+      setRole(user)
+    }
+  }, [])
 
+  return (
+    <main>
 
-useEffect(()=>{
+      <section className="hero">
 
-const user = localStorage.getItem("role")
+        <div>
+          <h1>⚖️ نظام وزارة العدل</h1>
+          <p>لوحة التحكم الرئيسية لإدارة القضايا والجلسات والأحكام.</p>
+        </div>
 
-if(user){
-setRole(user)
-}
+        <div className="role-badge">
+          {role || "زائر"}
+        </div>
 
-},[])
-
-
-
-return(
-
-<main>
-
-<h1>
-لوحة التحكم
-</h1>
-
-
-<h2>
-مرحباً بك 👋 {role}
-</h2>
+      </section>
 
 
+      <section className="dashboard">
 
-<div className="dashboard">
+        <div className="card">
+          <span>📁</span>
+          <h3>القضايا</h3>
+          <h2>0</h2>
+        </div>
 
+        <div className="card">
+          <span>👨‍⚖️</span>
+          <h3>القضاة</h3>
+          <h2>0</h2>
+        </div>
 
-<div className="card">
+        <div className="card">
+          <span>📜</span>
+          <h3>الأحكام</h3>
+          <h2>0</h2>
+        </div>
 
-<h2>📁</h2>
-<h3>القضايا</h3>
-<p>0</p>
+        <div className="card">
+          <span>👥</span>
+          <h3>المستخدم الحالي</h3>
+          <h2>{role || "زائر"}</h2>
+        </div>
 
-</div>
-
-
-
-<div className="card">
-
-<h2>⚖️</h2>
-<h3>الجلسات</h3>
-<p>
-{
-role === "قاضي" ? "متاحة" : "مغلقة"
-}
-</p>
-
-</div>
-
-
-
-{
-role === "مسؤول" &&
-
-<div className="card">
-
-<h2>👥</h2>
-<h3>إدارة المستخدمين</h3>
-<p>
-متاحة
-</p>
-
-</div>
-
-}
+      </section>
 
 
+      <section className="welcome-card">
 
-</div>
+        <h2>مرحباً بك 👋</h2>
 
+        <p>
+          أهلاً بك في نظام وزارة العدل الإلكتروني.
+          يمكنك إدارة القضايا، متابعة الأحكام، واستعراض بيانات القضاة من لوحة التحكم.
+        </p>
 
-</main>
+      </section>
 
-)
-
+    </main>
+  )
 }
