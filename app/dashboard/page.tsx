@@ -44,6 +44,7 @@ setCases(JSON.parse(savedCases))
 
 
 
+
 function logout(){
 
 localStorage.removeItem("user")
@@ -54,23 +55,25 @@ window.location.href="/login"
 
 
 
+
+
 const newCases =
 cases.filter(
-(item)=>item.status === "جديدة"
+(item)=>item.status==="جديدة"
 ).length
 
 
 
 const reviewing =
 cases.filter(
-(item)=>item.status === "قيد المراجعة"
+(item)=>item.status==="قيد المراجعة"
 ).length
 
 
 
 const closed =
 cases.filter(
-(item)=>item.status === "مغلقة"
+(item)=>item.status==="مغلقة"
 ).length
 
 
@@ -87,7 +90,9 @@ padding:"40px",
 
 direction:"rtl",
 
-textAlign:"center"
+textAlign:"center",
+
+fontFamily:"Arial"
 
 }}
 
@@ -95,14 +100,34 @@ textAlign:"center"
 
 
 <h1>
-⚖️ لوحة تحكم وزارة العدل
+⚖️ نظام العدل الإلكتروني
 </h1>
 
 
-
 <h2>
-مرحباً {user?.username}
+لوحة التحكم
 </h2>
+
+
+
+<div
+
+style={{
+
+background:"#eee",
+
+padding:"20px",
+
+borderRadius:"15px"
+
+}}
+
+>
+
+
+<h3>
+👤 {user?.username}
+</h3>
 
 
 <p>
@@ -118,66 +143,157 @@ textAlign:"center"
 </button>
 
 
-
-<hr/>
-
+</div>
 
 
+
+
+<br/>
+
+
+
+<div
+
+style={{
+
+display:"grid",
+
+gridTemplateColumns:"repeat(2,1fr)",
+
+gap:"20px"
+
+}}
+
+>
+
+
+<div
+
+style={{
+
+padding:"25px",
+
+border:"1px solid #ccc",
+
+borderRadius:"15px"
+
+}}
+
+>
 
 <h2>
-📁 إجمالي القضايا
+📁
 </h2>
+
+<h3>
+إجمالي القضايا
+</h3>
 
 <h1>
 {cases.length}
 </h1>
 
+</div>
 
 
-<hr/>
 
 
 
+<div
+
+style={{
+
+padding:"25px",
+
+border:"1px solid #ccc",
+
+borderRadius:"15px"
+
+}}
+
+>
 
 <h2>
-🆕 قضايا جديدة
+🆕
 </h2>
+
+<h3>
+قضايا جديدة
+</h3>
 
 <h1>
 {newCases}
 </h1>
 
+</div>
 
 
 
-<hr/>
 
 
+<div
 
+style={{
+
+padding:"25px",
+
+border:"1px solid #ccc",
+
+borderRadius:"15px"
+
+}}
+
+>
 
 <h2>
-🕒 قضايا قيد المراجعة
+🕒
 </h2>
+
+<h3>
+قيد المراجعة
+</h3>
 
 <h1>
 {reviewing}
 </h1>
 
+</div>
 
 
 
-<hr/>
 
 
+<div
 
+style={{
+
+padding:"25px",
+
+border:"1px solid #ccc",
+
+borderRadius:"15px"
+
+}}
+
+>
 
 <h2>
-✅ قضايا مغلقة
+✅
 </h2>
+
+<h3>
+القضايا المغلقة
+</h3>
 
 <h1>
 {closed}
 </h1>
+
+</div>
+
+
+
+</div>
 
 
 
@@ -189,6 +305,14 @@ textAlign:"center"
 
 <button
 
+style={{
+
+padding:"15px 30px",
+
+fontSize:"18px"
+
+}}
+
 onClick={()=>{
 
 window.location.href="/cases"
@@ -197,7 +321,7 @@ window.location.href="/cases"
 
 >
 
-📁 إدارة القضايا
+📁 الدخول للقضايا
 
 </button>
 
