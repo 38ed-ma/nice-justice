@@ -33,12 +33,12 @@ export default function Home() {
   }
 
   return (
-    <main>
+    <main style={{ padding: "40px", textAlign: "center" }}>
 
       {!role ? (
         <>
-          <h1>نايس سيتي</h1>
-          <p>وزارة العدل الإلكترونية</p>
+          <h1>🏛️ نايس سيتي</h1>
+          <h3>وزارة العدل الإلكترونية</h3>
 
           <button onClick={() => setLogin(true)}>
             تسجيل الدخول (للعدل فقط)
@@ -49,7 +49,7 @@ export default function Home() {
           <h2>مرحباً بكم في بوابة وزارة العدل</h2>
 
           <p>
-            هنا يتم تقديم الخدمات الإلكترونية الخاصة بالعدل والقضايا والتراخيص.
+            النظام الإلكتروني لإدارة القضايا والأحكام والتراخيص.
           </p>
 
           {login && (
@@ -82,18 +82,14 @@ export default function Home() {
               <p>{error}</p>
             </div>
           )}
+
         </>
       ) : (
+
         <>
-          <h1>🏛️ وزارة العدل الإلكترونية</h1>
+          <h1>🏛️ لوحة وزارة العدل</h1>
 
-          <hr />
-
-          <h2>مرحباً بك</h2>
-
-          <p>
-            المستخدم: {username}
-          </p>
+          <h2>مرحباً {username}</h2>
 
           <p>
             الرتبة: {role}
@@ -101,7 +97,7 @@ export default function Home() {
 
           <hr />
 
-          <h2>لوحة التحكم</h2>
+          <h2>الخدمات</h2>
 
           <button>
             ⚖️ القضايا
@@ -147,7 +143,7 @@ export default function Home() {
             </>
           )}
 
-          <br />
+          <br /><br />
 
           <button onClick={() => {
             setRole("")
