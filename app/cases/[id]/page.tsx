@@ -20,11 +20,16 @@ const [judgment,setJudgment] = useState("")
 
 const [judgeName,setJudgeName] = useState("")
 
+const [signature,setSignature] = useState("")
+
+
 
 
 const canEdit =
 user?.role === "وزير العدل" ||
 user?.role === "قاضي"
+
+
 
 
 
@@ -44,8 +49,10 @@ setUser(JSON.parse(savedUser))
 
 
 
+
+
 const id =
-window.location.pathname.split("/").pop()
+window.location.pathname.split("/")[2]
 
 
 
@@ -57,7 +64,9 @@ localStorage.getItem("cases")
 if(saved){
 
 
-const allCases = JSON.parse(saved)
+const allCases =
+JSON.parse(saved)
+
 
 
 const found =
@@ -77,8 +86,12 @@ setJudgment(found?.judgment || "")
 
 setJudgeName(found?.judgeName || "")
 
+setSignature(found?.signature || "")
+
+
 
 }
+
 
 
 },[])
@@ -89,18 +102,24 @@ setJudgeName(found?.judgeName || "")
 
 
 
+
+
 function saveChanges(){
+
 
 
 const saved =
 localStorage.getItem("cases")
 
 
+
 if(saved){
+
 
 
 const allCases =
 JSON.parse(saved)
+
 
 
 
@@ -123,10 +142,25 @@ judgment,
 
 judgeName,
 
+signature,
+
+
+deedNumber:
+
+item.deedNumber ||
+
+`DEED-2026-${String(Date.now()).slice(-6)}`,
+
+
+
 judgmentDate:
+
 new Date().toLocaleDateString("ar-SA")
 
+
+
 }
+
 
 
 }
@@ -136,6 +170,9 @@ return item
 
 
 })
+
+
+
 
 
 
@@ -149,13 +186,66 @@ JSON.stringify(updated)
 
 
 
+
+
+
+// 🔔 إشعار الحكم
+
+
+const oldNotifications =
+localStorage.getItem("notifications")
+
+
+
+const notifications =
+oldNotifications
+?
+JSON.parse(oldNotifications)
+:
+[]
+
+
+
+
+notifications.push({
+
+id:Date.now(),
+
+title:"⚖️ صدر حكم جديد",
+
+message:`تم إصدار حكم في القضية رقم ${caseData.id}`,
+
+date:new Date().toLocaleDateString("ar-SA")
+
+})
+
+
+
+
+localStorage.setItem(
+
+"notifications",
+
+JSON.stringify(notifications)
+
+)
+
+
+
+
+
+
 alert("تم حفظ الحكم")
 
 
+
 }
 
 
+
 }
+
+
 
 
 
@@ -175,11 +265,14 @@ window.location.href =
 
 
 
+
+
 if(!caseData){
 
 return <h1>جاري تحميل القضية...</h1>
 
 }
+
 
 
 
@@ -226,6 +319,7 @@ direction:"rtl"
 
 
 
+
 <h2>
 {caseData.id}
 </h2>
@@ -234,11 +328,6 @@ direction:"rtl"
 
 <hr/>
 
-
-
-<h3>
-بيانات القضية
-</h3>
 
 
 
@@ -257,6 +346,7 @@ direction:"rtl"
 </p>
 
 
+
 <p>
 القاضي: {caseData.judge}
 </p>
@@ -272,6 +362,7 @@ direction:"rtl"
 <h3>
 حالة القضية
 </h3>
+
 
 
 
@@ -311,6 +402,7 @@ onChange={(e)=>setStatus(e.target.value)}
 </option>
 
 
+
 </select>
 
 
@@ -338,9 +430,7 @@ value={notes}
 
 onChange={(e)=>setNotes(e.target.value)}
 
-placeholder="ملاحظات القاضي"
-
-/>
+ />
 
 
 
@@ -352,8 +442,9 @@ placeholder="ملاحظات القاضي"
 
 
 <h3>
-⚖️ نص الحكم
+⚖️ الحكم
 </h3>
+
 
 
 
@@ -367,9 +458,7 @@ value={judgment}
 
 onChange={(e)=>setJudgment(e.target.value)}
 
-placeholder="نص الحكم"
-
-/>
+ />
 
 
 
@@ -383,17 +472,41 @@ placeholder="نص الحكم"
 
 disabled={!canEdit}
 
+placeholder="اسم القاضي"
+
 value={judgeName}
 
 onChange={(e)=>setJudgeName(e.target.value)}
 
-placeholder="اسم القاضي المصدر للحكم"
+ />
 
-/>
+
 
 
 
 <br/><br/>
+
+
+
+
+<input
+
+disabled={!canEdit}
+
+placeholder="توقيع القاضي"
+
+value={signature}
+
+onChange={(e)=>setSignature(e.target.value)}
+
+ />
+
+
+
+
+
+<br/><br/>
+
 
 
 
@@ -402,13 +515,17 @@ placeholder="اسم القاضي المصدر للحكم"
 
 canEdit &&
 
+
 <button onClick={saveChanges}>
 
-💾 حفظ التعديلات
+💾 حفظ الحكم
 
 </button>
 
+
 }
+
+
 
 
 
@@ -417,11 +534,14 @@ canEdit &&
 
 
 
+
 <button onClick={printJudgment}>
 
-🖨️ طباعة صك الحكم
+🖨️ طباعة الصك
 
 </button>
+
+
 
 
 
