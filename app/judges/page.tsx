@@ -127,7 +127,9 @@ onChange={(e)=>setCourt(e.target.value)}
 <th>
 المحكمة
 </th>
-
+<th>
+إجراء
+</th>
 </tr>
 
 </thead>
