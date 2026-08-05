@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { getData, saveData } from "../../lib/storage"
 
 export default function Cases() {
 
