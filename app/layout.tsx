@@ -1,3 +1,4 @@
+"use cilent"
 import "./globals.css"
 import Link from "next/link"
 import { useEffect, useState } from "react"
