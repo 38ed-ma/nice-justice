@@ -10,23 +10,44 @@ const [user,setUser] = useState<any>(null)
 
 const [open,setOpen] = useState(false)
 
+const [count,setCount] = useState(0)
+
 
 
 useEffect(()=>{
 
 
-const saved =
+const savedUser =
 localStorage.getItem("user")
 
 
-if(saved){
+if(savedUser){
 
-setUser(JSON.parse(saved))
+setUser(JSON.parse(savedUser))
 
 }
 
 
+
+
+const savedNotifications =
+localStorage.getItem("notifications")
+
+
+
+if(savedNotifications){
+
+setCount(
+JSON.parse(savedNotifications).length
+)
+
+}
+
+
+
 },[])
+
+
 
 
 
@@ -118,16 +139,11 @@ direction:"rtl"
 </p>
 
 
-
-
 <p>
 الصلاحية:
 <br/>
-
 {user?.role}
-
 </p>
-
 
 
 
@@ -137,9 +153,7 @@ direction:"rtl"
 
 
 
-<button
-
-style={btn}
+<button style={btn}
 
 onClick={()=>window.location.href="/dashboard"}
 
@@ -153,9 +167,8 @@ onClick={()=>window.location.href="/dashboard"}
 
 
 
-<button
 
-style={btn}
+<button style={btn}
 
 onClick={()=>window.location.href="/cases"}
 
@@ -169,9 +182,8 @@ onClick={()=>window.location.href="/cases"}
 
 
 
-<button
 
-style={btn}
+<button style={btn}
 
 onClick={()=>window.location.href="/archive"}
 
@@ -185,9 +197,8 @@ onClick={()=>window.location.href="/archive"}
 
 
 
-<button
 
-style={btn}
+<button style={btn}
 
 onClick={()=>window.location.href="/calendar"}
 
@@ -201,15 +212,15 @@ onClick={()=>window.location.href="/calendar"}
 
 
 
-<button
 
-style={btn}
+
+<button style={btn}
 
 onClick={()=>window.location.href="/notifications"}
 
 >
 
-🔔 الإشعارات
+🔔 الإشعارات ({count})
 
 </button>
 
@@ -217,9 +228,8 @@ onClick={()=>window.location.href="/notifications"}
 
 
 
-<button
 
-style={btn}
+<button style={btn}
 
 onClick={()=>window.location.href="/users"}
 
@@ -233,9 +243,8 @@ onClick={()=>window.location.href="/users"}
 
 
 
-<button
 
-style={btn}
+<button style={btn}
 
 onClick={()=>window.location.href="/login"}
 
@@ -265,29 +274,20 @@ onClick={()=>window.location.href="/login"}
 
 const btn={
 
-
 width:"100%",
-
 
 padding:"12px",
 
-
 marginTop:"10px",
-
 
 background:"#1f2937",
 
-
 color:"white",
-
 
 border:"none",
 
-
 borderRadius:"8px",
 
-
 cursor:"pointer"
-
 
 }
