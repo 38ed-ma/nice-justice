@@ -1,61 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import Sidebar from "../components/Sidebar"
 
 
 export default function Dashboard(){
-
-
-const [cases,setCases] = useState<any[]>([])
-const [users,setUsers] = useState<any[]>([])
-const [user,setUser] = useState<any>(null)
-
-
-
-useEffect(()=>{
-
-
-const savedUser =
-localStorage.getItem("user")
-
-
-if(savedUser){
-
-setUser(JSON.parse(savedUser))
-
-}
-
-
-
-const savedCases =
-localStorage.getItem("cases")
-
-
-if(savedCases){
-
-setCases(JSON.parse(savedCases))
-
-}
-
-
-
-const savedUsers =
-localStorage.getItem("users")
-
-
-if(savedUsers){
-
-setUsers(JSON.parse(savedUsers))
-
-}
-
-
-
-},[])
-
-
-
 
 
 return(
@@ -69,9 +17,9 @@ return(
 
 style={{
 
-marginRight:"260px",
+marginRight:"300px",
 
-padding:"30px",
+padding:"35px",
 
 direction:"rtl",
 
@@ -85,7 +33,7 @@ minHeight:"100vh"
 
 
 
-<div
+<header
 
 style={{
 
@@ -93,16 +41,24 @@ background:"#0B1F3A",
 
 color:"white",
 
-padding:"25px",
+padding:"30px",
 
 borderRadius:"20px",
 
-boxShadow:"0 10px 25px #999"
+display:"flex",
+
+justifyContent:"space-between",
+
+alignItems:"center",
+
+marginBottom:"30px"
 
 }}
 
 >
 
+
+<div>
 
 <h1>
 
@@ -111,11 +67,25 @@ boxShadow:"0 10px 25px #999"
 </h1>
 
 
-<p>
+<p
+
+style={{
+
+color:"#D4AF37",
+
+marginTop:"8px"
+
+}}
+
+>
 
 Minister Of Justice
 
 </p>
+
+
+</div>
+
 
 
 
@@ -123,11 +93,11 @@ Minister Of Justice
 
 style={{
 
-marginTop:"15px",
+textAlign:"center",
 
 background:"rgba(255,255,255,.1)",
 
-padding:"15px",
+padding:"15px 30px",
 
 borderRadius:"15px"
 
@@ -136,21 +106,41 @@ borderRadius:"15px"
 >
 
 
+<span>
+
 وزير العدل
 
-<h2>
+</span>
 
-عقيد ( خالد ايلفن )
+
+<h2
+
+style={{
+
+margin:"8px 0",
+
+color:"#D4AF37"
+
+}}
+
+>
+
+خالد ايلفن
 
 </h2>
 
 
+<small>
+
+( عقيد )
+
+</small>
+
+
 </div>
 
 
-
-</div>
-
+</header>
 
 
 
@@ -162,201 +152,35 @@ style={{
 
 display:"grid",
 
-gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",
+gridTemplateColumns:"repeat(4,1fr)",
 
 gap:"20px",
 
-marginTop:"30px"
+marginBottom:"35px"
 
 }}
 
 >
-
-
-
-<Card
-icon="📁"
-number={cases.length}
-title="القضايا"
-/>
-
-
-
-<Card
-icon="⚖️"
-number="0"
-title="الأحكام"
-/>
-
-
-
-<Card
-icon="👥"
-number={users.length}
-title="المستخدمون"
-/>
-
-
-
-<Card
-icon="📅"
-number="0"
-title="الجلسات"
-/>
-
-
-
-</section>
-
-
-
-
-
-
-<section
-
-style={{
-
-background:"white",
-
-marginTop:"30px",
-
-padding:"25px",
-
-borderRadius:"20px",
-
-boxShadow:"0 5px 15px #aaa"
-
-}}
-
->
-
-
-
-<h2>
-
-📂 آخر القضايا
-
-</h2>
-
-
-
-
-<table
-
-style={{
-
-width:"100%",
-
-borderCollapse:"collapse"
-
-}}
-
->
-
-
-<thead>
-
-<tr>
-
-<th>رقم القضية</th>
-
-<th>المدعي</th>
-
-<th>المدعى عليه</th>
-
-<th>الحالة</th>
-
-<th>القاضي</th>
-
-</tr>
-
-</thead>
-
-
-
-<tbody>
 
 
 {
 
-cases.slice(0,5).map((item)=>(
+[
 
+["📁","128","القضايا"],
 
-<tr key={item.id}>
+["⚖️","84","الأحكام"],
 
+["👥","24","المستخدمون"],
 
-<td>{item.id}</td>
+["📅","17","الجلسات"]
 
-<td>{item.plaintiff}</td>
+].map((item:any)=>(
 
-<td>{item.defendant}</td>
-
-<td>{item.status}</td>
-
-<td>{item.judge}</td>
-
-
-</tr>
-
-
-))
-
-
-}
-
-
-
-</tbody>
-
-
-
-</table>
-
-
-</section>
-
-
-
-
-
-</main>
-
-
-</>
-
-)
-
-
-}
-
-
-
-
-
-
-function Card({
-
-icon,
-
-number,
-
-title
-
-}:{
-
-icon:string,
-
-number:any,
-
-title:string
-
-}){
-
-
-return(
 
 <div
+
+key={item[2]}
 
 style={{
 
@@ -368,55 +192,13 @@ borderRadius:"20px",
 
 textAlign:"center",
 
-boxShadow:"0 5px 15px rgba(0,0,0,.15)"
+boxShadow:"0 8px 20px rgba(0,0,0,.15)",
+
+borderTop:"5px solid #D4AF37"
 
 }}
 
 >
 
 
-<div
-
-style={{
-
-fontSize:"35px"
-
-}}
-
->
-
-{icon}
-
-</div>
-
-
-<h2
-
-style={{
-
-fontSize:"35px",
-
-color:"#0B1F3A"
-
-}}
-
->
-
-{number}
-
-</h2>
-
-
-<p>
-
-{title}
-
-</p>
-
-
-</div>
-
-)
-
-
-}
+<h
