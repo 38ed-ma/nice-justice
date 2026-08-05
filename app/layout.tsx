@@ -23,7 +23,9 @@ useEffect(() => {
     setRole(user)
   }
 
-}, [])return (
+}, [])
+
+return (
     <html lang="ar" dir="rtl">
       <body>
 
