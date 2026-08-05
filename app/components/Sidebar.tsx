@@ -75,7 +75,7 @@ export default function Sidebar() {
         top: 0,
         width: "300px",
         height: "100vh",
-        background: "#0F3D2E",
+        background: "#0B1F3A",
         color: "white",
         display: "flex",
         flexDirection: "column",
@@ -89,7 +89,7 @@ export default function Sidebar() {
           padding: "28px",
           borderBottom: "1px solid rgba(255,255,255,.12)",
           background:
-            "linear-gradient(180deg,#14532d,#0F3D2E)"
+            "linear-gradient(180deg,#132B4F,#0B1F3A)"
         }}
       >
 
