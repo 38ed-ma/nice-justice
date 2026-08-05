@@ -24,11 +24,15 @@ const [type,setType] = useState("")
 
 useEffect(()=>{
 
-const saved = localStorage.getItem("cases")
+const savedUser = localStorage.getItem("user")
 
-if(saved){
+if(savedUser){
 
-setCases(JSON.parse(saved))
+setUser(JSON.parse(savedUser))
+
+}else{
+
+window.location.href="/login"
 
 }
 
