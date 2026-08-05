@@ -66,10 +66,10 @@ useEffect(() => {
         </div>
 
         <div className="card">
-          <span>👥</span>
-          <h3>المستخدم الحالي</h3>
-          <h2>{role || "زائر"}</h2>
-        </div>
+  <span>👥</span>
+  <h3>المستخدمون</h3>
+  <h2>{usersCount}</h2>
+</div>
 
       </section>
 
