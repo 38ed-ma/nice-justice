@@ -21,7 +21,7 @@ export default function Login() {
           boxShadow: "0 5px 20px #ccc"
         }}
       >
-        <h1>⚖️ تسجيل الدخول</h1>
+        <h1> تسجيل الدخول</h1>
 
         <p>اختر نوع الحساب</p>
 
