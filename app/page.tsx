@@ -83,37 +83,11 @@ export default function Home() {
 
           <p>الرتبة: {role}</p>
 
-          <h2>تم تسجيل الدخول بنجاح ✅</h2>
+          <h2>الخدمات</h2>
 
-<p>
-مرحبًا بك في وزارة العدل الإلكترونية
-</p>
-
-<br />
-
-<Link href="/dashboard">
-  <button
-    style={{
-      padding: "15px 30px",
-      fontSize: "18px",
-      borderRadius: "10px",
-      cursor: "pointer"
-    }}
-  >
-    🏛️ دخول لوحة التحكم
-  </button>
-</Link>
-
-<br /><br />
-
-<button
-  onClick={() => {
-    setRole("")
-    setUsername("")
-  }}
->
-  تسجيل خروج
-</button>
+<div>
+  ...
+</div>
             style={{
               display: "flex",
               gap: "10px",
