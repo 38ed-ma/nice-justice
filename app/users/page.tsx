@@ -11,6 +11,8 @@ const [users,setUsers] = useState<any[]>([])
 
 const [username,setUsername] = useState("")
 
+const [password,setPassword] = useState("")
+
 const [role,setRole] = useState("")
 
 const [currentUser,setCurrentUser] = useState<any>(null)
@@ -52,9 +54,9 @@ setUsers(JSON.parse(savedUsers))
 function addUser(){
 
 
-if(!username || !role){
+if(!username || !password || !role){
 
-alert("اكمل البيانات")
+alert("اكمل جميع البيانات")
 
 return
 
@@ -67,6 +69,8 @@ const newUser={
 id:Date.now(),
 
 username,
+
+password,
 
 role
 
@@ -81,22 +85,21 @@ setUsers(updated)
 
 
 localStorage.setItem(
-
 "users",
-
 JSON.stringify(updated)
-
 )
 
 
 
 setUsername("")
-
+setPassword("")
 setRole("")
 
 
-}
+alert("تم إضافة المستخدم")
 
+
+}
 
 
 
@@ -115,16 +118,12 @@ setUsers(updated)
 
 
 localStorage.setItem(
-
 "users",
-
 JSON.stringify(updated)
-
 )
 
 
 }
-
 
 
 
@@ -152,7 +151,7 @@ return(
 
 style={{
 
-marginRight:"20px",
+marginRight:"280px",
 
 padding:"40px",
 
@@ -187,6 +186,23 @@ onChange={(e)=>setUsername(e.target.value)}
 
 
 
+<input
+
+placeholder="كلمة المرور"
+
+value={password}
+
+onChange={(e)=>setPassword(e.target.value)}
+
+ />
+
+
+
+<br/><br/>
+
+
+
+
 <select
 
 value={role}
@@ -196,8 +212,10 @@ onChange={(e)=>setRole(e.target.value)}
 >
 
 
-<option>
-اختر الرتبة
+<option value="">
+
+اختر الصلاحية
+
 </option>
 
 
@@ -240,14 +258,13 @@ onChange={(e)=>setRole(e.target.value)}
 
 
 
-
 <hr/>
 
 
 
 
 <h2>
-المستخدمين
+قائمة المستخدمين
 </h2>
 
 
@@ -266,7 +283,12 @@ users.map((item)=>(
 
 
 <p>
-الصلاحية: {item.role}
+🔐 {item.password}
+</p>
+
+
+<p>
+⚖️ {item.role}
 </p>
 
 
