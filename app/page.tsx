@@ -45,9 +45,7 @@ export default function Home() {
 
           <h2>مرحباً بكم في بوابة وزارة العدل</h2>
 
-          <p>
-            النظام الإلكتروني لإدارة القضايا والأحكام والتراخيص.
-          </p>
+          <p>النظام الإلكتروني لإدارة القضايا والأحكام والتراخيص.</p>
 
           {login && (
             <div>
@@ -68,13 +66,9 @@ export default function Home() {
 
               <br /><br />
 
-              <button onClick={handleLogin}>
-                دخول
-              </button>
+              <button onClick={handleLogin}>دخول</button>
 
-              <button onClick={() => setLogin(false)}>
-                إغلاق
-              </button>
+              <button onClick={() => setLogin(false)}>إغلاق</button>
 
               <p style={{ color: "red" }}>{error}</p>
             </div>
@@ -92,7 +86,14 @@ export default function Home() {
 
           <h2>الخدمات</h2>
 
-          <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
             <Link href="/cases">
               <button>⚖️ القضايا</button>
             </Link>
@@ -103,7 +104,10 @@ export default function Home() {
 
             {role === "وزير العدل" && (
               <>
-                <button>👥 إدارة الموظفين</button>
+                <Link href="/employees">
+                  <button>👥 إدارة الموظفين</button>
+                </Link>
+
                 <button>📝 القرارات</button>
               </>
             )}
