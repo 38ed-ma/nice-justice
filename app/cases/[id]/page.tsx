@@ -75,7 +75,6 @@ if(item.id === caseData.id){
 
 return {
 
-
 ...item,
 
 status,
@@ -89,9 +88,7 @@ judgeName,
 judgmentDate:
 new Date().toLocaleDateString("ar-SA")
 
-
 }
-
 
 }
 
@@ -131,6 +128,16 @@ alert("تم حفظ التعديلات")
 
 }
 
+
+}
+
+
+
+
+
+function printJudgment(){
+
+window.print()
 
 }
 
@@ -197,6 +204,7 @@ return(
 <hr/>
 
 
+
 <h3>
 حالة القضية
 </h3>
@@ -244,7 +252,7 @@ onChange={(e)=>setNotes(e.target.value)}
 
 placeholder="اكتب ملاحظات القاضي"
 
- />
+/>
 
 
 
@@ -254,6 +262,7 @@ placeholder="اكتب ملاحظات القاضي"
 <h3>
 ⚖️ إصدار حكم رسمي
 </h3>
+
 
 
 <input
@@ -293,6 +302,18 @@ onChange={(e)=>setJudgment(e.target.value)}
 <button onClick={saveChanges}>
 
 💾 حفظ الحكم والتعديلات
+
+</button>
+
+
+
+<br/><br/>
+
+
+
+<button onClick={printJudgment}>
+
+🖨️ طباعة صك الحكم
 
 </button>
 
