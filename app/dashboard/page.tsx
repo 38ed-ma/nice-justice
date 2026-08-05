@@ -22,6 +22,10 @@ if(savedUser){
 
 setUser(JSON.parse(savedUser))
 
+}else{
+
+window.location.href="/login"
+
 }
 
 
@@ -40,16 +44,28 @@ setCases(JSON.parse(savedCases))
 
 
 
+function logout(){
+
+localStorage.removeItem("user")
+
+window.location.href="/login"
+
+}
+
+
+
 const newCases =
 cases.filter(
 (item)=>item.status === "جديدة"
 ).length
 
 
+
 const reviewing =
 cases.filter(
 (item)=>item.status === "قيد المراجعة"
 ).length
+
 
 
 const closed =
@@ -59,15 +75,22 @@ cases.filter(
 
 
 
+
 return(
 
 
 <main
+
 style={{
+
 padding:"40px",
+
 direction:"rtl",
+
 textAlign:"center"
+
 }}
+
 >
 
 
@@ -88,69 +111,57 @@ textAlign:"center"
 
 
 
+<button onClick={logout}>
+
+🚪 تسجيل خروج
+
+</button>
+
+
+
 <hr/>
 
 
-
-
-<div>
 
 
 <h2>
 📁 إجمالي القضايا
 </h2>
 
-
 <h1>
 {cases.length}
 </h1>
-
-
-</div>
 
 
 
 <hr/>
 
 
-
-
-<div>
 
 
 <h2>
 🆕 قضايا جديدة
 </h2>
 
-
 <h1>
 {newCases}
 </h1>
 
-
-</div>
 
 
 
 <hr/>
 
 
-
-
-<div>
 
 
 <h2>
 🕒 قضايا قيد المراجعة
 </h2>
 
-
 <h1>
 {reviewing}
 </h1>
-
-
-</div>
 
 
 
@@ -160,25 +171,19 @@ textAlign:"center"
 
 
 
-<div>
-
-
 <h2>
 ✅ قضايا مغلقة
 </h2>
-
 
 <h1>
 {closed}
 </h1>
 
 
-</div>
-
-
 
 
 <br/><br/>
+
 
 
 
