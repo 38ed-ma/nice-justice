@@ -7,17 +7,21 @@ export default function Home() {
   const [user, setUser] = useState("")
   const [pass, setPass] = useState("")
   const [role, setRole] = useState("")
+  const [username, setUsername] = useState("")
   const [error, setError] = useState("")
 
   function handleLogin() {
     if (user === "minister" && pass === "1234") {
       setRole("وزير العدل")
+      setUsername("minister")
     } 
     else if (user === "judge" && pass === "J1234") {
       setRole("قاضي")
+      setUsername("judge")
     } 
     else if (user === "lawyer" && pass === "L1234") {
       setRole("محامي")
+      setUsername("lawyer")
     } 
     else {
       setError("بيانات الدخول غير صحيحة")
@@ -81,49 +85,77 @@ export default function Home() {
         </>
       ) : (
         <>
-          <h1>لوحة تحكم وزارة العدل</h1>
-
-          <h2>الرتبة: {role}</h2>
+          <h1>🏛️ وزارة العدل الإلكترونية</h1>
 
           <hr />
 
+          <h2>مرحباً بك</h2>
+
+          <p>
+            المستخدم: {username}
+          </p>
+
+          <p>
+            الرتبة: {role}
+          </p>
+
+          <hr />
+
+          <h2>لوحة التحكم</h2>
+
           <button>
-            القضايا
+            ⚖️ القضايا
           </button>
 
           <button>
-            الأحكام
+            📜 الأحكام
           </button>
 
           {role === "وزير العدل" && (
             <>
               <button>
-                إدارة الموظفين
+                👥 إدارة الموظفين
               </button>
 
               <button>
-                القرارات
+                📝 القرارات
               </button>
             </>
           )}
 
           {role === "قاضي" && (
-            <button>
-              مراجعة القضايا
-            </button>
+            <>
+              <button>
+                📂 القضايا المحالة
+              </button>
+
+              <button>
+                ⚖️ إصدار حكم
+              </button>
+            </>
           )}
 
           {role === "محامي" && (
-            <button>
-              ملفاتي
-            </button>
+            <>
+              <button>
+                📁 ملفاتي
+              </button>
+
+              <button>
+                📄 الطلبات
+              </button>
+            </>
           )}
 
           <br />
 
-          <button onClick={() => setRole("")}>
+          <button onClick={() => {
+            setRole("")
+            setUsername("")
+          }}>
             تسجيل خروج
           </button>
+
         </>
       )}
 
