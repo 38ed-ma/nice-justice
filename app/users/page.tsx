@@ -1,14 +1,15 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { encryptPassword } from "../lib/password"
 import Sidebar from "../components/Sidebar"
-import Auth from "../components/Auth"
 
 
 export default function Users(){
 
 
 const [users,setUsers] = useState<any[]>([])
+
 
 const [username,setUsername] = useState("")
 
@@ -18,16 +19,18 @@ const [role,setRole] = useState("")
 
 
 
+
+
 useEffect(()=>{
 
 
-const savedUsers =
+const saved =
 localStorage.getItem("users")
 
 
-if(savedUsers){
+if(saved){
 
-setUsers(JSON.parse(savedUsers))
+setUsers(JSON.parse(saved))
 
 }
 
@@ -38,7 +41,10 @@ setUsers(JSON.parse(savedUsers))
 
 
 
+
+
 function addUser(){
+
 
 
 if(!username || !password || !role){
@@ -51,23 +57,38 @@ return
 
 
 
-const newUser = {
+
+
+const newUser={
+
 
 id:Date.now(),
 
+
 username,
 
-password,
+
+password:
+
+encryptPassword(password),
+
 
 role
+
+
 
 }
 
 
 
-const updated = [
+
+
+const updated=[
+
 ...users,
+
 newUser
+
 ]
 
 
@@ -93,10 +114,14 @@ setPassword("")
 setRole("")
 
 
+
 alert("تم إضافة المستخدم")
 
 
+
 }
+
+
 
 
 
@@ -110,7 +135,6 @@ const updated =
 users.filter(
 (item)=>item.id !== id
 )
-
 
 
 setUsers(updated)
@@ -136,11 +160,7 @@ JSON.stringify(updated)
 
 return(
 
-<Auth roles={["وزير العدل"]}>
-
-
 <>
-
 
 <Sidebar />
 
@@ -168,6 +188,16 @@ textAlign:"center"
 
 
 
+<hr/>
+
+
+
+
+<h2>
+إضافة مستخدم
+</h2>
+
+
 
 <input
 
@@ -188,9 +218,9 @@ onChange={(e)=>setUsername(e.target.value)}
 
 <input
 
-placeholder="كلمة المرور"
-
 type="password"
+
+placeholder="كلمة المرور"
 
 value={password}
 
@@ -215,41 +245,33 @@ onChange={(e)=>setRole(e.target.value)}
 
 
 <option value="">
-
 اختر الصلاحية
-
 </option>
 
 
-<option value="وزير العدل">
-
+<option>
 وزير العدل
-
 </option>
 
 
-<option value="قاضي">
-
+<option>
 قاضي
-
 </option>
 
 
-<option value="محامي">
-
+<option>
 محامي
-
 </option>
 
 
-<option value="موظف">
-
+<option>
 موظف
-
 </option>
+
 
 
 </select>
+
 
 
 
@@ -260,9 +282,10 @@ onChange={(e)=>setRole(e.target.value)}
 
 <button onClick={addUser}>
 
-➕ إضافة مستخدم
+➕ إضافة
 
 </button>
+
 
 
 
@@ -273,7 +296,8 @@ onChange={(e)=>setRole(e.target.value)}
 
 
 <h2>
-قائمة المستخدمين
+المستخدمين
+
 </h2>
 
 
@@ -284,7 +308,21 @@ onChange={(e)=>setRole(e.target.value)}
 users.map((item)=>(
 
 
-<div key={item.id}>
+<div
+
+key={item.id}
+
+style={{
+
+border:"1px solid #ccc",
+
+padding:"15px",
+
+margin:"10px"
+
+}}
+
+>
 
 
 <p>
@@ -293,8 +331,9 @@ users.map((item)=>(
 
 
 <p>
-⚖️ الصلاحية: {item.role}
+الصلاحية: {item.role}
 </p>
+
 
 
 
@@ -310,9 +349,6 @@ onClick={()=>deleteUser(item.id)}
 
 
 
-<hr/>
-
-
 </div>
 
 
@@ -323,14 +359,12 @@ onClick={()=>deleteUser(item.id)}
 
 
 
+
+
 </main>
 
 
 </>
-
-
-</Auth>
-
 
 )
 
