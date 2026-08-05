@@ -28,7 +28,9 @@ export default function RootLayout({
   <p>📜 الأحكام</p>
   <p>⚙️ الإعدادات</p>
 
+  <Link href="/login">
   <p>🔐 تسجيل دخول للعدل</p>
+</Link>
 
 </nav>
 
