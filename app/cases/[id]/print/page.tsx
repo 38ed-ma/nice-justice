@@ -1,12 +1,17 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import jsPDF from "jspdf"
+import Sidebar from "../../../components/Sidebar"
+
 
 
 export default function PrintJudgment(){
 
 
-const [caseData,setCaseData] = useState<any>(null)
+const [data,setData] = useState<any>(null)
+
+
 
 
 
@@ -38,7 +43,7 @@ cases.find(
 
 
 
-setCaseData(found)
+setData(found)
 
 
 }
@@ -53,9 +58,178 @@ setCaseData(found)
 
 
 
-function printPage(){
+function createPDF(){
 
-window.print()
+
+
+const pdf = new jsPDF()
+
+
+
+pdf.setFontSize(18)
+
+
+pdf.text(
+
+"وزارة العدل",
+
+80,
+
+20
+
+)
+
+
+
+pdf.setFontSize(14)
+
+
+
+pdf.text(
+
+"صك حكم قضائي",
+
+70,
+
+35
+
+)
+
+
+
+
+pdf.text(
+
+`رقم الصك: ${data.deedNumber || "DEED-2026"}`,
+
+20,
+
+55
+
+)
+
+
+
+pdf.text(
+
+`رقم القضية: ${data.id}`,
+
+20,
+
+70
+
+)
+
+
+
+pdf.text(
+
+`المدعي: ${data.plaintiff}`,
+
+20,
+
+85
+
+)
+
+
+
+pdf.text(
+
+`المدعى عليه: ${data.defendant}`,
+
+20,
+
+100
+
+)
+
+
+
+pdf.text(
+
+`القاضي: ${data.judgeName || data.judge}`,
+
+20,
+
+115
+
+)
+
+
+
+
+
+pdf.text(
+
+"الحكم:",
+
+20,
+
+140
+
+)
+
+
+
+pdf.text(
+
+data.judgment || "لا يوجد حكم",
+
+20,
+
+155
+
+)
+
+
+
+
+
+pdf.text(
+
+"توقيع القاضي:",
+
+20,
+
+200
+
+)
+
+
+
+pdf.text(
+
+data.signature || "غير موجود",
+
+20,
+
+215
+
+)
+
+
+
+
+pdf.text(
+
+"ختم وزارة العدل",
+
+120,
+
+230
+
+)
+
+
+
+pdf.save(
+
+`صك-${data.id}.pdf`
+
+)
+
+
 
 }
 
@@ -65,9 +239,9 @@ window.print()
 
 
 
-if(!caseData){
+if(!data){
 
-return <h1>جاري تجهيز الصك...</h1>
+return <h1>جاري التحميل...</h1>
 
 }
 
@@ -77,87 +251,71 @@ return <h1>جاري تجهيز الصك...</h1>
 
 return(
 
+<>
+
+<Sidebar />
+
+
 <main
 
 style={{
 
-padding:"50px",
+marginRight:"280px",
+
+padding:"40px",
 
 direction:"rtl",
 
-textAlign:"center",
-
-fontFamily:"Arial"
+textAlign:"center"
 
 }}
 
 >
 
 
-
 <h1>
-⚖️ وزارة العدل
+📄 صك الحكم
 </h1>
 
 
 
+<hr/>
+
+
+
+
 <h2>
-صك حكم قضائي
+{data.id}
 </h2>
 
 
 
-<hr/>
-
-
-
-
-<h3>
-رقم القضية:
-</h3>
-
 <p>
-{caseData.id}
-</p>
-
-
-
-
-<h3>
-أطراف القضية
-</h3>
-
-
-
-<p>
-المدعي: {caseData.plaintiff}
+رقم الصك:
+{data.deedNumber || "يتم إنشاؤه عند الحفظ"}
 </p>
 
 
 
 <p>
-المدعى عليه: {caseData.defendant}
+القاضي:
+{data.judgeName || data.judge}
 </p>
 
 
 
 
-<h3>
-نوع القضية
-</h3>
+<div
 
+style={{
 
-<p>
-{caseData.type}
-</p>
+border:"2px solid #000",
 
+padding:"20px"
 
+}}
 
-
-<hr/>
-
-
-
+>
 
 
 <h3>
@@ -165,70 +323,44 @@ fontFamily:"Arial"
 </h3>
 
 
-
-<p
-
-style={{
-
-minHeight:"150px",
-
-fontSize:"18px"
-
-}}
-
->
-
-{caseData.judgment || "لم يتم إصدار حكم"}
-
+<p>
+{data.judgment}
 </p>
 
 
-
-
-
-<hr/>
-
-
-
-
-<p>
-القاضي المصدر للحكم:
-<br/>
-
-{caseData.judgeName || caseData.judge}
-
-</p>
-
-
-
-
-<p>
-
-تاريخ الإصدار:
 
 <br/>
 
-{caseData.judgmentDate || 
-new Date().toLocaleDateString("ar-SA")}
 
+<p>
+✍️ توقيع القاضي:
 </p>
 
 
+<h3>
+{data.signature}
+</h3>
 
 
 
-<br/><br/>
+<h2>
+🔴 ختم وزارة العدل
+</h2>
+
+
+
+</div>
 
 
 
 
-<button
 
-onClick={printPage}
+<br/>
 
->
 
-🖨️ طباعة الصك
+<button onClick={createPDF}>
+
+📥 إنشاء PDF
 
 </button>
 
@@ -237,7 +369,9 @@ onClick={printPage}
 
 </main>
 
-)
 
+</>
+
+)
 
 }
