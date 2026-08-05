@@ -3,13 +3,13 @@
 import { useEffect,useState } from "react"
 
 
-export default function Auth({
-children,
-roles
-}:any){
+
+export default function Auth({children,roles}:any){
 
 
 const [allowed,setAllowed] = useState(false)
+
+const [loading,setLoading] = useState(true)
 
 
 
@@ -18,6 +18,7 @@ useEffect(()=>{
 
 const saved =
 localStorage.getItem("user")
+
 
 
 if(!saved){
@@ -35,17 +36,26 @@ JSON.parse(saved)
 
 
 
-if(roles.includes(user.role)){
 
-setAllowed(true)
-
-}else{
+if(
+roles &&
+!roles.includes(user.role)
+){
 
 alert("ليس لديك صلاحية")
 
 window.location.href="/dashboard"
 
+return
+
 }
+
+
+
+
+setAllowed(true)
+
+setLoading(false)
 
 
 
@@ -53,15 +63,29 @@ window.location.href="/dashboard"
 
 
 
-if(!allowed){
 
-return null
+
+
+
+if(loading){
+
+return(
+
+<h1 style={{textAlign:"center"}}>
+
+جاري التحقق...
+
+</h1>
+
+)
 
 }
 
 
 
-return children
+
+
+return allowed ? children : null
 
 
 }
