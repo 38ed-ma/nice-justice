@@ -31,6 +31,18 @@ useEffect(() => {
     status: "جديدة"
   }
 
+  const updatedCases = [...cases, newCase]
+
+  setCases(updatedCases)
+
+  localStorage.setItem("cases", JSON.stringify(updatedCases))
+
+  setPlaintiff("")
+  setDefendant("")
+  setType("")
+  setJudge("")
+}
+
   return (
     <main style={{padding:"40px", textAlign:"center"}}>
 
