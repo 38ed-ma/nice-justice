@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useState } from "react"
 
 export default function Home() {
@@ -85,7 +86,6 @@ export default function Home() {
 
         </>
       ) : (
-
         <>
           <h1>🏛️ لوحة وزارة العدل</h1>
 
@@ -99,9 +99,11 @@ export default function Home() {
 
           <h2>الخدمات</h2>
 
-          <button>
-            ⚖️ القضايا
-          </button>
+          <Link href="/cases">
+            <button>
+              ⚖️ القضايا
+            </button>
+          </Link>
 
           <button>
             📜 الأحكام
