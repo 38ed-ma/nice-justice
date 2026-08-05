@@ -29,7 +29,9 @@ export default function RootLayout({
   <p>👨‍⚖️ القضاة</p>
 </Link>
   <p>👥 المستخدمين</p>
+  <Link href="/verdicts">
   <p>📜 الأحكام</p>
+</Link>
   <p>⚙️ الإعدادات</p>
 
   <Link href="/login">
