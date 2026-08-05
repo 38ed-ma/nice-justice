@@ -7,6 +7,18 @@ export default function Cases(){
 
 const [user,setUser] = useState<any>(null)
 
+const isAdmin =
+user?.role === "رئيس العدل"
+
+const isJudge =
+user?.role === "قاضي"
+
+const isLawyer =
+user?.role === "محامي"
+
+const isEmployee =
+user?.role === "ادارة العدل"
+
 
 const [cases,setCases] = useState<any[]>([])
 
