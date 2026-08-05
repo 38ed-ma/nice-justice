@@ -3,65 +3,97 @@
 }
 
 body {
-  margin:0;
+  margin: 0;
   font-family: Arial, sans-serif;
-  background:#f4f6f8;
+  background: #e8dcc0;
 }
 
+
+/* التصميم العام */
 
 .layout {
-  display:flex;
-  min-height:100vh;
+  display: flex;
+  min-height: 100vh;
 }
 
+
+/* القائمة الجانبية */
 
 .sidebar {
 
-  width:260px;
-  background:#111827;
-  color:white;
-  padding:25px;
+  width: 260px;
+  background: #0b1f3a;
+  color: white;
+  padding: 25px;
 
 }
 
 
 .sidebar h2 {
-  text-align:center;
-  margin-bottom:40px;
+
+  text-align: center;
+  margin-bottom: 40px;
+  color: #d4af37;
+
 }
 
 
 .sidebar p {
 
-  background:#1f2937;
-  padding:15px;
-  border-radius:10px;
-  cursor:pointer;
+  background: #b8860b;
+  padding: 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  text-align: center;
+  transition: 0.3s;
+
 }
 
 
 .sidebar p:hover {
 
-  background:#374151;
+  background: #d4af37;
+  color: #0b1f3a;
 
 }
 
+
+
+/* المحتوى */
 
 .content {
 
-  flex:1;
-  padding:30px;
+  flex: 1;
+  padding: 30px;
 
 }
 
 
+/* الهيدر */
+
 header {
 
-  background:white;
-  padding:20px;
-  border-radius:15px;
-  font-size:22px;
-  font-weight:bold;
-  margin-bottom:30px;
+  background: #d4af37;
+  color: #0b1f3a;
+  padding: 20px;
+  border-radius: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-align: center;
+
+}
+
+
+
+/* الكروت */
+
+.card {
+
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px #0002;
 
 }
