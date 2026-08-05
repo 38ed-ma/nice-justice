@@ -1,138 +1,187 @@
 "use client"
 
-import { useState, useEffect } from "react"
-
-export default function Cases() {
-
-  const [cases, setCases] = useState<any[]>([])
-
-useEffect(() => {
-  const savedCases = localStorage.getItem("cases")
-
-  if (savedCases) {
-    setCases(JSON.parse(savedCases))
-  }
-}, [])
-
-  const [plaintiff, setPlaintiff] = useState("")
-  const [defendant, setDefendant] = useState("")
-  const [type, setType] = useState("")
-  const [judge, setJudge] = useState("")
+import { useEffect, useState } from "react"
 
 
-  function addCase() {
+export default function Cases(){
 
-  const newCase = {
-    id: `NC-2026-${String(cases.length + 1).padStart(4, "0")}`,
-    plaintiff,
-    defendant,
-    type,
-    judge,
-    status: "جديدة"
-  }
 
-  const updatedCases = [...cases, newCase]
+const [cases,setCases] = useState<any[]>([])
 
-  setCases(updatedCases)
+const [search,setSearch] = useState("")
 
-  localStorage.setItem("cases", JSON.stringify(updatedCases))
 
-  setPlaintiff("")
-  setDefendant("")
-  setType("")
-  setJudge("")
+useEffect(()=>{
+
+const savedCases = localStorage.getItem("cases")
+
+if(savedCases){
+
+setCases(JSON.parse(savedCases))
+
 }
 
-  return (
-    <main style={{padding:"40px", textAlign:"center"}}>
-
-      <h1>⚖️ نظام القضايا - وزارة العدل</h1>
-
-      <hr />
-
-      <h2>تسجيل قضية جديدة</h2>
+},[])
 
 
-      <input
-        placeholder="اسم المدعي"
-        value={plaintiff}
-        onChange={(e)=>setPlaintiff(e.target.value)}
-      />
 
-      <br /><br />
+function deleteCase(id:string){
 
+const updated = cases.filter((item)=>item.id !== id)
 
-      <input
-        placeholder="اسم المدعى عليه"
-        value={defendant}
-        onChange={(e)=>setDefendant(e.target.value)}
-      />
+setCases(updated)
 
-      <br /><br />
+localStorage.setItem(
+"cases",
+JSON.stringify(updated)
+)
+
+}
 
 
-      <input
-        placeholder="نوع القضية"
-        value={type}
-        onChange={(e)=>setType(e.target.value)}
-      />
 
-      <br /><br />
+return(
+
+<main>
 
 
-      <input
-        placeholder="القاضي المسؤول"
-        value={judge}
-        onChange={(e)=>setJudge(e.target.value)}
-      />
-
-      <br /><br />
+<h1>
+📁 سجل القضايا
+</h1>
 
 
-      <button onClick={addCase}>
-        إنشاء قضية
-      </button>
+<input
+
+placeholder="🔍 البحث عن قضية"
+
+value={search}
+
+onChange={(e)=>setSearch(e.target.value)}
+
+/>
 
 
-      <hr />
+<br/><br/>
 
 
-      <h2>سجل القضايا</h2>
+<table>
 
 
-      {cases.map((item)=>(
-        <div key={item.id}>
+<thead>
 
-          <h3>
-            📁 {item.id}
-          </h3>
+<tr>
 
-          <p>
-            المدعي: {item.plaintiff}
-          </p>
-
-          <p>
-            المدعى عليه: {item.defendant}
-          </p>
-
-          <p>
-            نوع القضية: {item.type}
-          </p>
-
-          <p>
-            القاضي: {item.judge}
-          </p>
-
-          <p>
-            الحالة: {item.status}
-          </p>
-
-          <hr />
-
-        </div>
-      ))}
+<th>
+رقم القضية
+</th>
 
 
-    </main>
-  )
+<th>
+المدعي
+</th>
+
+
+<th>
+المدعى عليه
+</th>
+
+
+<th>
+القاضي
+</th>
+
+
+<th>
+الحالة
+</th>
+
+
+<th>
+إجراء
+</th>
+
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+{
+
+cases
+.filter((item)=>
+
+item.id.includes(search)
+
+)
+
+.map((item)=>(
+
+
+<tr key={item.id}>
+
+
+<td>
+{item.id}
+</td>
+
+
+<td>
+{item.plaintiff}
+</td>
+
+
+<td>
+{item.defendant}
+</td>
+
+
+<td>
+{item.judge}
+</td>
+
+
+<td>
+{item.status}
+</td>
+
+
+<td>
+
+<button
+onClick={()=>deleteCase(item.id)}
+>
+
+🗑 حذف
+
+</button>
+
+
+</td>
+
+
+</tr>
+
+
+))
+
+
+}
+
+
+
+</tbody>
+
+
+</table>
+
+
+</main>
+
+)
+
 }
