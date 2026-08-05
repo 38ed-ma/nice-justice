@@ -32,7 +32,6 @@ setUser(JSON.parse(saved))
 
 
 
-
 return(
 
 <>
@@ -120,10 +119,9 @@ direction:"rtl"
 
 
 
+
 <p>
-
 الصلاحية:
-
 <br/>
 
 {user?.role}
@@ -134,7 +132,6 @@ direction:"rtl"
 
 
 <hr/>
-
 
 
 
@@ -156,8 +153,6 @@ onClick={()=>window.location.href="/dashboard"}
 
 
 
-
-
 <button
 
 style={btn}
@@ -169,8 +164,6 @@ onClick={()=>window.location.href="/cases"}
 📁 القضايا
 
 </button>
-
-
 
 
 
@@ -192,8 +185,6 @@ onClick={()=>window.location.href="/archive"}
 
 
 
-
-
 <button
 
 style={btn}
@@ -210,6 +201,20 @@ onClick={()=>window.location.href="/calendar"}
 
 
 
+<button
+
+style={btn}
+
+onClick={()=>window.location.href="/notifications"}
+
+>
+
+🔔 الإشعارات
+
+</button>
+
+
+
 
 
 <button
@@ -223,8 +228,6 @@ onClick={()=>window.location.href="/users"}
 👥 المستخدمين
 
 </button>
-
-
 
 
 
