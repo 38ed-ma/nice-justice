@@ -2,88 +2,101 @@
 
 import { useEffect, useState } from "react"
 
-export default function Sidebar() {
 
-  const [user, setUser] = useState<any>(null)
-  const [notifications, setNotifications] = useState(0)
+export default function Sidebar(){
 
+const [user,setUser] = useState<any>(null)
 
-  useEffect(() => {
-
-    const savedUser = localStorage.getItem("user")
-
-    if(savedUser){
-      setUser(JSON.parse(savedUser))
-    }
-
-
-    const savedNotifications = localStorage.getItem("notifications")
-
-    if(savedNotifications){
-      setNotifications(JSON.parse(savedNotifications).length)
-    }
-
-
-  }, [])
+const [notifications,setNotifications] = useState(0)
 
 
 
-  const menu = [
+useEffect(()=>{
 
-    {
-      icon:"🏠",
-      title:"الرئيسية",
-      link:"/dashboard"
-    },
+const savedUser =
+localStorage.getItem("user")
 
-    {
-      icon:"⚖️",
-      title:"القضايا",
-      link:"/cases"
-    },
 
-    {
-      icon:"📜",
-      title:"الأحكام",
-      link:"/archive"
-    },
+if(savedUser){
 
-    {
-      icon:"📅",
-      title:"الجلسات",
-      link:"/calendar"
-    },
+setUser(JSON.parse(savedUser))
 
-    {
-      icon:"👥",
-      title:"المستخدمون",
-      link:"/users"
-    },
+}
 
-    {
-      icon:"🔔",
-      title:`الإشعارات (${notifications})`,
-      link:"/notifications"
-    },
 
-    {
-      icon:"👤",
-      title:"الملف الشخصي",
-      link:"/profile"
-    },
+const savedNotifications =
+localStorage.getItem("notifications")
 
-    {
-      icon:"🔐",
-      title:"تسجيل الدخول",
-      link:"/login"
-    }
 
-  ]
+if(savedNotifications){
+
+setNotifications(
+JSON.parse(savedNotifications).length
+)
+
+}
+
+
+},[])
 
 
 
 
-return (
+const menu=[
+
+{
+icon:"🏠",
+title:"الرئيسية",
+link:"/dashboard"
+},
+
+{
+icon:"⚖️",
+title:"القضايا",
+link:"/cases"
+},
+
+{
+icon:"📜",
+title:"الأحكام",
+link:"/archive"
+},
+
+{
+icon:"📅",
+title:"الجلسات",
+link:"/calendar"
+},
+
+{
+icon:"👥",
+title:"المستخدمون",
+link:"/users"
+},
+
+{
+icon:"🔔",
+title:`الإشعارات (${notifications})`,
+link:"/notifications"
+},
+
+{
+icon:"👤",
+title:"الملف الشخصي",
+link:"/profile"
+},
+
+{
+icon:"🔐",
+title:"تسجيل الدخول",
+link:"/login"
+}
+
+]
+
+
+
+return(
 
 <aside
 
@@ -95,11 +108,12 @@ right:0,
 
 top:0,
 
-width:"300px",
+width:"260px",
 
 height:"100vh",
 
-background:"#0B1F3A",
+background:
+"linear-gradient(180deg,#0B1F3A,#071426)",
 
 color:"white",
 
@@ -107,7 +121,7 @@ display:"flex",
 
 flexDirection:"column",
 
-boxShadow:"-8px 0 25px rgba(0,0,0,.25)",
+boxShadow:"-10px 0 30px rgba(0,0,0,.35)",
 
 zIndex:999
 
@@ -117,31 +131,46 @@ zIndex:999
 
 
 
+
 <div
 
 style={{
 
-padding:"28px",
+padding:"25px 15px",
 
-borderBottom:"1px solid rgba(255,255,255,.15)",
+textAlign:"center",
 
-background:
-"linear-gradient(180deg,#132B4F,#0B1F3A)"
+borderBottom:
+"1px solid rgba(255,255,255,.15)"
 
 }}
 
 >
 
 
+<div
+
+style={{
+
+fontSize:"35px"
+
+}}
+
+>
+
+⚖️
+
+</div>
+
+
+
 <h1
 
 style={{
 
-margin:0,
+margin:"5px 0",
 
-fontSize:"27px",
-
-fontWeight:"bold",
+fontSize:"24px",
 
 color:"#D4AF37"
 
@@ -149,19 +178,16 @@ color:"#D4AF37"
 
 >
 
-⚖️ وزارة العدل
+وزارة العدل
 
 </h1>
-
 
 
 <p
 
 style={{
 
-marginTop:"8px",
-
-fontSize:"15px",
+margin:0,
 
 color:"#E8DCC0"
 
@@ -176,29 +202,30 @@ Minister Of Justice
 
 
 
-
 <div
 
 style={{
 
-marginTop:"25px",
+marginTop:"20px",
 
-background:"rgba(255,255,255,.08)",
+background:"rgba(212,175,55,.12)",
+
+border:"1px solid #D4AF37",
 
 borderRadius:"15px",
 
-padding:"18px"
+padding:"15px"
 
 }}
 
 >
 
 
-<div
+<p
 
 style={{
 
-fontSize:"14px",
+margin:0,
 
 color:"#D4AF37"
 
@@ -208,30 +235,17 @@ color:"#D4AF37"
 
 وزير العدل
 
-</div>
+</p>
 
 
-
-<h2
-
-style={{
-
-margin:"8px 0",
-
-fontSize:"22px"
-
-}}
-
->
+<strong>
 
 عقيد ( خالد ايلفن )
 
-</h2>
-
+</strong>
 
 
 </div>
-
 
 
 
@@ -240,9 +254,13 @@ fontSize:"22px"
 
 style={{
 
-marginTop:"18px",
+marginTop:"15px",
 
-fontSize:"14px"
+background:"rgba(255,255,255,.08)",
+
+padding:"10px",
+
+borderRadius:"10px"
 
 }}
 
@@ -252,10 +270,14 @@ fontSize:"14px"
 
 <br/>
 
+<small>
+
 {user?.role || "بدون صلاحية"}
 
-</div>
+</small>
 
+
+</div>
 
 
 </div>
@@ -268,15 +290,16 @@ fontSize:"14px"
 
 style={{
 
-flex:1,
+padding:"15px",
 
-padding:"18px",
+overflowY:"auto",
 
-overflowY:"auto"
+flex:1
 
 }}
 
 >
+
 
 
 {
@@ -288,7 +311,6 @@ menu.map((item)=>(
 
 key={item.link}
 
-
 onClick={()=>window.location.href=item.link}
 
 
@@ -296,11 +318,11 @@ style={{
 
 width:"100%",
 
-padding:"16px",
+padding:"14px",
 
-marginBottom:"12px",
+marginBottom:"10px",
 
-borderRadius:"14px",
+borderRadius:"12px",
 
 border:"none",
 
@@ -308,13 +330,11 @@ background:"#132B4F",
 
 color:"white",
 
-textAlign:"right",
+fontSize:"15px",
 
 cursor:"pointer",
 
-fontSize:"16px",
-
-transition:".25s"
+textAlign:"right"
 
 }}
 
@@ -327,7 +347,6 @@ e.currentTarget.style.background="#D4AF37"
 e.currentTarget.style.color="#111"
 
 }}
-
 
 
 onMouseLeave={(e)=>{
@@ -343,12 +362,9 @@ e.currentTarget.style.color="white"
 >
 
 
-<span style={{marginLeft:"10px"}}>
-
 {item.icon}
 
-</span>
-
+&nbsp;
 
 {item.title}
 
@@ -368,19 +384,20 @@ e.currentTarget.style.color="white"
 
 
 
-<div
+<footer
 
 style={{
 
-padding:"20px",
+padding:"15px",
 
 textAlign:"center",
 
-borderTop:"1px solid rgba(255,255,255,.1)",
+fontSize:"12px",
 
 color:"#E8DCC0",
 
-fontSize:"13px"
+borderTop:
+"1px solid rgba(255,255,255,.1)"
 
 }}
 
@@ -388,8 +405,7 @@ fontSize:"13px"
 
 Ministry Of Justice © 2026
 
-</div>
-
+</footer>
 
 
 
@@ -397,5 +413,6 @@ Ministry Of Justice © 2026
 
 
 )
+
 
 }
