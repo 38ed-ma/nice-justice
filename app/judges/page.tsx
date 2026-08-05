@@ -52,7 +52,7 @@ function addJudge() {
   setCourt("")
 }
 
-return(
+return (
 
 
 const updated=[...judges,newJudge]
