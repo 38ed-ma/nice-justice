@@ -41,12 +41,19 @@ a{
 }
 
 
-.sidebar h2 {
+.logo{
+  text-align:center;
+  margin-bottom:40px;
+}
 
-  text-align: center;
-  margin-bottom: 40px;
-  color: #d4af37;
+.logo h2{
+  color:#d4af37;
+  margin-bottom:8px;
+}
 
+.logo span{
+  color:#cfd8e3;
+  font-size:14px;
 }
 
 
