@@ -284,6 +284,9 @@ item.id.includes(search)
 
 <td>
 
+{
+isAdmin &&
+
 <button
 onClick={()=>deleteCase(item.id)}
 >
@@ -291,6 +294,8 @@ onClick={()=>deleteCase(item.id)}
 🗑 حذف
 
 </button>
+
+}
 
 </td>
 
