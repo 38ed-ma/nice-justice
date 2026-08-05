@@ -4,10 +4,9 @@ import { useEffect, useState } from "react"
 import Sidebar from "../components/Sidebar"
 
 
+
 export default function Cases(){
 
-
-const [user,setUser] = useState<any>(null)
 
 const [cases,setCases] = useState<any[]>([])
 
@@ -17,31 +16,22 @@ const [search,setSearch] = useState("")
 
 
 const [plaintiff,setPlaintiff] = useState("")
+
 const [defendant,setDefendant] = useState("")
+
 const [judge,setJudge] = useState("")
+
 const [type,setType] = useState("")
+
+
 
 
 
 useEffect(()=>{
 
 
-const savedUser = localStorage.getItem("user")
-
-
-if(savedUser){
-
-setUser(JSON.parse(savedUser))
-
-}else{
-
-window.location.href="/login"
-
-}
-
-
-
-const saved = localStorage.getItem("cases")
+const saved =
+localStorage.getItem("cases")
 
 
 if(saved){
@@ -54,11 +44,6 @@ setCases(JSON.parse(saved))
 },[])
 
 
-
-
-
-const isAdmin =
-user?.role === "وزير العدل"
 
 
 
@@ -77,7 +62,9 @@ return
 
 
 
-const newCase={
+
+
+const newCase = {
 
 
 id:`NC-2026-${String(cases.length+1).padStart(4,"0")}`,
@@ -99,27 +86,96 @@ createdAt:new Date().toLocaleDateString("ar-SA")
 
 
 
-const updated=[...cases,newCase]
+
+
+
+const updated=[
+
+...cases,
+
+newCase
+
+]
+
 
 
 setCases(updated)
 
 
+
 localStorage.setItem(
+
 "cases",
+
 JSON.stringify(updated)
+
 )
+
+
+
+
+
+// 🔔 إنشاء إشعار
+
+const oldNotifications =
+localStorage.getItem("notifications")
+
+
+
+const notifications =
+oldNotifications
+?
+JSON.parse(oldNotifications)
+:
+[]
+
+
+
+
+notifications.push({
+
+id:Date.now(),
+
+title:"📁 قضية جديدة",
+
+message:`تم إنشاء القضية رقم ${newCase.id}`,
+
+date:new Date().toLocaleDateString("ar-SA")
+
+})
+
+
+
+
+localStorage.setItem(
+
+"notifications",
+
+JSON.stringify(notifications)
+
+)
+
+
+
+
 
 
 setShowForm(false)
 
 setPlaintiff("")
+
 setDefendant("")
-setType("")
+
 setJudge("")
+
+setType("")
+
 
 
 }
+
+
+
 
 
 
@@ -129,20 +185,33 @@ setJudge("")
 function deleteCase(id:string){
 
 
+
 const updated =
-cases.filter((item)=>item.id !== id)
+cases.filter(
+(item)=>item.id !== id
+)
+
+
 
 
 setCases(updated)
 
 
+
 localStorage.setItem(
+
 "cases",
+
 JSON.stringify(updated)
+
 )
 
 
+
 }
+
+
+
 
 
 
@@ -157,6 +226,7 @@ return(
 <Sidebar />
 
 
+
 <main
 
 style={{
@@ -165,7 +235,9 @@ marginRight:"280px",
 
 padding:"40px",
 
-direction:"rtl"
+direction:"rtl",
+
+textAlign:"center"
 
 }}
 
@@ -176,6 +248,7 @@ direction:"rtl"
 <h1>
 📁 نظام القضايا
 </h1>
+
 
 
 
@@ -194,8 +267,11 @@ onClick={()=>setShowForm(!showForm)}
 
 
 
+
 {
+
 showForm &&
+
 
 <div>
 
@@ -216,8 +292,6 @@ onChange={(e)=>setPlaintiff(e.target.value)}
 
  />
 
-
-
 <br/><br/>
 
 
@@ -232,9 +306,8 @@ onChange={(e)=>setDefendant(e.target.value)}
 
  />
 
-
-
 <br/><br/>
+
 
 
 
@@ -248,9 +321,8 @@ onChange={(e)=>setType(e.target.value)}
 
  />
 
-
-
 <br/><br/>
+
 
 
 
@@ -264,17 +336,19 @@ onChange={(e)=>setJudge(e.target.value)}
 
  />
 
-
-
 <br/><br/>
+
+
 
 
 
 <button onClick={addCase}>
 
-حفظ القضية
+💾 حفظ القضية
 
 </button>
+
+
 
 
 </div>
@@ -286,7 +360,9 @@ onChange={(e)=>setJudge(e.target.value)}
 
 
 
-<br/><br/>
+
+<hr/>
+
 
 
 
@@ -305,8 +381,15 @@ onChange={(e)=>setSearch(e.target.value)}
 
 
 
-<table border={1} width="100%">
 
+
+<table
+
+border={1}
+
+width="100%"
+
+>
 
 
 <thead>
@@ -332,7 +415,9 @@ onChange={(e)=>setSearch(e.target.value)}
 
 
 
+
 <tbody>
+
 
 
 {
@@ -358,7 +443,9 @@ item.id.includes(search)
 
 onClick={()=>{
 
-window.location.href=`/cases/${item.id}`
+window.location.href=
+
+`/cases/${item.id}`
 
 }}
 
@@ -372,33 +459,21 @@ window.location.href=`/cases/${item.id}`
 </td>
 
 
-<td>
-{item.plaintiff}
-</td>
+
+<td>{item.plaintiff}</td>
 
 
-<td>
-{item.defendant}
-</td>
+<td>{item.defendant}</td>
 
 
-<td>
-{item.judge}
-</td>
+<td>{item.judge}</td>
 
 
-<td>
-{item.status}
-</td>
+<td>{item.status}</td>
 
 
 
 <td>
-
-
-{
-
-isAdmin &&
 
 
 <button
@@ -412,11 +487,8 @@ onClick={()=>deleteCase(item.id)}
 </button>
 
 
-}
-
-
-
 </td>
+
 
 
 </tr>
@@ -428,6 +500,8 @@ onClick={()=>deleteCase(item.id)}
 }
 
 
+
+
 </tbody>
 
 
@@ -436,13 +510,14 @@ onClick={()=>deleteCase(item.id)}
 
 
 
+
+
 </main>
+
 
 
 </>
 
-
 )
-
 
 }
