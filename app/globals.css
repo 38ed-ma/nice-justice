@@ -29,13 +29,15 @@ a{
 
 /* القائمة الجانبية */
 
-.sidebar {
-
-  width: 260px;
-  background: #0b1f3a;
-  color: white;
-  padding: 25px;
-
+.sidebar{
+  width:280px;
+  background:#0d1b2a;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:25px;
+  box-shadow:4px 0 20px rgba(0,0,0,.15);
 }
 
 
