@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Sidebar from "../components/Sidebar"
 
-export default function Cases(){
+alert("وصلت صفحة القضايا")
 
 const [cases,setCases] = useState<any[]>([])
 const [showForm,setShowForm] = useState(false)
