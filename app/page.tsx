@@ -1,14 +1,12 @@
-import Link from "next/link"
-
 export default function Home() {
   return (
     <main>
       <h1>نايس سيتي</h1>
+      <p>وزارة العدل الإلكترونية</p>
 
-      <Link href="/login">
-        افتح تسجيل الدخول
-      </Link>
-
+      <button>
+        تسجيل الدخول (للعدل فقط)
+      </button>
     </main>
   )
 }
