@@ -4,34 +4,28 @@ import { useEffect, useState } from "react"
 import Sidebar from "../components/Sidebar"
 
 
+
 export default function Dashboard(){
 
 
 const [cases,setCases] = useState<any[]>([])
 
-const [user,setUser] = useState<any>(null)
+const [users,setUsers] = useState<any[]>([])
+
+
 
 
 
 useEffect(()=>{
 
 
-const savedUser = localStorage.getItem("user")
+const savedCases =
+localStorage.getItem("cases")
 
 
-if(savedUser){
+const savedUsers =
+localStorage.getItem("users")
 
-setUser(JSON.parse(savedUser))
-
-}else{
-
-window.location.href="/login"
-
-}
-
-
-
-const savedCases = localStorage.getItem("cases")
 
 
 if(savedCases){
@@ -41,29 +35,58 @@ setCases(JSON.parse(savedCases))
 }
 
 
+
+if(savedUsers){
+
+setUsers(JSON.parse(savedUsers))
+
+}
+
+
+
 },[])
+
+
+
 
 
 
 
 const newCases =
 cases.filter(
-(item)=>item.status==="جديدة"
+(item)=>item.status === "جديدة"
 ).length
 
 
 
-const reviewing =
+const closedCases =
 cases.filter(
-(item)=>item.status==="قيد المراجعة"
+(item)=>item.status === "مغلقة"
 ).length
 
 
 
-const closed =
+const judgments =
 cases.filter(
-(item)=>item.status==="مغلقة"
+(item)=>item.judgment
 ).length
+
+
+
+const judges =
+users.filter(
+(item)=>item.role === "قاضي"
+).length
+
+
+
+const lawyers =
+users.filter(
+(item)=>item.role === "محامي"
+).length
+
+
+
 
 
 
@@ -76,6 +99,7 @@ return(
 <Sidebar />
 
 
+
 <main
 
 style={{
@@ -86,9 +110,7 @@ padding:"40px",
 
 direction:"rtl",
 
-textAlign:"center",
-
-fontFamily:"Arial"
+textAlign:"center"
 
 }}
 
@@ -96,48 +118,14 @@ fontFamily:"Arial"
 
 
 <h1>
-⚖️ نظام العدل الإلكتروني
+⚖️ لوحة تحكم وزارة العدل
 </h1>
 
 
-<h2>
-لوحة التحكم
-</h2>
+
+<hr/>
 
 
-
-<div
-
-style={{
-
-background:"#eee",
-
-padding:"20px",
-
-borderRadius:"15px"
-
-}}
-
->
-
-
-<h3>
-👤 {user?.username}
-</h3>
-
-
-<p>
-الصلاحية: {user?.role}
-</p>
-
-
-
-</div>
-
-
-
-
-<br/>
 
 
 
@@ -147,7 +135,7 @@ style={{
 
 display:"grid",
 
-gridTemplateColumns:"repeat(2,1fr)",
+gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",
 
 gap:"20px"
 
@@ -156,114 +144,69 @@ gap:"20px"
 >
 
 
-<div style={card}>
 
-<h2>
-📁
-</h2>
 
-<h3>
-إجمالي القضايا
-</h3>
+<Card
 
-<h1>
-{cases.length}
-</h1>
+title="📁 إجمالي القضايا"
 
-</div>
+value={cases.length}
+
+/>
 
 
 
+<Card
 
+title="🆕 قضايا جديدة"
 
-<div style={card}>
+value={newCases}
 
-<h2>
-🆕
-</h2>
-
-<h3>
-قضايا جديدة
-</h3>
-
-<h1>
-{newCases}
-</h1>
-
-</div>
+/>
 
 
 
+<Card
 
+title="🔒 قضايا مغلقة"
 
-<div style={card}>
+value={closedCases}
 
-<h2>
-🕒
-</h2>
-
-<h3>
-قيد المراجعة
-</h3>
-
-<h1>
-{reviewing}
-</h1>
-
-</div>
+/>
 
 
 
+<Card
+
+title="⚖️ أحكام صادرة"
+
+value={judgments}
+
+/>
 
 
-<div style={card}>
 
-<h2>
-✅
-</h2>
+<Card
 
-<h3>
-القضايا المغلقة
-</h3>
+title="👨‍⚖️ القضاة"
 
-<h1>
-{closed}
-</h1>
+value={judges}
 
-</div>
+/>
+
+
+
+<Card
+
+title="👨‍💼 المحامين"
+
+value={lawyers}
+
+/>
 
 
 
 </div>
-
-
-
-
-<br/><br/>
-
-
-
-<button
-
-style={{
-
-padding:"15px 30px",
-
-fontSize:"18px"
-
-}}
-
-onClick={()=>{
-
-window.location.href="/cases"
-
-}}
-
->
-
-📁 الدخول للقضايا
-
-</button>
 
 
 
@@ -272,21 +215,56 @@ window.location.href="/cases"
 
 </>
 
-
 )
-
 
 }
 
 
 
 
-const card={
 
-padding:"25px",
+
+
+function Card({title,value}:any){
+
+
+return(
+
+<div
+
+style={{
 
 border:"1px solid #ccc",
 
-borderRadius:"15px"
+padding:"25px",
+
+borderRadius:"15px",
+
+fontSize:"20px"
+
+}}
+
+>
+
+
+<h3>
+
+{title}
+
+</h3>
+
+
+
+<h1>
+
+{value}
+
+</h1>
+
+
+
+</div>
+
+)
 
 }
