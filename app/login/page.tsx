@@ -1,86 +1,74 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 
 
 export default function Login(){
 
-const router = useRouter()
 
-const [user,setUser] = useState("")
-const [password,setPassword] = useState("")
-const [error,setError] = useState("")
+const [username,setUsername] = useState("")
+const [role,setRole] = useState("")
+
 
 
 function login(){
 
-if(
-(user === "قاضي" && password === "1289") ||
-(user === "محامي" && password === "3467") ||
-(user === "مسؤول" && password === "0912")
-){
 
-localStorage.setItem("role", user)
+if(!username || !role){
 
-router.push("/")
+alert("عبي جميع البيانات")
 
-}else{
-
-setError("بيانات الدخول غير صحيحة")
+return
 
 }
 
+
+localStorage.setItem(
+"user",
+JSON.stringify({
+
+username,
+
+role
+
+})
+)
+
+
+window.location.href="/"
+
+
 }
+
 
 
 return(
 
-<main style={{
+<main
+style={{
 textAlign:"center",
 padding:"50px"
-}}>
-
-
-<h1>⚖️ تسجيل دخول العدل</h1>
-
-
-<select
-value={user}
-onChange={(e)=>setUser(e.target.value)}
+}}
 >
 
-<option value="">
-اختر المستخدم
-</option>
 
-<option>
-قاضي
-</option>
-
-<option>
-محامي
-</option>
-
-<option>
-مسؤول
-</option>
-
-</select>
+<h1>
+⚖️ نظام العدل الإلكتروني
+</h1>
 
 
-<br/><br/>
+<h2>
+تسجيل الدخول
+</h2>
 
 
 <input
 
-placeholder="كلمة المرور"
+placeholder="اسم المستخدم"
 
-type="password"
+value={username}
 
-value={password}
-
-onChange={(e)=>setPassword(e.target.value)}
+onChange={(e)=>setUsername(e.target.value)}
 
 />
 
@@ -88,14 +76,55 @@ onChange={(e)=>setPassword(e.target.value)}
 <br/><br/>
 
 
+
+<select
+
+value={role}
+
+onChange={(e)=>setRole(e.target.value)}
+
+>
+
+
+<option value="">
+اختر الصلاحية
+</option>
+
+
+<option>
+وزير العدل
+</option>
+
+
+<option>
+قاضي
+</option>
+
+
+<option>
+محامي
+</option>
+
+
+<option>
+موظف
+</option>
+
+
+</select>
+
+
+
+<br/><br/>
+
+
+
 <button onClick={login}>
+
 دخول
+
 </button>
 
-
-<p style={{color:"red"}}>
-{error}
-</p>
 
 
 </main>
