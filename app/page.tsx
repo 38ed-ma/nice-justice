@@ -6,23 +6,32 @@ export default function Home() {
   const [login, setLogin] = useState(false)
   const [user, setUser] = useState("")
   const [pass, setPass] = useState("")
-  const [dashboard, setDashboard] = useState(false)
+  const [role, setRole] = useState("")
   const [error, setError] = useState("")
 
   function handleLogin() {
-    if (user === "admin" && pass === "1234") {
-      setDashboard(true)
-      setLogin(false)
-      setError("")
-    } else {
+    if (user === "minister" && pass === "1234") {
+      setRole("وزير العدل")
+    } 
+    else if (user === "judge" && pass === "J1234") {
+      setRole("قاضي")
+    } 
+    else if (user === "lawyer" && pass === "L1234") {
+      setRole("محامي")
+    } 
+    else {
       setError("بيانات الدخول غير صحيحة")
+      return
     }
+
+    setLogin(false)
+    setError("")
   }
 
   return (
     <main>
 
-      {!dashboard ? (
+      {!role ? (
         <>
           <h1>نايس سيتي</h1>
           <p>وزارة العدل الإلكترونية</p>
@@ -34,6 +43,7 @@ export default function Home() {
           <hr />
 
           <h2>مرحباً بكم في بوابة وزارة العدل</h2>
+
           <p>
             هنا يتم تقديم الخدمات الإلكترونية الخاصة بالعدل والقضايا والتراخيص.
           </p>
@@ -73,16 +83,45 @@ export default function Home() {
         <>
           <h1>لوحة تحكم وزارة العدل</h1>
 
-          <p>مرحباً بك في النظام الإداري</p>
+          <h2>الرتبة: {role}</h2>
 
-          <button>القضايا</button>
-          <button>الأحكام</button>
-          <button>التراخيص</button>
-          <button>المحامين</button>
+          <hr />
+
+          <button>
+            القضايا
+          </button>
+
+          <button>
+            الأحكام
+          </button>
+
+          {role === "وزير العدل" && (
+            <>
+              <button>
+                إدارة الموظفين
+              </button>
+
+              <button>
+                القرارات
+              </button>
+            </>
+          )}
+
+          {role === "قاضي" && (
+            <button>
+              مراجعة القضايا
+            </button>
+          )}
+
+          {role === "محامي" && (
+            <button>
+              ملفاتي
+            </button>
+          )}
 
           <br />
 
-          <button onClick={() => setDashboard(false)}>
+          <button onClick={() => setRole("")}>
             تسجيل خروج
           </button>
         </>
