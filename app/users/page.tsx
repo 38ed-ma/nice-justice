@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Sidebar from "../components/Sidebar"
 
 
 export default function Users(){
@@ -8,22 +9,42 @@ export default function Users(){
 
 const [users,setUsers] = useState<any[]>([])
 
-const [name,setName] = useState("")
+const [username,setUsername] = useState("")
+
 const [role,setRole] = useState("")
+
+const [currentUser,setCurrentUser] = useState<any>(null)
 
 
 
 useEffect(()=>{
 
-const saved = localStorage.getItem("users")
 
-if(saved){
+const savedUser =
+localStorage.getItem("user")
 
-setUsers(JSON.parse(saved))
+
+if(savedUser){
+
+setCurrentUser(JSON.parse(savedUser))
 
 }
 
+
+
+const savedUsers =
+localStorage.getItem("users")
+
+
+if(savedUsers){
+
+setUsers(JSON.parse(savedUsers))
+
+}
+
+
 },[])
+
 
 
 
@@ -31,11 +52,21 @@ setUsers(JSON.parse(saved))
 function addUser(){
 
 
+if(!username || !role){
+
+alert("اكمل البيانات")
+
+return
+
+}
+
+
+
 const newUser={
 
-id:`U-${String(users.length+1).padStart(3,"0")}`,
+id:Date.now(),
 
-name,
+username,
 
 role
 
@@ -50,13 +81,19 @@ setUsers(updated)
 
 
 localStorage.setItem(
+
 "users",
+
 JSON.stringify(updated)
+
 )
 
 
-setName("")
+
+setUsername("")
+
 setRole("")
+
 
 }
 
@@ -64,10 +101,12 @@ setRole("")
 
 
 
-function deleteUser(id:string){
+
+function deleteUser(id:number){
 
 
-const updated = users.filter(
+const updated =
+users.filter(
 (item)=>item.id !== id
 )
 
@@ -76,8 +115,11 @@ setUsers(updated)
 
 
 localStorage.setItem(
+
 "users",
+
 JSON.stringify(updated)
+
 )
 
 
@@ -86,9 +128,39 @@ JSON.stringify(updated)
 
 
 
+
+
+if(currentUser?.role !== "وزير العدل"){
+
+return <h1>ليس لديك صلاحية</h1>
+
+}
+
+
+
+
+
 return(
 
-<main>
+<>
+
+
+<Sidebar />
+
+
+<main
+
+style={{
+
+marginRight:"20px",
+
+padding:"40px",
+
+direction:"rtl"
+
+}}
+
+>
 
 
 <h1>
@@ -97,18 +169,21 @@ return(
 
 
 
-<div className="card">
-
 
 <input
 
 placeholder="اسم المستخدم"
 
-value={name}
+value={username}
 
-onChange={(e)=>setName(e.target.value)}
+onChange={(e)=>setUsername(e.target.value)}
 
  />
+
+
+
+<br/><br/>
+
 
 
 
@@ -122,8 +197,14 @@ onChange={(e)=>setRole(e.target.value)}
 
 
 <option>
-اختر الصلاحية
+اختر الرتبة
 </option>
+
+
+<option>
+وزير العدل
+</option>
+
 
 <option>
 قاضي
@@ -136,11 +217,17 @@ onChange={(e)=>setRole(e.target.value)}
 
 
 <option>
-مسؤول
+موظف
 </option>
 
 
 </select>
+
+
+
+
+<br/><br/>
+
 
 
 
@@ -151,72 +238,43 @@ onChange={(e)=>setRole(e.target.value)}
 </button>
 
 
-</div>
 
 
 
-<br/>
-
-
-<table>
-
-
-<thead>
-
-<tr>
-
-<th>
-الرقم
-</th>
-
-<th>
-الاسم
-</th>
-
-<th>
-الصلاحية
-</th>
-
-<th>
-إجراء
-</th>
-
-</tr>
-
-</thead>
+<hr/>
 
 
 
-<tbody>
+
+<h2>
+المستخدمين
+</h2>
+
 
 
 {
 
-users.map((user)=>(
+users.map((item)=>(
 
 
-<tr key={user.id}>
+<div key={item.id}>
 
 
-<td>
-{user.id}
-</td>
+<p>
+👤 {item.username}
+</p>
 
 
-<td>
-{user.name}
-</td>
+<p>
+الصلاحية: {item.role}
+</p>
 
 
-<td>
-{user.role}
-</td>
-
-
-<td>
 
 <button
-onClick={()=>deleteUser(user.id)}
+
+onClick={()=>deleteUser(item.id)}
+
 >
 
 🗑 حذف
@@ -224,10 +282,10 @@ onClick={()=>deleteUser(user.id)}
 </button>
 
 
-</td>
+<hr/>
 
 
-</tr>
+</div>
 
 
 ))
@@ -237,14 +295,10 @@ onClick={()=>deleteUser(user.id)}
 
 
 
-</tbody>
-
-
-</table>
-
-
-
 </main>
+
+
+</>
 
 )
 
