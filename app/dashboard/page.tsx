@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Sidebar from "../components/Sidebar"
 
 
 export default function Dashboard(){
@@ -45,18 +46,6 @@ setCases(JSON.parse(savedCases))
 
 
 
-function logout(){
-
-localStorage.removeItem("user")
-
-window.location.href="/login"
-
-}
-
-
-
-
-
 const newCases =
 cases.filter(
 (item)=>item.status==="جديدة"
@@ -81,10 +70,17 @@ cases.filter(
 
 return(
 
+<>
+
+
+<Sidebar />
+
 
 <main
 
 style={{
+
+marginRight:"280px",
 
 padding:"40px",
 
@@ -136,13 +132,6 @@ borderRadius:"15px"
 
 
 
-<button onClick={logout}>
-
-🚪 تسجيل خروج
-
-</button>
-
-
 </div>
 
 
@@ -167,19 +156,7 @@ gap:"20px"
 >
 
 
-<div
-
-style={{
-
-padding:"25px",
-
-border:"1px solid #ccc",
-
-borderRadius:"15px"
-
-}}
-
->
+<div style={card}>
 
 <h2>
 📁
@@ -199,19 +176,7 @@ borderRadius:"15px"
 
 
 
-<div
-
-style={{
-
-padding:"25px",
-
-border:"1px solid #ccc",
-
-borderRadius:"15px"
-
-}}
-
->
+<div style={card}>
 
 <h2>
 🆕
@@ -231,19 +196,7 @@ borderRadius:"15px"
 
 
 
-<div
-
-style={{
-
-padding:"25px",
-
-border:"1px solid #ccc",
-
-borderRadius:"15px"
-
-}}
-
->
+<div style={card}>
 
 <h2>
 🕒
@@ -263,19 +216,7 @@ borderRadius:"15px"
 
 
 
-<div
-
-style={{
-
-padding:"25px",
-
-border:"1px solid #ccc",
-
-borderRadius:"15px"
-
-}}
-
->
+<div style={card}>
 
 <h2>
 ✅
@@ -299,7 +240,6 @@ borderRadius:"15px"
 
 
 <br/><br/>
-
 
 
 
@@ -330,7 +270,23 @@ window.location.href="/cases"
 </main>
 
 
+</>
+
+
 )
 
+
+}
+
+
+
+
+const card={
+
+padding:"25px",
+
+border:"1px solid #ccc",
+
+borderRadius:"15px"
 
 }
