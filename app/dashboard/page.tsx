@@ -1,343 +1,118 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import Sidebar from "../components/Sidebar"
 
+export default function Dashboard() {
+  return (
+    <>
+      <Sidebar />
 
-export default function Dashboard(){
+      <main className="main">
 
+        <header className="header">
 
-const [cases,setCases] = useState<any[]>([])
+          <div>
+            <h1>⚖️ وزارة العدل</h1>
+            <p>Minister Of Justice</p>
+          </div>
 
-const [users,setUsers] = useState<any[]>([])
+          <div className="minister">
 
+            <span>وزير العدل</span>
 
+            <h2>خالد ايلفن</h2>
 
-useEffect(()=>{
+            <small>( عقيد )</small>
 
+          </div>
 
-const savedCases =
-localStorage.getItem("cases")
+        </header>
 
+        <section className="cards">
 
-const savedUsers =
-localStorage.getItem("users")
+          <div className="card">
+            <h3>📁</h3>
+            <h2>128</h2>
+            <p>القضايا</p>
+          </div>
 
+          <div className="card">
+            <h3>⚖️</h3>
+            <h2>84</h2>
+            <p>الأحكام</p>
+          </div>
 
+          <div className="card">
+            <h3>👥</h3>
+            <h2>24</h2>
+            <p>المستخدمون</p>
+          </div>
 
-if(savedCases){
+          <div className="card">
+            <h3>📅</h3>
+            <h2>17</h2>
+            <p>الجلسات</p>
+          </div>
 
-setCases(JSON.parse(savedCases))
+        </section>
 
-}
+        <section className="tableBox">
 
+          <div className="tableHeader">
 
+            <h2>آخر القضايا</h2>
 
-if(savedUsers){
+            <button>+ قضية جديدة</button>
 
-setUsers(JSON.parse(savedUsers))
+          </div>
 
-}
+          <table>
 
+            <thead>
 
+              <tr>
 
-},[])
+                <th>رقم</th>
 
+                <th>المدعي</th>
 
+                <th>المدعى عليه</th>
 
+                <th>الحالة</th>
 
+                <th>القاضي</th>
 
-const totalCases =
-cases.length
+              </tr>
 
+            </thead>
 
+            <tbody>
 
-const newCases =
-cases.filter(
-(item)=>item.status === "جديدة"
-).length
+              <tr>
 
+                <td>#1001</td>
 
+                <td>محمد</td>
 
+                <td>أحمد</td>
 
-const closedCases =
-cases.filter(
-(item)=>item.status === "مغلقة"
-).length
+                <td>
+                  <span className="green">
+                    مكتملة
+                  </span>
+                </td>
 
+                <td>خالد ايلفن</td>
 
+              </tr>
 
+            </tbody>
 
-const judgments =
-cases.filter(
-(item)=>item.judgment
-).length
+          </table>
 
+        </section>
 
-
-
-const judges =
-users.filter(
-(item)=>item.role === "قاضي"
-).length
-
-
-
-
-const lawyers =
-users.filter(
-(item)=>item.role === "محامي"
-).length
-
-
-
-
-
-
-return(
-
-<>
-
-
-<Sidebar />
-
-
-
-<main
-
-style={{
-
-marginRight:"280px",
-
-padding:"30px",
-
-direction:"rtl",
-
-textAlign:"center"
-
-}}
-
->
-
-
-<h1>
-⚖️ لوحة وزارة العدل
-</h1>
-
-
-
-<p>
-إحصائيات النظام
-</p>
-
-
-
-<hr/>
-
-
-
-
-
-<div
-
-style={{
-
-display:"grid",
-
-gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",
-
-gap:"15px"
-
-}}
-
->
-
-
-
-
-<Box
-
-title="📁 إجمالي القضايا"
-
-number={totalCases}
-
-/>
-
-
-
-<Box
-
-title="🆕 القضايا الجديدة"
-
-number={newCases}
-
-/>
-
-
-
-<Box
-
-title="🔒 القضايا المغلقة"
-
-number={closedCases}
-
-/>
-
-
-
-<Box
-
-title="⚖️ الأحكام الصادرة"
-
-number={judgments}
-
-/>
-
-
-
-<Box
-
-title="👨‍⚖️ القضاة"
-
-number={judges}
-
-/>
-
-
-
-<Box
-
-title="👨‍💼 المحامين"
-
-number={lawyers}
-
-/>
-
-
-
-</div>
-
-
-
-
-
-<hr/>
-
-
-
-
-<h2>
-📊 حالة القضايا
-</h2>
-
-
-
-
-<div
-
-style={{
-
-width:"300px",
-
-height:"20px",
-
-background:"#ddd",
-
-margin:"auto",
-
-borderRadius:"20px",
-
-overflow:"hidden"
-
-}}
-
->
-
-
-<div
-
-style={{
-
-width:
-`${totalCases ? (closedCases/totalCases)*100 : 0}%`,
-
-height:"100%",
-
-background:"green"
-
-}}
-
->
-
-
-</div>
-
-
-</div>
-
-
-
-<p>
-
-نسبة القضايا المغلقة
-
-</p>
-
-
-
-
-
-
-</main>
-
-
-</>
-
-)
-
-}
-
-
-
-
-
-
-function Box({title,number}:any){
-
-
-return(
-
-<div
-
-style={{
-
-border:"1px solid #ccc",
-
-padding:"20px",
-
-borderRadius:"15px"
-
-}}
-
->
-
-
-<h3>
-
-{title}
-
-</h3>
-
-
-<h1>
-
-{number}
-
-</h1>
-
-
-</div>
-
-)
-
+      </main>
+    </>
+  )
 }
