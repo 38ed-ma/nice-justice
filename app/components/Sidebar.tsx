@@ -81,7 +81,6 @@ borderRadius:"10px"
 
 
 
-
 <aside
 
 style={{
@@ -131,12 +130,14 @@ direction:"rtl"
 
 
 
+
 <p>
 الصلاحية:
 <br/>
-{user?.role}
-</p>
 
+{user?.role}
+
+</p>
 
 
 
@@ -189,6 +190,23 @@ onClick={()=>window.location.href="/archive"}
 >
 
 📚 أرشيف الأحكام
+
+</button>
+
+
+
+
+
+
+<button
+
+style={btn}
+
+onClick={()=>window.location.href="/calendar"}
+
+>
+
+📅 مواعيد الجلسات
 
 </button>
 
