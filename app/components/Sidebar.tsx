@@ -1,49 +1,192 @@
 "use client"
 
-import Link from "next/link"
 import { useEffect, useState } from "react"
 
-export default function Sidebar() {
-  const [role, setRole] = useState("")
 
-  useEffect(() => {
-    const savedRole = localStorage.getItem("role")
-    if (savedRole) {
-      setRole(savedRole)
-    }
-  }, [])
+export default function Sidebar(){
 
-  return (
-    <aside className="sidebar">
 
-      <div className="logo">
-        <h2>⚖️ وزارة العدل</h2>
-        <span>النظام الإلكتروني</span>
-      </div>
+const [user,setUser] = useState<any>(null)
 
-      <nav>
 
-        <Link href="/">🏠 الرئيسية</Link>
 
-        <Link href="/cases">📁 القضايا</Link>
+useEffect(()=>{
 
-        <Link href="/judges">👨‍⚖️ القضاة</Link>
 
-        {role === "مسؤول" && (
-          <Link href="/users">👥 المستخدمين</Link>
-        )}
+const saved = localStorage.getItem("user")
 
-        <Link href="/verdicts">📜 الأحكام</Link>
 
-        <Link href="/settings">⚙️ الإعدادات</Link>
+if(saved){
 
-      </nav>
+setUser(JSON.parse(saved))
 
-      <div className="sidebar-footer">
-        <p>الصلاحية الحالية</p>
-        <strong>{role || "غير مسجل"}</strong>
-      </div>
+}
 
-    </aside>
-  )
+
+},[])
+
+
+
+
+function logout(){
+
+localStorage.removeItem("user")
+
+window.location.href="/login"
+
+}
+
+
+
+return(
+
+<aside
+
+style={{
+
+width:"250px",
+
+height:"100vh",
+
+background:"#111827",
+
+color:"white",
+
+padding:"20px",
+
+position:"fixed",
+
+right:0,
+
+top:0,
+
+direction:"rtl"
+
+}}
+
+>
+
+
+<h2>
+⚖️ العدل الإلكتروني
+</h2>
+
+
+<hr/>
+
+
+
+<p>
+👤 {user?.username}
+</p>
+
+
+<p>
+الصلاحية:
+<br/>
+{user?.role}
+</p>
+
+
+
+<hr/>
+
+
+
+<button
+
+onClick={()=>window.location.href="/dashboard"}
+
+style={btn}
+
+>
+
+🏠 الرئيسية
+
+</button>
+
+
+
+<button
+
+onClick={()=>window.location.href="/cases"}
+
+style={btn}
+
+>
+
+📁 القضايا
+
+</button>
+
+
+
+<button
+
+onClick={()=>window.location.href="/cases"}
+
+style={btn}
+
+>
+
+⚖️ الأحكام
+
+</button>
+
+
+
+<button
+
+onClick={()=>window.location.href="/users"}
+
+style={btn}
+
+>
+
+👥 المستخدمين
+
+</button>
+
+
+
+<button
+
+onClick={logout}
+
+style={btn}
+
+>
+
+🚪 تسجيل خروج
+
+</button>
+
+
+
+</aside>
+
+)
+
+}
+
+
+
+const btn={
+
+width:"100%",
+
+padding:"12px",
+
+marginTop:"10px",
+
+background:"#1f2937",
+
+color:"white",
+
+border:"none",
+
+borderRadius:"8px",
+
+cursor:"pointer"
+
 }
