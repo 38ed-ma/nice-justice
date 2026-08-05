@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import jsPDF from "jspdf"
+import QRCode from "qrcode"
 import Sidebar from "../../../components/Sidebar"
 
 
@@ -11,11 +12,18 @@ export default function PrintJudgment(){
 
 const [data,setData] = useState<any>(null)
 
+const [qr,setQr] = useState("")
+
+
+
 
 
 
 
 useEffect(()=>{
+
+
+async function load(){
 
 
 const id =
@@ -46,7 +54,30 @@ cases.find(
 setData(found)
 
 
+
+
+const qrCode =
+await QRCode.toDataURL(
+
+`justice-system/check/${id}`
+
+)
+
+
+
+setQr(qrCode)
+
+
+
 }
+
+
+
+}
+
+
+
+load()
 
 
 
@@ -58,15 +89,34 @@ setData(found)
 
 
 
+
+
 function createPDF(){
 
 
 
-const pdf = new jsPDF()
+const pdf =
+new jsPDF()
 
 
 
-pdf.setFontSize(18)
+
+
+// إطار الصك
+
+pdf.rect(
+10,
+10,
+190,
+270
+)
+
+
+
+
+
+pdf.setFontSize(20)
+
 
 
 pdf.text(
@@ -75,13 +125,15 @@ pdf.text(
 
 80,
 
-20
+30
 
 )
 
 
 
-pdf.setFontSize(14)
+
+
+pdf.setFontSize(16)
 
 
 
@@ -91,22 +143,17 @@ pdf.text(
 
 70,
 
-35
+45
 
 )
 
 
 
 
-pdf.text(
 
-`رقم الصك: ${data.deedNumber || "DEED-2026"}`,
 
-20,
 
-55
-
-)
+pdf.setFontSize(12)
 
 
 
@@ -124,7 +171,10 @@ pdf.text(
 
 pdf.text(
 
-`المدعي: ${data.plaintiff}`,
+`رقم الصك: ${
+data.deedNumber ||
+"DEED-2026"
+}`,
 
 20,
 
@@ -134,9 +184,11 @@ pdf.text(
 
 
 
+
+
 pdf.text(
 
-`المدعى عليه: ${data.defendant}`,
+`المدعي: ${data.plaintiff}`,
 
 20,
 
@@ -148,7 +200,7 @@ pdf.text(
 
 pdf.text(
 
-`القاضي: ${data.judgeName || data.judge}`,
+`المدعى عليه: ${data.defendant}`,
 
 20,
 
@@ -158,27 +210,16 @@ pdf.text(
 
 
 
-
-
 pdf.text(
 
-"الحكم:",
+`القاضي: ${
+data.judgeName ||
+data.judge
+}`,
 
 20,
 
-140
-
-)
-
-
-
-pdf.text(
-
-data.judgment || "لا يوجد حكم",
-
-20,
-
-155
+130
 
 )
 
@@ -188,11 +229,11 @@ data.judgment || "لا يوجد حكم",
 
 pdf.text(
 
-"توقيع القاضي:",
+"نص الحكم:",
 
 20,
 
-200
+150
 
 )
 
@@ -200,13 +241,33 @@ pdf.text(
 
 pdf.text(
 
-data.signature || "غير موجود",
+data.judgment ||
+
+"لا يوجد حكم",
 
 20,
 
-215
+165
 
 )
+
+
+
+
+
+pdf.text(
+
+`توقيع القاضي: ${
+data.signature ||
+""
+}`,
+
+20,
+
+210
+
+)
+
 
 
 
@@ -220,6 +281,23 @@ pdf.text(
 230
 
 )
+
+
+
+
+
+
+pdf.text(
+
+`رقم التحقق: ${Date.now()}`,
+
+20,
+
+250
+
+)
+
+
 
 
 
@@ -239,11 +317,22 @@ pdf.save(
 
 
 
+
 if(!data){
 
-return <h1>جاري التحميل...</h1>
+return (
+
+<h1>
+
+جاري تحميل الصك...
+
+</h1>
+
+)
 
 }
+
+
 
 
 
@@ -253,7 +342,9 @@ return(
 
 <>
 
+
 <Sidebar />
+
 
 
 <main
@@ -273,34 +364,10 @@ textAlign:"center"
 >
 
 
+
 <h1>
-📄 صك الحكم
+📜 صك الحكم
 </h1>
-
-
-
-<hr/>
-
-
-
-
-<h2>
-{data.id}
-</h2>
-
-
-
-<p>
-رقم الصك:
-{data.deedNumber || "يتم إنشاؤه عند الحفظ"}
-</p>
-
-
-
-<p>
-القاضي:
-{data.judgeName || data.judge}
-</p>
 
 
 
@@ -309,13 +376,96 @@ textAlign:"center"
 
 style={{
 
-border:"2px solid #000",
+border:"3px solid black",
 
-padding:"20px"
+padding:"30px",
+
+borderRadius:"10px"
 
 }}
 
 >
+
+
+
+<h2>
+⚖️ وزارة العدل
+</h2>
+
+
+
+<h3>
+صك حكم قضائي
+</h3>
+
+
+
+
+<hr/>
+
+
+
+
+
+<p>
+
+رقم القضية:
+
+{data.id}
+
+</p>
+
+
+
+
+<p>
+
+رقم الصك:
+
+{data.deedNumber || "DEED-2026"}
+
+</p>
+
+
+
+
+<p>
+
+المدعي:
+
+{data.plaintiff}
+
+</p>
+
+
+
+
+<p>
+
+المدعى عليه:
+
+{data.defendant}
+
+</p>
+
+
+
+
+<p>
+
+القاضي:
+
+{data.judgeName || data.judge}
+
+</p>
+
+
+
+
+
+<hr/>
+
+
 
 
 <h3>
@@ -324,28 +474,56 @@ padding:"20px"
 
 
 <p>
+
 {data.judgment}
+
 </p>
+
 
 
 
 <br/>
 
 
+
+
 <p>
-✍️ توقيع القاضي:
+✍️ توقيع القاضي
 </p>
 
 
 <h3>
+
 {data.signature}
+
 </h3>
+
 
 
 
 <h2>
 🔴 ختم وزارة العدل
 </h2>
+
+
+
+
+
+{
+
+qr &&
+
+<img
+
+src={qr}
+
+width="120"
+
+/>
+
+}
+
+
 
 
 
@@ -358,11 +536,18 @@ padding:"20px"
 <br/>
 
 
-<button onClick={createPDF}>
+
+
+<button
+
+onClick={createPDF}
+
+>
 
 📥 إنشاء PDF
 
 </button>
+
 
 
 
