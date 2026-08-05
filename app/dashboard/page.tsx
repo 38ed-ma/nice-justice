@@ -2,7 +2,9 @@
 
 import Sidebar from "../components/Sidebar"
 
+
 export default function Dashboard(){
+
 
 return(
 
@@ -14,11 +16,13 @@ return(
 <main
 
 style={{
+
 marginRight:"260px",
 padding:"35px",
 direction:"rtl",
 background:"#E8DCC0",
 minHeight:"100vh"
+
 }}
 
 >
@@ -34,8 +38,7 @@ padding:"30px",
 borderRadius:"20px",
 display:"flex",
 justifyContent:"space-between",
-alignItems:"center",
-marginBottom:"30px"
+alignItems:"center"
 
 }}
 
@@ -49,53 +52,42 @@ marginBottom:"30px"
 </h1>
 
 
-<p style={{
-color:"#D4AF37"
-}}>
+<p style={{color:"#D4AF37"}}>
 Minister Of Justice
 </p>
-
 
 </div>
 
 
 
 <div
-
 style={{
-
-background:"rgba(255,255,255,.1)",
+background:"#132B4F",
 padding:"20px",
 borderRadius:"15px",
 textAlign:"center"
-
 }}
-
 >
 
 <p>
 وزير العدل
 </p>
 
-<h2 style={{
-color:"#D4AF37"
-}}>
+
+<h2 style={{color:"#D4AF37"}}>
 خالد ايلفن
 </h2>
 
 
-<small>
+<span>
 ( عقيد )
-</small>
+</span>
 
 
 </div>
 
 
-
 </header>
-
-
 
 
 
@@ -105,29 +97,28 @@ style={{
 
 display:"grid",
 gridTemplateColumns:"repeat(4,1fr)",
-gap:"20px"
+gap:"20px",
+marginTop:"30px"
 
 }}
 
 >
 
 
-{[
+{
 
+[
 ["📁","128","القضايا"],
-
 ["⚖️","84","الأحكام"],
-
 ["👥","24","المستخدمون"],
-
 ["📅","17","الجلسات"]
 
-].map((item:any)=>(
+].map((x:any)=>(
 
 
 <div
 
-key={item[2]}
+key={x[2]}
 
 style={{
 
@@ -135,40 +126,29 @@ background:"white",
 padding:"25px",
 borderRadius:"20px",
 textAlign:"center",
-boxShadow:"0 8px 20px #0003",
 borderTop:"5px solid #D4AF37"
 
 }}
 
 >
 
+<h1>{x[0]}</h1>
 
-<h1>
-{item[0]}
-</h1>
+<h2>{x[1]}</h2>
 
-
-<h2 style={{
-fontSize:"35px"
-}}>
-{item[1]}
-</h2>
-
-
-<p>
-{item[2]}
-</p>
+<p>{x[2]}</p>
 
 
 </div>
 
 
-))}
+))
+
+
+}
 
 
 </section>
-
-
 
 
 
@@ -176,7 +156,7 @@ fontSize:"35px"
 
 style={{
 
-marginTop:"35px",
+marginTop:"30px",
 background:"white",
 padding:"25px",
 borderRadius:"20px"
@@ -191,52 +171,36 @@ borderRadius:"20px"
 </h2>
 
 
-<table
-
-style={{
-
+<table style={{
 width:"100%",
-marginTop:"20px",
-borderCollapse:"collapse"
+marginTop:"20px"
+}}>
 
-}}
-
->
-
-
-<thead>
 
 <tr>
 
-<th>رقم القضية</th>
-<th>المدعي</th>
-<th>المدعى عليه</th>
-<th>الحالة</th>
+<th>
+رقم القضية
+</th>
+
+<th>
+الحالة
+</th>
 
 </tr>
 
-</thead>
-
-
-
-<tbody>
 
 <tr>
 
-<td>NC-2026-0001</td>
-
-<td>محمد</td>
-
-<td>أحمد</td>
+<td>
+NC-2026-0001
+</td>
 
 <td>
-مكتملة
+جديدة
 </td>
 
 </tr>
-
-
-</tbody>
 
 
 </table>
