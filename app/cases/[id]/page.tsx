@@ -29,7 +29,6 @@ user?.role === "قاضي"
 
 
 
-
 useEffect(()=>{
 
 
@@ -82,7 +81,6 @@ setJudgeName(found?.judgeName || "")
 }
 
 
-
 },[])
 
 
@@ -94,10 +92,8 @@ setJudgeName(found?.judgeName || "")
 function saveChanges(){
 
 
-
 const saved =
 localStorage.getItem("cases")
-
 
 
 if(saved){
@@ -115,7 +111,7 @@ allCases.map((item:any)=>{
 if(item.id === caseData.id){
 
 
-return {
+return{
 
 ...item,
 
@@ -153,16 +149,13 @@ JSON.stringify(updated)
 
 
 
-alert("تم حفظ التعديلات")
+alert("تم حفظ الحكم")
 
 
 }
 
 
-
 }
-
-
 
 
 
@@ -182,8 +175,6 @@ window.location.href =
 
 
 
-
-
 if(!caseData){
 
 return <h1>جاري تحميل القضية...</h1>
@@ -198,8 +189,12 @@ return <h1>جاري تحميل القضية...</h1>
 
 return(
 
+<Auth roles={[
+"وزير العدل",
+"قاضي",
+"محامي"
+]}>
 
-<Auth roles={["وزير العدل","قاضي"]}>
 
 
 <>
@@ -237,9 +232,7 @@ direction:"rtl"
 
 
 
-
 <hr/>
-
 
 
 
@@ -286,9 +279,9 @@ direction:"rtl"
 
 value={status}
 
-onChange={(e)=>setStatus(e.target.value)}
-
 disabled={!canEdit}
+
+onChange={(e)=>setStatus(e.target.value)}
 
 >
 
@@ -359,28 +352,8 @@ placeholder="ملاحظات القاضي"
 
 
 <h3>
-⚖️ إصدار الحكم
+⚖️ نص الحكم
 </h3>
-
-
-
-
-<input
-
-disabled={!canEdit}
-
-placeholder="اسم القاضي"
-
-value={judgeName}
-
-onChange={(e)=>setJudgeName(e.target.value)}
-
-/>
-
-
-
-<br/><br/>
-
 
 
 
@@ -390,11 +363,31 @@ rows={8}
 
 disabled={!canEdit}
 
-placeholder="نص الحكم"
-
 value={judgment}
 
 onChange={(e)=>setJudgment(e.target.value)}
+
+placeholder="نص الحكم"
+
+/>
+
+
+
+
+<br/><br/>
+
+
+
+
+<input
+
+disabled={!canEdit}
+
+value={judgeName}
+
+onChange={(e)=>setJudgeName(e.target.value)}
+
+placeholder="اسم القاضي المصدر للحكم"
 
 />
 
@@ -405,27 +398,21 @@ onChange={(e)=>setJudgment(e.target.value)}
 
 
 
-
 {
 
 canEdit &&
 
-
 <button onClick={saveChanges}>
 
-💾 حفظ الحكم والتعديلات
+💾 حفظ التعديلات
 
 </button>
-
 
 }
 
 
 
-
-
 <br/><br/>
-
 
 
 
@@ -446,11 +433,11 @@ canEdit &&
 </>
 
 
+
 </Auth>
 
 
 )
-
 
 
 }
